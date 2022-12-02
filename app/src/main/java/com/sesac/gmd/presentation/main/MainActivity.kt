@@ -18,6 +18,8 @@ import com.sesac.gmd.presentation.ui.chart.ChartFragment
 import com.sesac.gmd.presentation.ui.home.HomeFragment
 import com.sesac.gmd.presentation.ui.setting.SettingFragment
 
+// Discord Webhook test
+
 private const val TAG = "MainActivity"
 
 class MainActivity : AppCompatActivity() {
