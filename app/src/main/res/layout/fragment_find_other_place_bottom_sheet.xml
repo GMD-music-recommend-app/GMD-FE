@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/txt_create"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="24dp"
+        android:text="화면을 길게 클릭하여 위치를 지정해주세요."
+        android:textColor="@color/black"
+        android:textSize="18sp"
+        android:textStyle="bold" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/txt_create_guide"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/txt_create"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="16dp"
+        android:text="검색 창에서 장소를 검색한 뒤\n화면을 움직여 정확한 장소를 길게 클릭해주세요."
+        android:textAlignment="center"
+        android:textSize="16sp" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_ok"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/txt_create_guide"
+        android:layout_centerHorizontal="true"
+        android:layout_marginVertical="16dp"
+        android:layout_marginHorizontal="64dp"
+        android:padding="16dp"
+        android:backgroundTint="@color/main_color"
+        android:elevation="4dp"
+        android:text="확인"
+        android:textStyle="bold"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        app:cornerRadius="10dp" />
+</RelativeLayout>

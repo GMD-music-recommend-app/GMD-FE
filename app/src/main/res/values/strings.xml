@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">GMD</string>
+    <string name="app_name_kor">지뭐듣</string>
+
+    <!--  Google Map API KEY-->
+    <string name="google_maps_key">AIzaSyCtpnLGzbDfRUqvU_aSOpDH-58Y8SCEmpA</string>
+
+    <!--  tab name  -->
+    <string name="tab_home">홈</string>
+    <string name="tab_chart">인기차트</string>
+    <string name="tab_setting">설정</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+</resources>

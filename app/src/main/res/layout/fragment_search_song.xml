@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/img_page_num"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="32dp"
+        android:layout_marginStart="32dp"
+        android:src="@drawable/ic_page_one" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/txt_story"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/img_page_num"
+        android:layout_alignStart="@+id/img_page_num"
+        android:layout_marginTop="12dp"
+        android:text="노래 검색하기"
+        android:textColor="@color/black"
+        android:textSize="24sp" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/txt_guide_story"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/txt_story"
+        android:layout_alignStart="@+id/txt_story"
+        android:layout_marginTop="16dp"
+        android:text="지금 당신이 듣고 싶은 노래를\n제목, 가수, 곡 정보 검색을 통해 찾아보세요."
+        android:textSize="16sp" />
+
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/edt_search_song"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/txt_guide_story"
+        android:layout_marginHorizontal="16dp"
+        android:layout_centerHorizontal="true"
+        android:paddingStart="12dp"
+        android:layout_marginTop="24dp"
+        android:hint="제목, 가수, 앨범을 입력하세요." />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_next_page"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="32dp"
+        android:layout_marginBottom="16dp"
+        android:layout_alignParentBottom="true"
+        android:backgroundTint="#D9D9D9"
+        android:text="다음으로" />
+</RelativeLayout>

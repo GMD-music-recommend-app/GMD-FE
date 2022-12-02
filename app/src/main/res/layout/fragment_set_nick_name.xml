@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".presentation.ui.sign_up.SetNickNameFragment">
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/txt_nick_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true"
+        android:layout_margin="48dp"
+        android:text="닉네임을 입력해주세요."
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:textSize="24sp"/>
+    <com.google.android.material.textfield.TextInputEditText
+        android:id="@+id/edt_nick_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/txt_nick_name"
+        android:layout_marginHorizontal="32dp"
+        android:hint="닉네임 입력(최대 15자)"/>
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/txt_nick_name_guide"
+        android:background="#EDEDEDED"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginVertical="64dp"
+        android:layout_marginHorizontal="32dp"
+        android:layout_below="@id/edt_nick_name"
+        android:padding="16dp"
+        android:text="* 닉네임을 최대 15자까지 입력 가능합니다\n\n* 닉네임은 공백을 포함하지 않습니다.\n\n* 이모티콘 및 일부 특수문자 사용 불가"
+        />
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_next_page"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="32dp"
+        android:layout_marginBottom="16dp"
+        android:layout_alignParentBottom="true"
+        android:backgroundTint="#D9D9D9"
+        android:text="다음으로" />
+</RelativeLayout>

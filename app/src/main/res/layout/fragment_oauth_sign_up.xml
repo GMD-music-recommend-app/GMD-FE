@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/txt_oauth_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="32dp"
+        android:text="위치 기반 음악추천\n지뭐듣"
+        android:textAlignment="center"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        android:textSize="28sp"/>
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/txt_oauth_subtitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/txt_oauth_title"
+        android:layout_margin="16dp"
+        android:text="아이디와 비밀번호 입력하기 귀찮으시죠?\n카카오로 1초 만에 회원가입 하세요."
+        android:textAlignment="center"
+        android:textSize="16sp"/>
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/img_app_logo"
+        android:layout_width="240dp"
+        android:layout_height="240dp"
+        android:layout_below="@id/txt_oauth_subtitle"
+        android:layout_marginTop="12dp"
+        android:layout_centerInParent="true"
+        android:src="@drawable/ic_app_logo_black"/>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_sign_in"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/img_app_logo"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="64dp"
+        android:layout_marginHorizontal="64dp"
+        android:layout_marginBottom="16dp"
+        android:backgroundTint="#F7E600"
+        android:elevation="4dp"
+        android:padding="16dp"
+        android:text="카카오 계정으로 로그인"
+        android:textColor="#3A1D1D"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:cornerRadius="10dp"
+        app:icon="@drawable/ic_kakaotalk" />
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_sign_up"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/btn_sign_in"
+        android:layout_centerHorizontal="true"
+        android:layout_marginHorizontal="64dp"
+        android:padding="16dp"
+        android:backgroundTint="#F7E600"
+        android:elevation="4dp"
+        android:text="카카오 계정으로 회원가입"
+        android:textColor="#3A1D1D"
+        android:textStyle="bold"
+        android:textSize="16sp"
+        app:cornerRadius="10dp"
+        app:icon="@drawable/ic_kakaotalk" />
+
+</RelativeLayout>

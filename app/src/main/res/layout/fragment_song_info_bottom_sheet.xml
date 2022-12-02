@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/bottom_sheet_song"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/iv_song_albumCover"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="24dp"
+        android:src="@drawable/hardcode_album_image1"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/txt_song_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="18dp"
+        android:text="COOL (Your rainbow)"
+        android:textColor="@color/black"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toEndOf="@+id/iv_song_albumCover"
+        app:layout_constraintTop_toTopOf="@+id/iv_song_albumCover" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/txt_song_artist"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="NMIXX"
+        android:textColor="@color/black"
+        app:layout_constraintStart_toStartOf="@+id/txt_song_title"
+        app:layout_constraintTop_toBottomOf="@+id/txt_song_title" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/txt_song_albumName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Entwurf"
+        android:textColor="@color/black"
+        app:layout_constraintStart_toStartOf="@+id/txt_song_title"
+        app:layout_constraintTop_toBottomOf="@+id/txt_song_artist" />
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/iv_star"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:src="@drawable/ic_star"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/txt_song_userName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="가브리엘님의 추천"
+        android:textColor="@color/black"
+        app:layout_constraintStart_toStartOf="@+id/iv_song_albumCover"
+        app:layout_constraintTop_toBottomOf="@+id/txt_song_hashtag" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/txt_song_hashtag"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="#가을 #몽환적인 #불타오르는"
+        android:textColor="@color/main_color"
+        android:textSize="10sp"
+        app:layout_constraintStart_toStartOf="@+id/iv_song_albumCover"
+        app:layout_constraintTop_toBottomOf="@+id/iv_song_albumCover" />
+
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/txt_song_userStory"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="퇴근할 시간 쯤되면 횡단보도 너머로... 더보기"
+        app:layout_constraintStart_toEndOf="@+id/txt_song_userName"
+        app:layout_constraintTop_toTopOf="@+id/txt_song_userName" />
+
+    <!--  Functions  -->
+    <androidx.appcompat.widget.AppCompatImageButton
+        android:id="@+id/btn_song_youtube"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="64dp"
+        android:background="@drawable/ic_youtube"
+        app:layout_constraintEnd_toStartOf="@+id/btn_song_like"
+        app:layout_constraintTop_toBottomOf="@+id/txt_song_userName" />
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/txt_song_youtube"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="유튜브로 듣기"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toEndOf="@+id/btn_song_youtube"
+        app:layout_constraintStart_toStartOf="@+id/btn_song_youtube"
+        app:layout_constraintTop_toBottomOf="@+id/btn_song_youtube" />
+    <androidx.appcompat.widget.AppCompatImageButton
+        android:id="@+id/btn_song_like"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/ic_like"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/btn_song_youtube" />
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/txt_song_like"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="공감하기"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toEndOf="@+id/btn_song_like"
+        app:layout_constraintStart_toStartOf="@+id/btn_song_like"
+        app:layout_constraintTop_toBottomOf="@+id/btn_song_like" />
+    <androidx.appcompat.widget.AppCompatImageButton
+        android:id="@+id/btn_song_share"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="64dp"
+        android:background="@drawable/ic_share"
+        app:layout_constraintStart_toEndOf="@+id/btn_song_like"
+        app:layout_constraintTop_toTopOf="@+id/btn_song_youtube" />
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/txt_song_share"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="공유하기"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toEndOf="@+id/btn_song_share"
+        app:layout_constraintStart_toStartOf="@+id/btn_song_share"
+        app:layout_constraintTop_toBottomOf="@+id/btn_song_share" />
+
+    <!--  댓글  -->
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/txt_song_comment1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="찹도"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@+id/txt_song_userName"
+        app:layout_constraintTop_toBottomOf="@+id/txt_song_youtube" />
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/txt_song_comment1_spc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="님 음잘알 인정"
+        app:layout_constraintStart_toEndOf="@+id/txt_song_comment1"
+        app:layout_constraintTop_toTopOf="@+id/txt_song_comment1" />
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/txt_song_comment2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="밀리바비브라운"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@+id/txt_song_comment1"
+        app:layout_constraintTop_toBottomOf="@+id/txt_song_comment1" />
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/txt_song_comment2_spc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="저도 퇴근 길에 들으면서 눈물 흘렸네요."
+        app:layout_constraintStart_toEndOf="@+id/txt_song_comment2"
+        app:layout_constraintTop_toTopOf="@+id/txt_song_comment2" />
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/txt_song_comment3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="보릿고개"
+        android:textColor="@color/black"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@+id/txt_song_comment1"
+        app:layout_constraintTop_toBottomOf="@+id/txt_song_comment2" />
+    <com.google.android.material.textview.MaterialTextView
+        android:id="@+id/txt_song_comment3_spc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:text="솔직히 뉴진스보다 엔믹스"
+        app:layout_constraintStart_toEndOf="@+id/txt_song_comment3"
+        app:layout_constraintTop_toTopOf="@+id/txt_song_comment3" />
+</androidx.constraintlayout.widget.ConstraintLayout>
