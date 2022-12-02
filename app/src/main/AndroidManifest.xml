@@ -25,7 +25,7 @@
             android:value="@string/google_maps_key" />
 
         <activity
-            android:name=".presentation.ui.activities.MainActivity"
+            android:name=".presentation.main.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -34,7 +34,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".presentation.ui.activities.create.CreateSongActivity"
+            android:name=".presentation.ui.create_song.CreateSongActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"

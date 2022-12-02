@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="50dp"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/white">
+
+    <TextView
+        android:id="@+id/chartNumberTextView"
+        android:layout_width="42dp"
+        android:layout_height="wrap_content"
+        android:text="1"
+        android:textStyle="bold"
+        android:textSize="12sp"
+        android:gravity="center_horizontal"
+        android:textColor="@color/purple_200"
+        android:layout_centerVertical="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="8dp"/>
+
+    <ImageView
+        android:id="@+id/chartImageView"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:background="@color/black"
+        android:layout_toEndOf="@id/chartNumberTextView"
+        android:layout_centerVertical="true" />
+
+    <TextView
+        android:id="@+id/chartTitleTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Attention"
+        android:textStyle="bold"
+        android:textSize="14sp"
+        android:textColor="@color/black"
+        android:layout_centerVertical="true"
+        android:layout_toEndOf="@id/chartImageView"
+        android:layout_marginStart="8dp"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/black"
+        android:layout_alignParentBottom="true"
+        android:layout_marginHorizontal="15dp"/>
+
+</RelativeLayout>
