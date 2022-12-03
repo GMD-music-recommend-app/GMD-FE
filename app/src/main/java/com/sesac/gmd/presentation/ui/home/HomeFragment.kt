@@ -21,6 +21,7 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
 import com.sesac.gmd.R
+import com.sesac.gmd.common.base.BaseFragment
 import com.sesac.gmd.databinding.FragmentHomeBinding
 import com.sesac.gmd.presentation.main.MainActivity
 import com.sesac.gmd.presentation.ui.create_song.CreateSongBottomSheetFragment
@@ -29,9 +30,7 @@ import com.sesac.gmd.presentation.ui.songinfo.SongInfoBottomSheetFragment
 
 private const val TAG = "HomeFragment"
 
-class HomeFragment : Fragment(), OnMapReadyCallback, OnMarkerClickListener {
-    private var _binding: FragmentHomeBinding? = null
-    private val binding get() = _binding!!
+class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::inflate), OnMapReadyCallback, OnMarkerClickListener {
     private lateinit var activity: MainActivity
     private lateinit var mMap: GoogleMap
     private val bottomSheet by lazy { view?.findViewById<ConstraintLayout>(R.id.bottom_sheet_song) }
@@ -46,21 +45,12 @@ class HomeFragment : Fragment(), OnMapReadyCallback, OnMarkerClickListener {
         activity = requireActivity() as MainActivity
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        Log.d(TAG, "onCreateView() called!")
-        _binding = FragmentHomeBinding.inflate(inflater, container, false)
-
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         // 구글 맵 생성
         initMap()
         // Listener 초기화
         setListener()
-
-        return binding.root
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
     }
 
     private fun initMap() {

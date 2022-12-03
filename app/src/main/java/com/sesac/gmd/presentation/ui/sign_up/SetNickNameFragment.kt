@@ -11,30 +11,21 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.sesac.gmd.R
+import com.sesac.gmd.common.base.BaseFragment
 import com.sesac.gmd.databinding.FragmentSetNickNameBinding
 
 private const val TAG = "SetNickNameFragment"
 
-class SetNickNameFragment : Fragment() {
-    private var _binding: FragmentSetNickNameBinding? = null
-    private val binding get() = _binding!!
+class SetNickNameFragment : BaseFragment<FragmentSetNickNameBinding>(FragmentSetNickNameBinding::inflate) {
 
     companion object {
         fun newInstance() = SetNickNameFragment()
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        _binding = FragmentSetNickNameBinding.inflate(inflater, container, false)
-
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         // Listener 초기화
         setListener()
-
-        return binding.root
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
     }
 
     private fun setListener() {

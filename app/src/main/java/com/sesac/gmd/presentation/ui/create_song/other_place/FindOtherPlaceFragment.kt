@@ -22,23 +22,21 @@ import com.google.android.libraries.places.api.model.Place
 import com.google.android.libraries.places.widget.AutocompleteSupportFragment
 import com.google.android.libraries.places.widget.listener.PlaceSelectionListener
 import com.sesac.gmd.R
+import com.sesac.gmd.common.base.BaseFragment
 import com.sesac.gmd.databinding.FragmentFindOtherPlaceBinding
 import com.sesac.gmd.presentation.ui.create_song.create.SearchSongFragment
 
 private const val TAG = "FinOtherPlaceFragment"
 
-class FindOtherPlaceFragment : Fragment(), OnMapReadyCallback{
-    private var _binding: FragmentFindOtherPlaceBinding? = null
-    private val binding get() = _binding!!
+class FindOtherPlaceFragment : BaseFragment<FragmentFindOtherPlaceBinding>(FragmentFindOtherPlaceBinding::inflate), OnMapReadyCallback{
     private lateinit var mMap: GoogleMap
 
     companion object {
         fun newInstance() = FindOtherPlaceFragment()
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        _binding = FragmentFindOtherPlaceBinding.inflate(inflater, container, false)
-
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         // 구글 맵 생성
         initMap()
         // Listener 초기화
@@ -63,13 +61,6 @@ class FindOtherPlaceFragment : Fragment(), OnMapReadyCallback{
                 Log.i(TAG, "An error occurred: $status")
             }
         })
-
-        return binding.root
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
     }
 
     private fun initMap() {

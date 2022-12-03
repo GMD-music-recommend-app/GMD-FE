@@ -11,32 +11,23 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.sesac.gmd.common.base.BaseFragment
 import com.sesac.gmd.common.util.Utils.Companion.toastMessage
 import com.sesac.gmd.databinding.FragmentFavoritePlaceBinding
 import com.sesac.gmd.presentation.main.MainActivity
 
 private const val TAG = "SetNickNameFragment"
 
-class FavoritePlaceFragment : Fragment() {
-    private var _binding: FragmentFavoritePlaceBinding? = null
-    private val binding get() = _binding!!
+class FavoritePlaceFragment : BaseFragment<FragmentFavoritePlaceBinding>(FragmentFavoritePlaceBinding::inflate) {
 
     companion object {
         fun newInstance() = FavoritePlaceFragment()
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        _binding = FragmentFavoritePlaceBinding.inflate(inflater, container, false)
-
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         // Listener 초기화
         setListener()
-
-        return binding.root
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
     }
 
     private fun setListener() {
