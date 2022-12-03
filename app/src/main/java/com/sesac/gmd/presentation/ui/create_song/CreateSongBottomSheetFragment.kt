@@ -42,16 +42,22 @@ class CreateSongBottomSheetFragment : BottomSheetDialogFragment() {
     // TODO: 임시 작성 코드. 추후 수정 필요
     private fun setListener() {
         with(binding) {
+            val intent = Intent(requireContext(), CreateSongActivity::class.java)
+
+            // 여기서 추천하기 버튼 클릭
             btnCreateHere.setOnClickListener {
                 Log.d(TAG, "여기서 추천하기 Clicked!")
-                startActivity(Intent(requireContext(), CreateSongActivity::class.java))
+                intent.putExtra("page", "here")
+                dismiss()
+                startActivity(intent)
             }
+
+            // 다른 곳에서 추천하기 버튼 클릭
             btnCreateOtherPlace.setOnClickListener {
                 Log.d(TAG, "다른 곳에서 추천하기 Clicked!")
-                startActivityForResult(Intent(requireContext(), CreateSongActivity::class.java), 123)
-                activity?.setResult(RESULT_OK)
+                intent.putExtra("page", "other")
                 dismiss()
-                activity?.finish()
+                startActivity(intent)
             }
             btnClose.setOnClickListener {
                 dismiss()

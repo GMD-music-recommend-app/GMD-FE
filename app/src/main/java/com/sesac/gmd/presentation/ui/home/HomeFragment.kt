@@ -7,10 +7,7 @@ package com.sesac.gmd.presentation.ui.home
 
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.constraintlayout.widget.ConstraintLayout
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -23,7 +20,6 @@ import com.google.android.gms.maps.model.MarkerOptions
 import com.sesac.gmd.R
 import com.sesac.gmd.common.base.BaseFragment
 import com.sesac.gmd.databinding.FragmentHomeBinding
-import com.sesac.gmd.presentation.main.MainActivity
 import com.sesac.gmd.presentation.ui.create_song.CreateSongBottomSheetFragment
 import com.sesac.gmd.presentation.ui.login.LoginBottomSheetFragment
 import com.sesac.gmd.presentation.ui.songinfo.SongInfoBottomSheetFragment
@@ -31,18 +27,11 @@ import com.sesac.gmd.presentation.ui.songinfo.SongInfoBottomSheetFragment
 private const val TAG = "HomeFragment"
 
 class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::inflate), OnMapReadyCallback, OnMarkerClickListener {
-    private lateinit var activity: MainActivity
     private lateinit var mMap: GoogleMap
     private val bottomSheet by lazy { view?.findViewById<ConstraintLayout>(R.id.bottom_sheet_song) }
 
     companion object {
         fun newInstance() = HomeFragment()
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        Log.d(TAG, "onCreate() called!")
-        activity = requireActivity() as MainActivity
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

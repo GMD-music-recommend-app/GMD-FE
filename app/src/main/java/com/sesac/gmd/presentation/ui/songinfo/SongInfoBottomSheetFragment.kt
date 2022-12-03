@@ -28,11 +28,6 @@ class SongInfoBottomSheetFragment : BottomSheetDialogFragment() {
         fun newInstance() = SongInfoBottomSheetFragment()
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-    }
-
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = FragmentSongInfoBottomSheetBinding.inflate(inflater, container, false)
 

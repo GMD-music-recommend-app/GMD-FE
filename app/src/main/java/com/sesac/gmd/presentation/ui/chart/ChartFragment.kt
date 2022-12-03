@@ -6,29 +6,19 @@
 package com.sesac.gmd.presentation.ui.chart
 
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import com.sesac.gmd.common.base.BaseFragment
 import com.sesac.gmd.databinding.FragmentChartBinding
-import com.sesac.gmd.presentation.main.MainActivity
 import com.sesac.gmd.presentation.ui.chart.adapter.ChartAdapter
 import com.sesac.gmd.presentation.ui.chart.adapter.ChartViewHolder
 
 private const val TAG = "ChartFragment"
 
 class ChartFragment : BaseFragment<FragmentChartBinding>(FragmentChartBinding::inflate) {
-    private lateinit var activity : MainActivity
-
     private var chartAdapter: ChartAdapter? = null
 
     companion object {
         fun newInstance() = ChartFragment()
-    }
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        Log.d(TAG, "ChartFragment : onCreate() called!")
-        activity = requireActivity() as MainActivity
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

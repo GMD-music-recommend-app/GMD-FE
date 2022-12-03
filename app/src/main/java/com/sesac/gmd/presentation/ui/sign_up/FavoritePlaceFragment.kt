@@ -7,10 +7,7 @@ package com.sesac.gmd.presentation.ui.sign_up
 
 import android.content.Intent
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import com.sesac.gmd.common.base.BaseFragment
 import com.sesac.gmd.common.util.Utils.Companion.toastMessage
 import com.sesac.gmd.databinding.FragmentFavoritePlaceBinding
