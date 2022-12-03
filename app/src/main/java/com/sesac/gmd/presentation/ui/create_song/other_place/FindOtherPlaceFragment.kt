@@ -23,7 +23,7 @@ import com.google.android.libraries.places.widget.AutocompleteSupportFragment
 import com.google.android.libraries.places.widget.listener.PlaceSelectionListener
 import com.sesac.gmd.R
 import com.sesac.gmd.databinding.FragmentFindOtherPlaceBinding
-import com.sesac.gmd.presentation.ui.create_song.SearchSongFragment
+import com.sesac.gmd.presentation.ui.create_song.create.SearchSongFragment
 
 private const val TAG = "FinOtherPlaceFragment"
 
