@@ -20,5 +20,4 @@ class ChartViewHolder(
         val singerName: String,
         val empathyCount: Int
     )
-
 }

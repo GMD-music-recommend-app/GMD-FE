@@ -14,14 +14,13 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.sesac.gmd.R
+import com.sesac.gmd.common.base.BaseFragment
 import com.sesac.gmd.common.util.Utils.Companion.toastMessage
 import com.sesac.gmd.databinding.FragmentSearchSongBinding
 
 private const val TAG = "SearchSongFragment"
 
-class SearchSongFragment : Fragment() {
-    private var _binding: FragmentSearchSongBinding? = null
-    private val binding get() = _binding!!
+class SearchSongFragment : BaseFragment<FragmentSearchSongBinding>(FragmentSearchSongBinding::inflate) {
 
     companion object {
         fun newInstance() = SearchSongFragment()
@@ -35,12 +34,6 @@ class SearchSongFragment : Fragment() {
                 it.arguments = bundle
             }
         }
-    }
-
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        _binding = FragmentSearchSongBinding.inflate(inflater, container, false)
-
-        return binding.root
     }
 
     @SuppressLint("ResourceAsColor")
@@ -86,10 +79,5 @@ class SearchSongFragment : Fragment() {
                 }
             }
         }
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
     }
 }
