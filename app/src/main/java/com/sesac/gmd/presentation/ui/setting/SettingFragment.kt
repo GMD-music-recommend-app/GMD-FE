@@ -11,18 +11,20 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.sesac.gmd.R
 import com.sesac.gmd.databinding.FragmentSettingBinding
 import com.sesac.gmd.presentation.main.MainActivity
 
-private const val TAG = "SettingFragment"
-
 class SettingFragment : Fragment() {
+
     private var _binding: FragmentSettingBinding? = null
     private val binding get() = _binding!!
     private lateinit var activity : MainActivity
 
     companion object {
         fun newInstance() = SettingFragment()
+
+        const val TAG = "SettingFragment"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -40,8 +42,18 @@ class SettingFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        binding.interestLocation.setOnClickListener {
+        initViews()
+    }
 
+    private fun initViews() = with(binding) {
+        interestLocation.setOnClickListener {
+
+        }
+        recommendMusic.setOnClickListener {
+            activity.supportFragmentManager.beginTransaction()
+                .add(R.id.tabContent, MyAddMusicFragment(), MyAddMusicFragment.TAG)
+                .addToBackStack(null)
+                .commit()
         }
     }
 
@@ -49,4 +61,7 @@ class SettingFragment : Fragment() {
         super.onDestroyView()
         _binding = null
     }
+
+
+
 }

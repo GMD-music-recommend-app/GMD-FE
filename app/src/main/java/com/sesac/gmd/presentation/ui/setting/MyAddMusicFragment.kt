@@ -1,33 +1,27 @@
-/*
-* Created by gabriel
-* date : 22/11/21
-* */
-
-package com.sesac.gmd.presentation.ui.chart
+package com.sesac.gmd.presentation.ui.setting
 
 import android.os.Bundle
 import android.util.Log
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.sesac.gmd.databinding.FragmentChartBinding
+import androidx.fragment.app.Fragment
+import com.sesac.gmd.databinding.FragmentMyAddMusicBinding
 import com.sesac.gmd.presentation.main.MainActivity
+import com.sesac.gmd.presentation.ui.chart.ChartFragment
 import com.sesac.gmd.presentation.ui.chart.adapter.AddMusicAdapter
 import com.sesac.gmd.presentation.ui.chart.adapter.AddMusicViewHolder
-import com.sesac.gmd.presentation.ui.chart.adapter.ChartAdapter
-import com.sesac.gmd.presentation.ui.chart.adapter.ChartViewHolder
 
-private const val TAG = "ChartFragment"
-
-class ChartFragment : Fragment() {
-    private lateinit var binding: FragmentChartBinding
+class MyAddMusicFragment : Fragment() {
+    private lateinit var binding: FragmentMyAddMusicBinding
     private lateinit var activity : MainActivity
 
-    private var chartAdapter: ChartAdapter? = null
+    private var addMusicAdapter: AddMusicAdapter? = null
 
     companion object {
-        fun newInstance() = ChartFragment()
+        fun newInstance() = MyAddMusicFragment()
+
+        const val TAG = "MyAddMusicFragment"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -38,7 +32,7 @@ class ChartFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         Log.d(TAG, "ChartFragment : onCreateView() called!")
-        binding = FragmentChartBinding.inflate(inflater, container, false)
+        binding = FragmentMyAddMusicBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -49,22 +43,22 @@ class ChartFragment : Fragment() {
     }
 
     private fun initViews() = with(binding) {
-        if (chartAdapter == null) {
-            chartAdapter = ChartAdapter()
-            recyclerView.adapter = chartAdapter
+        if (addMusicAdapter == null) {
+            addMusicAdapter = AddMusicAdapter()
+            recyclerView.adapter = addMusicAdapter
         }
     }
 
     private fun initializeData() {
-        chartAdapter?.submitList(
+        addMusicAdapter?.submitList(
             (1..10).map {
-                ChartViewHolder.Chart(
+                AddMusicViewHolder.AddMusic(
                     id = it.toLong(),
-                    chartNumber = it,
+                    location = "",
                     imageUrl = "",
                     title ="제목 : $it",
                     singerName = "가수 이름 : $it",
-                    empathyCount = it
+                    story = ""
                 )
             }
         )

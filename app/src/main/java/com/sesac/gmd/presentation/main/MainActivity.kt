@@ -7,6 +7,7 @@ package com.sesac.gmd.presentation.main
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.FragmentTransaction
 import com.google.android.material.tabs.TabLayout
 import com.sesac.gmd.R
@@ -56,6 +57,15 @@ class MainActivity : AppCompatActivity() {
                 override fun onTabReselected(tab: TabLayout.Tab) {}
             })
         }
+
+        onBackPressedDispatcher.addCallback(object : OnBackPressedCallback(true) {
+            override fun handleOnBackPressed() {
+                supportFragmentManager.popBackStack()
+                if (supportFragmentManager.backStackEntryCount == 0) {
+                    finish()
+                }
+            }
+        })
     }
 
     // Fragment 교체 함수
@@ -76,4 +86,5 @@ class MainActivity : AppCompatActivity() {
             else -> throw IllegalStateException("Unexpected value : $tabPosition")
         }
     }
+
 }
