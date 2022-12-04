@@ -69,8 +69,9 @@ class SearchSongFragment : BaseFragment<FragmentSearchSongBinding>(FragmentSearc
                             arguments = Bundle().apply {
                                 putString("SONG", edtSearchSong.text.toString())  // <- 대충 이런 방식
                             }
-                        }
-                    ).commit()
+                        })
+                        .addToBackStack(null)
+                        .commit()
                 }
 
                 // 노래를 추가하지 않았다면 Toast 출력

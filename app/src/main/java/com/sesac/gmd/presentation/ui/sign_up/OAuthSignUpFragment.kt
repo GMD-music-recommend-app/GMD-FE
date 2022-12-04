@@ -27,6 +27,7 @@ class OAuthSignUpFragment : BaseFragment<FragmentOauthSignUpBinding>(FragmentOau
             val supportFragmentManager = parentFragmentManager
             supportFragmentManager.beginTransaction()
                 .replace(R.id.container, SetNickNameFragment.newInstance())
+                .addToBackStack(null)
                 .commit()
         }
     }

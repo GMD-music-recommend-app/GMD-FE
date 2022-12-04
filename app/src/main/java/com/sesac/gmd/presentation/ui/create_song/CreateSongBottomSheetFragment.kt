@@ -5,10 +5,8 @@
 
 package com.sesac.gmd.presentation.ui.create_song
 
-import android.app.Activity.RESULT_OK
 import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -46,7 +44,6 @@ class CreateSongBottomSheetFragment : BottomSheetDialogFragment() {
 
             // 여기서 추천하기 버튼 클릭
             btnCreateHere.setOnClickListener {
-                Log.d(TAG, "여기서 추천하기 Clicked!")
                 intent.putExtra("page", "here")
                 dismiss()
                 startActivity(intent)
@@ -54,7 +51,6 @@ class CreateSongBottomSheetFragment : BottomSheetDialogFragment() {
 
             // 다른 곳에서 추천하기 버튼 클릭
             btnCreateOtherPlace.setOnClickListener {
-                Log.d(TAG, "다른 곳에서 추천하기 Clicked!")
                 intent.putExtra("page", "other")
                 dismiss()
                 startActivity(intent)

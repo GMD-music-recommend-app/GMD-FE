@@ -1,4 +1,4 @@
-package com.sesac.gmd.presentation.ui.chart.adapter
+package com.sesac.gmd.presentation.ui.setting.adapter
 
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.sesac.gmd.databinding.ViewholderMyAddMusicItemBinding

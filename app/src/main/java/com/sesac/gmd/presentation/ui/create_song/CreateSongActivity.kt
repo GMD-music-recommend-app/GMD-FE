@@ -34,10 +34,12 @@ class CreateSongActivity : AppCompatActivity() {
                 when(getIntent) {
                     "here" -> {
                         add(R.id.container, SearchSongFragment.newInstance())
+                        addToBackStack(null)
                         commit()
                     }
                     "other" -> {
                         add(R.id.container, FindOtherPlaceFragment.newInstance())
+                        addToBackStack(null)
                         commit()
                     }
                     else -> toastMessage("오류뜸")

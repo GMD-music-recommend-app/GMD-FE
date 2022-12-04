@@ -8,9 +8,8 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.sesac.gmd.databinding.FragmentMyAddMusicBinding
 import com.sesac.gmd.presentation.main.MainActivity
-import com.sesac.gmd.presentation.ui.chart.ChartFragment
-import com.sesac.gmd.presentation.ui.chart.adapter.AddMusicAdapter
-import com.sesac.gmd.presentation.ui.chart.adapter.AddMusicViewHolder
+import com.sesac.gmd.presentation.ui.setting.adapter.AddMusicAdapter
+import com.sesac.gmd.presentation.ui.setting.adapter.AddMusicViewHolder
 
 class MyAddMusicFragment : Fragment() {
     private lateinit var binding: FragmentMyAddMusicBinding

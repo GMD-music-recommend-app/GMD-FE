@@ -1,4 +1,4 @@
-package com.sesac.gmd.presentation.ui.chart.adapter
+package com.sesac.gmd.presentation.ui.setting.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -29,5 +29,4 @@ class AddMusicAdapter: ListAdapter<AddMusicViewHolder.AddMusic, AddMusicViewHold
     override fun onBindViewHolder(holder: AddMusicViewHolder, position: Int) {
         holder.bind(currentList[position])
     }
-
 }

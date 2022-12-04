@@ -73,6 +73,7 @@ class FindOtherPlaceFragment : BaseFragment<FragmentFindOtherPlaceBinding>(Fragm
                 supportMapFragment
                     .beginTransaction()
                     .replace(R.id.container, SearchSongFragment.newInstance())
+                    .addToBackStack(null)
                     .commit()
             }
         }

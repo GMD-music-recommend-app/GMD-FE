@@ -34,6 +34,7 @@ class MainActivity : AppCompatActivity() {
         if (savedInstanceState == null) {
             with(supportFragmentManager.beginTransaction()){
                 add(R.id.tabContent, HomeFragment.newInstance())
+                addToBackStack(null)
                 commit()
             }
             binding.tabLayout.selectTab(binding.tabLayout.getTabAt(TAB_HOME))
@@ -71,14 +72,17 @@ class MainActivity : AppCompatActivity() {
         when(tabPosition) {
             TAB_CHART -> {
                 ft.replace(R.id.tabContent, ChartFragment.newInstance())
+                    .addToBackStack(null)
                     .commit()
             }
             TAB_HOME -> {
                 ft.replace(R.id.tabContent, HomeFragment.newInstance())
+                    .addToBackStack(null)
                     .commit()
             }
             TAB_SETTING -> {
                 ft.replace(R.id.tabContent, SettingFragment.newInstance())
+                    .addToBackStack(null)
                     .commit()
             }
             else -> throw IllegalStateException("Unexpected value : $tabPosition")

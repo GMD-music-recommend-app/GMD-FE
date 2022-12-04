@@ -25,6 +25,7 @@ class SignUpActivity : AppCompatActivity() {
         if (savedInstanceState == null) {
             with(supportFragmentManager.beginTransaction()){
                 add(R.id.container, OAuthSignUpFragment.newInstance())
+                addToBackStack(null)
                 commit()
             }
         }

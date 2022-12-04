@@ -31,6 +31,7 @@ class SetNickNameFragment : BaseFragment<FragmentSetNickNameBinding>(FragmentSet
                 val supportFragmentManager = parentFragmentManager
                 supportFragmentManager.beginTransaction()
                     .replace(R.id.container, FavoritePlaceFragment.newInstance())
+                    .addToBackStack(null)
                     .commit()
             }
         }
