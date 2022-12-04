@@ -7,8 +7,12 @@ package com.sesac.gmd.presentation.ui.chart
 
 import android.os.Bundle
 import android.view.View
-import com.sesac.gmd.common.base.BaseFragment
+import android.view.ViewGroup
 import com.sesac.gmd.databinding.FragmentChartBinding
+import com.sesac.gmd.presentation.main.MainActivity
+import com.sesac.gmd.presentation.ui.chart.adapter.AddMusicAdapter
+import com.sesac.gmd.presentation.ui.chart.adapter.AddMusicViewHolder
+import com.sesac.gmd.common.base.BaseFragment
 import com.sesac.gmd.presentation.ui.chart.adapter.ChartAdapter
 import com.sesac.gmd.presentation.ui.chart.adapter.ChartViewHolder
 
