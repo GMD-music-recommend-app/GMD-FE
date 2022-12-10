@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -22,15 +21,12 @@
             />
     </com.google.android.material.card.MaterialCardView>
 
-
-
     <!--  Google Map Container  -->
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/subMap"
         android:name="com.google.android.gms.maps.SupportMapFragment"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        tools:context="com.example.mapwithmarker.MapsMarkerActivity" />
+        android:layout_height="match_parent" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btn_create_place"
