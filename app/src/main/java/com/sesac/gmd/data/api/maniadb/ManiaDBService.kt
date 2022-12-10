@@ -20,8 +20,8 @@ private const val MANIADB_SERVICE_KEY = "gmd6to30@gmail.com"
 * */
 
 interface ManiaDBService {
-    // 곡 제목 검색
-    @GET("{keyword}/?sr=song&display=100&key=${MANIADB_SERVICE_KEY}&v=0.5")
+    // 곡 제목 검색(검색 결과 10개 표시)
+    @GET("{keyword}/?sr=song&display=10&key=${MANIADB_SERVICE_KEY}&v=0.5")
     suspend fun getSong(@Path("keyword") keyword: String) : ResponseBody
 
     /*// 가수 검색

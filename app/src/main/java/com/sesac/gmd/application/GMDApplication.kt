@@ -46,7 +46,7 @@ class GMDApplication : Application(){
 
     private fun initPlaceSDK() {
         if (!Places.isInitialized()) {
-            Places.initialize(getApplicationContext(), getString(R.string.google_places_key), Locale.US);
+            Places.initialize(applicationContext, getString(R.string.google_places_key), Locale.US);
         }
     }
 

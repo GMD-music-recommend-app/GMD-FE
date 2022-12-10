@@ -14,6 +14,8 @@ package com.sesac.gmd.data.model
 * maniadb:artist.name : 가수
 * */
 
+// TODO: songID 추가 필요
+
 data class SongInfo(
     val items: MutableList<Item> = mutableListOf()
 )

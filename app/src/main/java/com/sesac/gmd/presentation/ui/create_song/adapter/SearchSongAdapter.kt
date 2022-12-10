@@ -5,37 +5,57 @@
 
 package com.sesac.gmd.presentation.ui.create_song.adapter
 
+import android.annotation.SuppressLint
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageButton
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.sesac.gmd.R
 import com.sesac.gmd.data.model.Item
-import com.sesac.gmd.data.model.SongInfo
+import com.sesac.gmd.databinding.ViewholderSearchSongResultBinding
+
+private const val TAG = "SearchSongRecyclerItem"
 
 class SearchSongAdapter(private val items : MutableList<Item>)
-    : RecyclerView.Adapter<SearchSongAdapter.RecyclerViewHolder>() {
+    : RecyclerView.Adapter<SearchSongAdapter.SearchSongViewHolder>() {
 
-    inner class RecyclerViewHolder(itemRoot: View) : RecyclerView.ViewHolder(itemRoot) {
-        val songTitle: TextView = itemRoot.findViewById(R.id.song_title)
-        val songArtist: TextView = itemRoot.findViewById(R.id.song_artist)
-        val songAlbum: TextView = itemRoot.findViewById(R.id.song_album)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SearchSongViewHolder {
+        val binding = ViewholderSearchSongResultBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+
+
+        return SearchSongViewHolder(binding)
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.recycler_item, parent, false)
-        return RecyclerViewHolder(view)
+    @SuppressLint("SetTextI18n")
+    override fun onBindViewHolder(holder: SearchSongViewHolder, position: Int) {
+        val song = items[position]
+        with(holder.binding) {
+            songTitle.text = song.songTitle
+            songArtist.text = """${song.artist.joinToString ( "," )} · ${song.album.albumTitle}"""
+            Glide.with(holder.itemView.context)
+                .load(song.album.albumImageURL)
+                .into(songAlbumImage)
+        }
+
+        // Listener 등록
+        setListener(holder, position)
     }
 
-    override fun onBindViewHolder(holder: RecyclerViewHolder, position: Int) {
-        val tempEntity = items[position]
-        with(holder) {
-                songTitle.text = tempEntity.songTitle
-                songAlbum.text = tempEntity.album.albumTitle
-                songArtist.text = tempEntity.artist.joinToString ( "," )
+    private fun setListener(holder: SearchSongViewHolder, position: Int) {
+        with(holder.binding) {
+            selectSong.setOnClickListener {
+                Log.d(TAG, "Recycler Item Select Clicked!")
+                it.setBackgroundResource(R.drawable.ic_selected)
+            }
         }
     }
 
     override fun getItemCount() = items.size
+
+    inner class SearchSongViewHolder(val binding: ViewholderSearchSongResultBinding) : RecyclerView.ViewHolder(binding.root)
 }

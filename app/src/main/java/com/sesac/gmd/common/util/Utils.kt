@@ -5,7 +5,10 @@
 
 package com.sesac.gmd.common.util
 
+import android.app.Activity
+import android.content.Context
 import android.util.Log
+import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import com.sesac.gmd.application.GMDApplication
 import com.sesac.gmd.data.model.Item
@@ -24,8 +27,16 @@ class Utils {
             Toast.makeText(GMDApplication.getAppInstance(), message, Toast.LENGTH_SHORT).show()
         }
 
+        // event 발생 시 키보드 내려가는 함수
+        fun hideKeyBoard(activity: Activity) {
+            val inputManager: InputMethodManager = activity.getSystemService(
+                Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            inputManager.hideSoftInputFromWindow(activity.currentFocus?.windowToken, InputMethodManager.HIDE_NOT_ALWAYS)
+        }
+
         // XML -> DTO parsing 함수
         fun parseXMLFromMania(xmlFromManiaDB: String): SongInfo {
+            // TODO: SongID 파싱 필요
             val xmlDOMBuilder = DocumentBuilderFactory.newInstance()
             val songInfo = SongInfo()
             try {
