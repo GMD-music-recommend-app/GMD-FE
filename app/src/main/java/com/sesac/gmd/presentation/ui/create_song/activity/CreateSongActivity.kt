@@ -47,8 +47,7 @@ class CreateSongActivity : AppCompatActivity() {
             }
         }
 
-        // TODO: 코드 수정 필요
-        // toolbar 뒤로가기 버튼 구현
+        // toolbar 뒤로가기 버튼
         val toolbar = binding.toolbar
         setSupportActionBar(toolbar)
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
