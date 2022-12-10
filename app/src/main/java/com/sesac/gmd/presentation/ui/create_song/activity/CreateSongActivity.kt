@@ -34,12 +34,10 @@ class CreateSongActivity : AppCompatActivity() {
                 when(getIntent) {
                     "here" -> { // 여기에서 추천하기
                         add(R.id.container, SearchSongFragment.newInstance())
-//                        addToBackStack(null)
                         commit()
                     }
                     "other" -> { // 다른 곳에서 추천하기
                         add(R.id.container, FindOtherPlaceFragment.newInstance())
-//                        addToBackStack(null)
                         commit()
                     }
                     else -> {

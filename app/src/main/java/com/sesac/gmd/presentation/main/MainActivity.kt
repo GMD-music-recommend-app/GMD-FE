@@ -32,7 +32,6 @@ class MainActivity : AppCompatActivity() {
         if (savedInstanceState == null) {
             with(supportFragmentManager.beginTransaction()){
                 add(R.id.tabContent, HomeFragment.newInstance())
-//                addToBackStack(null)
                 commit()
             }
             // 탭 focus 홈으로 가도록 설정
