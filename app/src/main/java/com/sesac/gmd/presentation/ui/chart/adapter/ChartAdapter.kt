@@ -29,5 +29,4 @@ class ChartAdapter: ListAdapter<ChartViewHolder.Chart, ChartViewHolder>(
     override fun onBindViewHolder(holder: ChartViewHolder, position: Int) {
         holder.bind(currentList[position])
     }
-
 }

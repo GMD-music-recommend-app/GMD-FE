@@ -19,8 +19,6 @@ import com.sesac.gmd.presentation.ui.chart.ChartFragment
 import com.sesac.gmd.presentation.ui.home.HomeFragment
 import com.sesac.gmd.presentation.ui.setting.SettingFragment
 
-private const val TAG = "MainActivity"
-
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
 
@@ -34,12 +32,13 @@ class MainActivity : AppCompatActivity() {
         if (savedInstanceState == null) {
             with(supportFragmentManager.beginTransaction()){
                 add(R.id.tabContent, HomeFragment.newInstance())
-                addToBackStack(null)
+//                addToBackStack(null)
                 commit()
             }
+            // 탭 focus 홈으로 가도록 설정
             binding.tabLayout.selectTab(binding.tabLayout.getTabAt(TAB_HOME))
         }
-        // Listener 초기화
+        // Listener 등록
         setListener()
     }
 
@@ -88,5 +87,4 @@ class MainActivity : AppCompatActivity() {
             else -> throw IllegalStateException("Unexpected value : $tabPosition")
         }
     }
-
 }

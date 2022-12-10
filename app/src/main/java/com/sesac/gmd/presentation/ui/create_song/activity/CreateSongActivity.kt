@@ -3,16 +3,18 @@
 * date : 22/11/26
 * */
 
-package com.sesac.gmd.presentation.ui.create_song
+package com.sesac.gmd.presentation.ui.create_song.activity
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.MenuItem
 import com.sesac.gmd.R
 import com.sesac.gmd.common.util.Utils.Companion.toastMessage
+import com.sesac.gmd.data.repository.CreateSongRepository
 import com.sesac.gmd.databinding.ActivityCreateSongBinding
-import com.sesac.gmd.presentation.ui.create_song.create.SearchSongFragment
-import com.sesac.gmd.presentation.ui.create_song.other_place.FindOtherPlaceFragment
+import com.sesac.gmd.presentation.ui.create_song.fragment.FindOtherPlaceFragment
+import com.sesac.gmd.presentation.ui.create_song.fragment.SearchSongFragment
 
 private const val TAG = "CreateSongActivity"
 
@@ -24,25 +26,25 @@ class CreateSongActivity : AppCompatActivity() {
         binding = ActivityCreateSongBinding.inflate(layoutInflater).also {
             setContentView(it.root)
         }
-
-        // TODO: 임시 작성 코드. 추후 수정 필요
-        // 노래 추천하기 -> 여기에서 추천하기 or 다른 곳에서 추천하기
-        val getIntent = intent.getStringExtra("page")
+        val getIntent = intent.getStringExtra("CREATE_PLACE")
 
         if (savedInstanceState == null) {
             with(supportFragmentManager.beginTransaction()) {
+                // 노래 추천하기 버튼 클릭 시 첫 화면
                 when(getIntent) {
-                    "here" -> {
+                    "here" -> { // 여기에서 추천하기
                         add(R.id.container, SearchSongFragment.newInstance())
-                        addToBackStack(null)
+//                        addToBackStack(null)
                         commit()
                     }
-                    "other" -> {
+                    "other" -> { // 다른 곳에서 추천하기
                         add(R.id.container, FindOtherPlaceFragment.newInstance())
-                        addToBackStack(null)
+//                        addToBackStack(null)
                         commit()
                     }
-                    else -> toastMessage("오류뜸")
+                    else -> {
+                        toastMessage("예기치 못한 오류가 발생했습니다.")
+                    }
                 }
             }
         }

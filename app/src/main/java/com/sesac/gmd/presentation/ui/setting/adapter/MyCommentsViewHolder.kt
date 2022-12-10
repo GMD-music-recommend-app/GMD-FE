@@ -21,5 +21,4 @@ class MyCommentsViewHolder(
         val title: String,
         val comments: String,
     )
-
 }

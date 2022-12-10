@@ -3,7 +3,7 @@
 * date : 22/12/01
 * */
 
-package com.sesac.gmd.presentation.ui.create_song.other_place
+package com.sesac.gmd.presentation.ui.create_song.bottomsheet
 
 import android.os.Bundle
 import android.view.LayoutInflater

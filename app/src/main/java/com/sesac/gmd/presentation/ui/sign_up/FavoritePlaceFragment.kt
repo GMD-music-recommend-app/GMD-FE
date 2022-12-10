@@ -13,7 +13,7 @@ import com.sesac.gmd.common.util.Utils.Companion.toastMessage
 import com.sesac.gmd.databinding.FragmentFavoritePlaceBinding
 import com.sesac.gmd.presentation.main.MainActivity
 
-private const val TAG = "SetNickNameFragment"
+private const val TAG = "FavoritePlaceFragment"
 
 class FavoritePlaceFragment : BaseFragment<FragmentFavoritePlaceBinding>(FragmentFavoritePlaceBinding::inflate) {
 

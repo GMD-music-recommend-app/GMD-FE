@@ -3,7 +3,7 @@
 * date : 22/12/02
 * */
 
-package com.sesac.gmd.presentation.ui.create_song.other_place
+package com.sesac.gmd.presentation.ui.create_song.fragment
 
 import android.os.Bundle
 import android.util.Log
@@ -21,7 +21,7 @@ import com.google.android.libraries.places.widget.listener.PlaceSelectionListene
 import com.sesac.gmd.R
 import com.sesac.gmd.common.base.BaseFragment
 import com.sesac.gmd.databinding.FragmentFindOtherPlaceBinding
-import com.sesac.gmd.presentation.ui.create_song.create.SearchSongFragment
+import com.sesac.gmd.presentation.ui.create_song.bottomsheet.FindOtherPlaceBottomSheetFragment
 
 private const val TAG = "FinOtherPlaceFragment"
 

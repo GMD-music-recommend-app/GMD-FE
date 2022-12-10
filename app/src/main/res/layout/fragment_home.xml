@@ -15,20 +15,6 @@
         android:layout_height="match_parent"
         tools:context="com.example.mapwithmarker.MapsMarkerActivity" />
 
-    <!--  GPS Tracking 버튼   -->
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab_GPS_Tracking"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentTop="true"
-        android:layout_margin="16dp"
-        android:backgroundTint="@color/white"
-        android:src="@drawable/ic_gps_tracking"
-        android:tint="@null"
-        app:borderWidth="0dp"
-        app:fabSize="mini" />
-
     <!--  노래 추천하기 버튼  -->
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btn_create_song"

@@ -3,7 +3,7 @@
 * date : 22/11/24
 * */
 
-package com.sesac.gmd.presentation.ui.create_song
+package com.sesac.gmd.presentation.ui.create_song.bottomsheet
 
 import android.content.Intent
 import android.os.Bundle
@@ -12,8 +12,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.sesac.gmd.databinding.FragmentCreateSongBottomSheetBinding
-
-private const val TAG = "CreateSongBottomSheet"
+import com.sesac.gmd.presentation.ui.create_song.activity.CreateSongActivity
 
 class CreateSongBottomSheetFragment : BottomSheetDialogFragment() {
     private var _binding: FragmentCreateSongBottomSheetBinding? = null
@@ -26,7 +25,7 @@ class CreateSongBottomSheetFragment : BottomSheetDialogFragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = FragmentCreateSongBottomSheetBinding.inflate(inflater, container, false)
 
-        // Listener 초기화
+        // Listener 등록
         setListener()
 
         return binding.root
@@ -37,24 +36,24 @@ class CreateSongBottomSheetFragment : BottomSheetDialogFragment() {
         _binding = null
     }
 
-    // TODO: 임시 작성 코드. 추후 수정 필요
+    // Listener 초기화 함수
     private fun setListener() {
         with(binding) {
             val intent = Intent(requireContext(), CreateSongActivity::class.java)
 
             // 여기서 추천하기 버튼 클릭
             btnCreateHere.setOnClickListener {
-                intent.putExtra("page", "here")
+                intent.putExtra("CREATE_PLACE", "here")
                 dismiss()
                 startActivity(intent)
             }
-
             // 다른 곳에서 추천하기 버튼 클릭
             btnCreateOtherPlace.setOnClickListener {
-                intent.putExtra("page", "other")
+                intent.putExtra("CREATE_PLACE", "other")
                 dismiss()
                 startActivity(intent)
             }
+            // 바텀시트 닫기
             btnClose.setOnClickListener {
                 dismiss()
             }
