@@ -10,6 +10,9 @@ import android.app.Activity
 import android.app.Application
 import android.content.pm.ActivityInfo
 import android.os.Bundle
+import com.google.android.libraries.places.api.Places
+import com.sesac.gmd.R
+import java.util.*
 
 // 앱 런처 아이콘을 터치하면 처음 실행되는 코드
 // App Scope 모든 코틀린 클래스/파일에서 호출할 수 있는 코드
@@ -23,6 +26,7 @@ class GMDApplication : Application(){
         super.onCreate()
         appInstance = this
         settingScreenPortrait()
+        initPlaceSDK()
     }
 
     private fun settingScreenPortrait() {
@@ -39,4 +43,11 @@ class GMDApplication : Application(){
             override fun onActivityDestroyed(activity: Activity) {}
         })
     }
+
+    private fun initPlaceSDK() {
+        if (!Places.isInitialized()) {
+            Places.initialize(getApplicationContext(), getString(R.string.google_places_key), Locale.US);
+        }
+    }
+
 }
