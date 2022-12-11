@@ -66,6 +66,7 @@
      android:layout_below="@id/edt_search_song"
      android:layout_marginTop="16dp"
      android:layout_marginHorizontal="32dp"
+     android:splitMotionEvents="false"
      app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
 
  <com.google.android.material.button.MaterialButton

@@ -6,16 +6,10 @@
 package com.sesac.gmd.presentation.ui.create_song.adapter
 
 import android.annotation.SuppressLint
-import android.util.Log
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageButton
-import android.widget.ImageView
-import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.sesac.gmd.R
 import com.sesac.gmd.data.model.Item
 import com.sesac.gmd.databinding.ViewholderSearchSongResultBinding
 
@@ -27,8 +21,10 @@ class SearchSongAdapter(private val items : MutableList<Item>)
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SearchSongViewHolder {
         val binding = ViewholderSearchSongResultBinding.inflate(LayoutInflater.from(parent.context), parent, false)
 
-
-        return SearchSongViewHolder(binding)
+        return SearchSongViewHolder(binding).also { searchSongViewHolder ->
+            // Listener 등록
+            setListener(searchSongViewHolder)
+        }
     }
 
     @SuppressLint("SetTextI18n")
@@ -41,16 +37,13 @@ class SearchSongAdapter(private val items : MutableList<Item>)
                 .load(song.album.albumImageURL)
                 .into(songAlbumImage)
         }
-
-        // Listener 등록
-        setListener(holder, position)
     }
 
-    private fun setListener(holder: SearchSongViewHolder, position: Int) {
+    // Listener 초기화 함수
+    private fun setListener(holder: SearchSongViewHolder) {
         with(holder.binding) {
-            selectSong.setOnClickListener {
-                Log.d(TAG, "Recycler Item Select Clicked!")
-                it.setBackgroundResource(R.drawable.ic_selected)
+            selectSong.setOnClickListener{
+                // TODO: 곡 중복 선택 안되도록 구현 필요
             }
         }
     }

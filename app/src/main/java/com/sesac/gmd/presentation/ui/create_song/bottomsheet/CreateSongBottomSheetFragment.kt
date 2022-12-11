@@ -43,13 +43,13 @@ class CreateSongBottomSheetFragment : BottomSheetDialogFragment() {
 
             // 여기서 추천하기 버튼 클릭
             btnCreateHere.setOnClickListener {
-                intent.putExtra("CREATE_PLACE", "here")
+                intent.putExtra("GO_TO_PAGE", "CreateSongHere")
                 dismiss()
                 startActivity(intent)
             }
             // 다른 곳에서 추천하기 버튼 클릭
             btnCreateOtherPlace.setOnClickListener {
-                intent.putExtra("CREATE_PLACE", "other")
+                intent.putExtra("GO_TO_PAGE", "SetOtherPlace")
                 dismiss()
                 startActivity(intent)
             }

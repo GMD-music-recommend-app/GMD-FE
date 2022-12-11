@@ -26,17 +26,17 @@ class CreateSongActivity : AppCompatActivity() {
         binding = ActivityCreateSongBinding.inflate(layoutInflater).also {
             setContentView(it.root)
         }
-        val getIntent = intent.getStringExtra("CREATE_PLACE")
+        val getIntent = intent.getStringExtra("GO_TO_PAGE")
 
         if (savedInstanceState == null) {
             with(supportFragmentManager.beginTransaction()) {
                 // 노래 추천하기 버튼 클릭 시 첫 화면
                 when(getIntent) {
-                    "here" -> { // 여기에서 추천하기
+                    "CreateSongHere" -> { // 여기에서 추천하기
                         add(R.id.container, SearchSongFragment.newInstance())
                         commit()
                     }
-                    "other" -> { // 다른 곳에서 추천하기
+                    "SetOtherPlace" -> { // 다른 곳에서 추천하기
                         add(R.id.container, FindOtherPlaceFragment.newInstance())
                         commit()
                     }

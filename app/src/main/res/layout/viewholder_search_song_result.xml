@@ -46,7 +46,6 @@
             android:textStyle="bold" />
 
         <!--  Song Artist & Album Title  -->
-
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/song_artist"
             android:layout_width="wrap_content"
@@ -61,7 +60,7 @@
             android:maxLength="18"
             android:text="가수 · 앨범" />
 
-        <androidx.appcompat.widget.AppCompatImageButton
+        <RadioButton
             android:id="@+id/select_song"
             android:layout_width="24dp"
             android:layout_height="24dp"
@@ -71,8 +70,8 @@
             android:layout_marginTop="16dp"
             android:layout_marginEnd="16dp"
             android:layout_marginBottom="16dp"
-            android:adjustViewBounds="true"
-            android:backgroundTint="@android:color/transparent"
-            android:src="@drawable/ic_select" />
+            android:background="@drawable/custom_radio_button"
+            android:button="@android:color/transparent"
+            android:checked="false" />
     </RelativeLayout>
 </com.google.android.material.card.MaterialCardView>
