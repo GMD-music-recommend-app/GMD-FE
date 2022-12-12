@@ -49,8 +49,8 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
     }
 
     private fun initMap() {
-        val mapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment?
-        mapFragment?.getMapAsync(this)
+        val mapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
+        mapFragment.getMapAsync(this)
     }
 
     // Listener 초기화
@@ -93,10 +93,10 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
     }
 
     override fun onMyLocationClick(p0: Location) {
-        TODO("Not yet implemented")
+
     }
 
     override fun onMyLocationButtonClick(): Boolean {
-        TODO("Not yet implemented")
+        return false
     }
 }

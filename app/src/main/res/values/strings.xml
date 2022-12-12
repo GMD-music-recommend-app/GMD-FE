@@ -3,8 +3,7 @@
     <string name="app_name_kor">지뭐듣</string>
 
     <!--  Google Map API KEY-->
-    <string name="google_maps_key">AIzaSyCtpnLGzbDfRUqvU_aSOpDH-58Y8SCEmpA</string>
-    <string name="google_places_key">AIzaSyA1vL3vDpfHOn0zzplBR2Z5cpJ2v9Qz5Cw</string>
+    <string name="google_maps_key">AIzaSyA1vL3vDpfHOn0zzplBR2Z5cpJ2v9Qz5Cw</string>
 
     <!--  tab name  -->
     <string name="tab_home">홈</string>
