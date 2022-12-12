@@ -8,14 +8,18 @@ package com.sesac.gmd.presentation.ui.create_song.fragment
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import com.sesac.gmd.common.base.BaseFragment
+import com.sesac.gmd.data.repository.CreateSongRepository
 import com.sesac.gmd.databinding.FragmentWriteStoryBinding
 import com.sesac.gmd.presentation.main.MainActivity
+import com.sesac.gmd.presentation.ui.create_song.viewmodel.CreateSongViewModel
 
 private const val TAG = "WriteStoryFragment"
 
 class WriteStoryFragment : BaseFragment<FragmentWriteStoryBinding>(FragmentWriteStoryBinding::inflate) {
+    private val viewModel = CreateSongViewModel(CreateSongRepository())
 
     companion object {
         fun newInstance() = WriteStoryFragment()
