@@ -21,12 +21,11 @@ private const val TAG = "SongInfoBottomSheet"
 
 // TODO: Expanded Bottom Sheet Dialog 로 변경 필요
 class SongInfoBottomSheetFragment : BottomSheetDialogFragment() {
-    private var _binding: FragmentSongInfoBottomSheetBinding? = null
-    private val binding get() = _binding!!
-
     companion object {
         fun newInstance() = SongInfoBottomSheetFragment()
     }
+    private var _binding: FragmentSongInfoBottomSheetBinding? = null
+    private val binding get() = _binding!!
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = FragmentSongInfoBottomSheetBinding.inflate(inflater, container, false)

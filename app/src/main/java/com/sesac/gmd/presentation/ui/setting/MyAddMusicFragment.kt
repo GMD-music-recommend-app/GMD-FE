@@ -12,16 +12,15 @@ import com.sesac.gmd.presentation.ui.setting.adapter.AddMusicAdapter
 import com.sesac.gmd.presentation.ui.setting.adapter.AddMusicViewHolder
 
 class MyAddMusicFragment : Fragment() {
-    private lateinit var binding: FragmentMyAddMusicBinding
-    private lateinit var activity : MainActivity
-
-    private var addMusicAdapter: AddMusicAdapter? = null
-
     companion object {
         fun newInstance() = MyAddMusicFragment()
 
         const val TAG = "MyAddMusicFragment"
     }
+    private lateinit var binding: FragmentMyAddMusicBinding
+    private lateinit var activity : MainActivity
+
+    private var addMusicAdapter: AddMusicAdapter? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

@@ -33,11 +33,10 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
     OnMyLocationClickListener,
     OnMyLocationButtonClickListener
 {
-    private lateinit var mMap: GoogleMap
-
     companion object {
         fun newInstance() = HomeFragment()
     }
+    private lateinit var mMap: GoogleMap
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -65,9 +64,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
     }
 
     override fun onMapReady(googleMap: GoogleMap) {
-        if (googleMap != null) {
-            mMap = googleMap
-        }
+        mMap = googleMap
 
         // TODO: 최초 시작 위치 임시 설정. 추후 수정 필요
         val startingPoint = LatLng(37.5662952, 126.97794509999994)
@@ -76,11 +73,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::infl
                 .position(startingPoint)
                 .title("NMIXX - COOL(Your rainbow)"))
                 ?.hideInfoWindow()
-            moveCamera(CameraUpdateFactory.newLatLngZoom(startingPoint, 15F))
+            moveCamera(CameraUpdateFactory.newLatLngZoom(startingPoint, 16F))
             setOnMarkerClickListener(this@HomeFragment)
         }
-
-//        googleMap.isMyLocationEnabled = true
     }
 
     override fun onMarkerClick(marker: Marker): Boolean {

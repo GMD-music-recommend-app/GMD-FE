@@ -17,7 +17,6 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
-import com.google.android.gms.maps.model.LatLng
 import com.sesac.gmd.common.util.Utils.Companion.parseXMLFromMania
 import com.sesac.gmd.common.util.Utils.Companion.toastMessage
 import com.sesac.gmd.data.model.Item
@@ -34,7 +33,7 @@ class CreateSongViewModel(private val repository: CreateSongRepository) : ViewMo
     var isLoading = MutableLiveData<Boolean>()
 
     // Location
-    private val _location = MutableLiveData<Location>()
+    private val _location = MutableLiveData<Location>(null)
     val location: LiveData<Location> get() = _location
 
     // Search result Song list
@@ -58,21 +57,29 @@ class CreateSongViewModel(private val repository: CreateSongRepository) : ViewMo
     // 다른 위치 지정
     fun setLocation() {}
 
-    // TODO: 위치 정보가 null 일 경우 현재 위치 정보를 mutableLiveData<Location> 에 넣는다
     // 현재 위치 정보 저장
     @SuppressLint("MissingPermission")
-    fun getCurrentLocation(context: Context) {
+    fun getCurrentLocation(context: Context) : Boolean {
+        var flag = false    // FusedLocation 성공 여부
+
         // 사용자의 현재 위치를 정확하게 받아옴
         val fusedLocationClient: FusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(context)
         fusedLocationClient.lastLocation.addOnSuccessListener {
-            // 받아온 현재 위치를 기준으로 geocoding 실행
-            val userLocation = geocoding(context, it.latitude, it.longitude)
-            _location.postValue(userLocation)
+            if (it == null)
+                flag = false
+            else {
+                // 받아온 현재 위치를 기준으로 geocoding 실행
+                val userLocation = geocoding(context, it.latitude, it.longitude)
+                _location.value = userLocation
+                flag = true
+            }
         }
+        return flag
     }
 
     // Geocoding(위/경도 -> 행정구역 변환) 함수
     private fun geocoding(context: Context, lat: Double, lng: Double) : Location {
+        Log.d("TEST_CODE", "geocoding() called!")
         val userLocation = Location(lat, lng)
         val geocoder = Geocoder(context, Locale.getDefault())
 
@@ -133,13 +140,7 @@ class CreateSongViewModel(private val repository: CreateSongRepository) : ViewMo
     }
 
     // 핀 생성하기
-    fun createPin() {
-//        Log.d("SearchSongFragment", "${it.latitude}")
-//        Log.d("SearchSongFragment", "${it.longitude}")
-//        Log.d("SearchSongFragment", "Location lat : ${_location.value?.latitude}")
-//        Log.d("SearchSongFragment", "Location lng : ${_location.value?.longitude}")
-//        Log.d("SearchSongFragment", "Location city : ${_location.value?.city}")
-    }
+    fun createPin() {}
 
     // Coroutine 내 REST 처리 중 에러 발생 시 호출됨
     private fun onError(message: String) {

@@ -25,12 +25,11 @@ import com.sesac.gmd.presentation.ui.create_song.bottomsheet.FindOtherPlaceBotto
 
 private const val TAG = "FinOtherPlaceFragment"
 
-class FindOtherPlaceFragment : BaseFragment<FragmentFindOtherPlaceBinding>(FragmentFindOtherPlaceBinding::inflate), OnMapReadyCallback{
-    private lateinit var mMap: GoogleMap
-
+class FindOtherPlaceFragment : BaseFragment<FragmentFindOtherPlaceBinding>(FragmentFindOtherPlaceBinding::inflate), OnMapReadyCallback {
     companion object {
         fun newInstance() = FindOtherPlaceFragment()
     }
+    private lateinit var mMap: GoogleMap
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -80,12 +79,10 @@ class FindOtherPlaceFragment : BaseFragment<FragmentFindOtherPlaceBinding>(Fragm
     }
 
     override fun onMapReady(googleMap: GoogleMap) {
-        if (googleMap != null) {
-            mMap = googleMap
-        }
+        mMap = googleMap
 
         val startingPoint = LatLng(36.573898277022, 126.9731314753)
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(startingPoint, 15F))
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(startingPoint, 16F))
 
         mMap.setOnMapLongClickListener { point ->
             val position = LatLng(point.latitude, point.longitude)

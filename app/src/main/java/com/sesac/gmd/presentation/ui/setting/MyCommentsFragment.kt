@@ -14,14 +14,13 @@ import com.sesac.gmd.presentation.ui.setting.adapter.MyCommentsViewHolder
 private const val TAG = "MyCommentsFragment"
 
 class MyCommentsFragment : Fragment() {
+    companion object {
+        fun newInstance() = MyCommentsFragment()
+    }
     private lateinit var binding: FragmentMyCommentsBinding
     private lateinit var activity: MainActivity
 
     private var myCommentsAdapter: MyCommentsAdapter? = null
-
-    companion object {
-        fun newInstance() = MyCommentsFragment()
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

@@ -16,16 +16,14 @@ import com.sesac.gmd.databinding.FragmentSettingBinding
 import com.sesac.gmd.presentation.main.MainActivity
 
 class SettingFragment : Fragment() {
-
-    private var _binding: FragmentSettingBinding? = null
-    private val binding get() = _binding!!
-    private lateinit var activity : MainActivity
-
     companion object {
         fun newInstance() = SettingFragment()
 
         const val TAG = "SettingFragment"
     }
+    private var _binding: FragmentSettingBinding? = null
+    private val binding get() = _binding!!
+    private lateinit var activity : MainActivity
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

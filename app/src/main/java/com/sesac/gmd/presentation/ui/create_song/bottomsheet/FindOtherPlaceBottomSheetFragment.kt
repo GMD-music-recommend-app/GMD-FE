@@ -13,12 +13,11 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.sesac.gmd.databinding.FragmentFindOtherPlaceBottomSheetBinding
 
 class FindOtherPlaceBottomSheetFragment : BottomSheetDialogFragment() {
-    private var _binding: FragmentFindOtherPlaceBottomSheetBinding? = null
-    private val binding get() = _binding!!
-
     companion object {
         fun newInstance() = FindOtherPlaceBottomSheetFragment()
     }
+    private var _binding: FragmentFindOtherPlaceBottomSheetBinding? = null
+    private val binding get() = _binding!!
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = FragmentFindOtherPlaceBottomSheetBinding.inflate(inflater, container, false)

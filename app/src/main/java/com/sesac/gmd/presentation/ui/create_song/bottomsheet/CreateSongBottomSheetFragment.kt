@@ -15,12 +15,11 @@ import com.sesac.gmd.databinding.FragmentCreateSongBottomSheetBinding
 import com.sesac.gmd.presentation.ui.create_song.activity.CreateSongActivity
 
 class CreateSongBottomSheetFragment : BottomSheetDialogFragment() {
-    private var _binding: FragmentCreateSongBottomSheetBinding? = null
-    private val binding get() = _binding!!
-
     companion object {
         fun newInstance() = CreateSongBottomSheetFragment()
     }
+    private var _binding: FragmentCreateSongBottomSheetBinding? = null
+    private val binding get() = _binding!!
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         _binding = FragmentCreateSongBottomSheetBinding.inflate(inflater, container, false)

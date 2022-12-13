@@ -1,6 +1,5 @@
 package com.sesac.gmd.presentation.ui.create_song.adapter
 
-import android.graphics.Canvas
 import android.graphics.Rect
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView

@@ -15,11 +15,10 @@ import com.sesac.gmd.presentation.ui.chart.adapter.ChartViewHolder
 private const val TAG = "ChartFragment"
 
 class ChartFragment : BaseFragment<FragmentChartBinding>(FragmentChartBinding::inflate) {
-    private var chartAdapter: ChartAdapter? = null
-
     companion object {
         fun newInstance() = ChartFragment()
     }
+    private var chartAdapter: ChartAdapter? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
