@@ -46,6 +46,9 @@ class SearchSongFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        // 사용자 위치 정보 초기화
+        viewModel.getCurrentLocation(requireActivity())
+
         // ViewModel Observer 등록
         setObserver()
         // Listener 등록
@@ -57,30 +60,22 @@ class SearchSongFragment : Fragment() {
             location.observe(viewLifecycleOwner) {
                 // 위치 정보가 저장되어 있지 않다면 현재 사용자의 위치 정보를 저장
                 if (it == null) {
-                    Log.d("TEST_CODE", "Location is not initialized!")
-                    val resultStatusGetLocation = getCurrentLocation(requireActivity())
-
-                    // 위치 정보를 가져오지 못했을 경우 Dialog 생성
-                    if (!resultStatusGetLocation) {
-                        AlertDialog.Builder(context)
-                            .setTitle("위치 정보를 가져오는 데 실패했습니다.")
-                            .setMessage("위치 지정 페이지로 이동하시겠습니까?")
-                            .setPositiveButton("예") { _, _ ->
-                                // 예 -> 위치 지정 페이지(FindOtherPlaceFragment)로 이동
-                                parentFragmentManager
-                                    .beginTransaction()
-                                    .replace(R.id.container, FindOtherPlaceFragment.newInstance())
-                                    .commit()
-                            }
-                            // 아니오 -> 홈 화면(MainActivity)로 이동
-                            .setNegativeButton("아니오") { _, _ ->
-                                requireActivity().finish()
-                                startActivity(Intent(requireContext(), MainActivity::class.java))
-                            }
-                            .setCancelable(false)   // 화면 밖 터치 시 종료x
-                            .create()
-                            .show()
-                    }
+                    AlertDialog.Builder(context)
+                        .setTitle("위치 정보를 가져오는 데 실패했습니다.")
+                        .setMessage("위치 지정 페이지로 이동하시겠습니까?")
+                        .setPositiveButton("예") { _, _ ->
+                            // 위치 지정 페이지(FindOtherPlaceFragment)로 이동
+                            parentFragmentManager
+                                .beginTransaction()
+                                .replace(R.id.container, FindOtherPlaceFragment.newInstance())
+                                .commit()
+                        }
+                        .setNegativeButton("아니오") { _, _ ->
+                            requireActivity().finish()
+                            startActivity(Intent(requireContext(), MainActivity::class.java))
+                        }
+                        .create()
+                        .show()
                 } else {
                     Log.d("TEST_CODE", "Location is already initialized!")
                 }

@@ -94,7 +94,6 @@ class CreateSongViewModel(private val repository: CreateSongRepository) : ViewMo
 
     // Geocoding(위/경도 -> 행정구역 변환) 함수
     private fun geocoding(context: Context, lat: Double, lng: Double) : Location {
-        Log.d("TEST_CODE", "geocoding() called!")
         val userLocation = Location(lat, lng)
         val geocoder = Geocoder(context, Locale.getDefault())
 
