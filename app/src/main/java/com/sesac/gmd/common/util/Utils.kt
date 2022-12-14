@@ -36,7 +36,6 @@ class Utils {
 
         // XML -> DTO parsing 함수
         fun parseXMLFromMania(xmlFromManiaDB: String): SongInfo {
-            // TODO: SongID 파싱 필요
             val xmlDOMBuilder = DocumentBuilderFactory.newInstance()
             val songInfo = SongInfo()
             try {
@@ -46,6 +45,7 @@ class Utils {
                 val itemTags = rootDoc.getElementsByTagName("item")
                 for (idx in 0 until itemTags.length) {
                     val item = Item()
+                    item.songID = itemTags.item(idx).attributes.getNamedItem("id").nodeValue.trim().toInt()
                     val itemSubTagLength = itemTags.item(idx).childNodes.length
                     for (subIdx in 0 until itemSubTagLength) {
                         val itemChildNode = itemTags.item(idx).childNodes.item(subIdx)
@@ -87,7 +87,7 @@ class Utils {
                     songInfo.items.add(item)
                 }
             } catch (e: Exception) {
-                Log.e("CreateSongViewModel", e.toString())
+                Log.e("XML Parser", e.toString())
             }
             return songInfo
         }
