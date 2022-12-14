@@ -33,7 +33,7 @@ class CreateSongViewModel(private val repository: CreateSongRepository) : ViewMo
     var isLoading = MutableLiveData<Boolean>()
 
     // Location
-    private val _location = MutableLiveData<Location>(null)
+    private val _location = MutableLiveData<Location>()
     val location: LiveData<Location> get() = _location
 
     // Search result Song list
@@ -44,9 +44,9 @@ class CreateSongViewModel(private val repository: CreateSongRepository) : ViewMo
     val selectedSong: LiveData<SongInfo> get() = _selectedSong
 
     // 사연
-    private val _comment = MutableLiveData<String>()
-    private val comment: LiveData<String>
-            get() = _comment
+    private val _story = MutableLiveData<String>()
+    private val story: LiveData<String>
+            get() = _story
 
     // REST 처리 중 Coroutine 내에서 예외가 발생했을 때
     private val errorMessage = MutableLiveData<String>()
@@ -57,25 +57,40 @@ class CreateSongViewModel(private val repository: CreateSongRepository) : ViewMo
     // 다른 위치 지정
     fun setLocation() {}
 
-    // 현재 위치 정보 저장
-    @SuppressLint("MissingPermission")
-    fun getCurrentLocation(context: Context) : Boolean {
-        var flag = false    // FusedLocation 성공 여부
-
-        // 사용자의 현재 위치를 정확하게 받아옴
-        val fusedLocationClient: FusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(context)
-        fusedLocationClient.lastLocation.addOnSuccessListener {
-            if (it == null)
-                flag = false
-            else {
-                // 받아온 현재 위치를 기준으로 geocoding 실행
-                val userLocation = geocoding(context, it.latitude, it.longitude)
-                _location.value = userLocation
-                flag = true
+    // 음악 검색
+    fun getSong(keyword: String) {
+        isLoading.postValue(true)
+        CoroutineScope(Dispatchers.IO).launch(exceptionHandler) {
+            val responseBody = repository.getSong(keyword)
+            Log.d(TAG, responseBody.toString())
+            val result = parseXMLFromMania(responseBody.string())
+            songList.postValue(result.items)
+            withContext(Dispatchers.Main) {
+                isLoading.value = false
             }
         }
-        return flag
     }
+
+    // 현재 위치 정보 저장
+    @SuppressLint("MissingPermission")
+      fun getCurrentLocation(context: Context) : Boolean {
+          var flag = false    // FusedLocation 성공 여부
+
+          // 사용자의 현재 위치를 정확하게 받아옴
+          val fusedLocationClient: FusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(context)
+          fusedLocationClient.lastLocation.addOnSuccessListener {
+              if (it == null) {
+                  flag = false
+              }
+              else {
+                  // 받아온 현재 위치를 기준으로 geocoding 실행
+                  val userLocation = geocoding(context, it.latitude, it.longitude)
+                  _location.value = userLocation
+                  flag = true
+              }
+          }
+          return flag
+      }
 
     // Geocoding(위/경도 -> 행정구역 변환) 함수
     private fun geocoding(context: Context, lat: Double, lng: Double) : Location {
@@ -116,20 +131,6 @@ class CreateSongViewModel(private val repository: CreateSongRepository) : ViewMo
             }
         }
         return userLocation
-    }
-
-    // 음악 검색
-    fun getSong(keyword: String) {
-        isLoading.postValue(true)
-        CoroutineScope(Dispatchers.IO).launch(exceptionHandler) {
-            val responseBody = repository.getSong(keyword)
-            Log.d(TAG, responseBody.toString())
-            val result = parseXMLFromMania(responseBody.string())
-            songList.postValue(result.items)
-            withContext(Dispatchers.Main) {
-                isLoading.value = false
-            }
-        }
     }
 
     // 음악 선택

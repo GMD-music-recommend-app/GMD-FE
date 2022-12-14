@@ -18,21 +18,15 @@ class CreateSongBottomSheetFragment : BottomSheetDialogFragment() {
     companion object {
         fun newInstance() = CreateSongBottomSheetFragment()
     }
-    private var _binding: FragmentCreateSongBottomSheetBinding? = null
-    private val binding get() = _binding!!
+    private lateinit var binding: FragmentCreateSongBottomSheetBinding
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        _binding = FragmentCreateSongBottomSheetBinding.inflate(inflater, container, false)
+        binding = FragmentCreateSongBottomSheetBinding.inflate(inflater, container, false)
 
         // Listener 등록
         setListener()
 
         return binding.root
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
     }
 
     // Listener 초기화 함수

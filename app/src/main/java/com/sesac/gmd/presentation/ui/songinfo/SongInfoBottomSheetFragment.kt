@@ -17,19 +17,28 @@ import com.sesac.gmd.R
 import com.sesac.gmd.common.util.Utils.Companion.toastMessage
 import com.sesac.gmd.databinding.FragmentSongInfoBottomSheetBinding
 
-private const val TAG = "SongInfoBottomSheet"
-
 // TODO: Expanded Bottom Sheet Dialog 로 변경 필요
 class SongInfoBottomSheetFragment : BottomSheetDialogFragment() {
     companion object {
         fun newInstance() = SongInfoBottomSheetFragment()
     }
-    private var _binding: FragmentSongInfoBottomSheetBinding? = null
-    private val binding get() = _binding!!
+    private lateinit var binding: FragmentSongInfoBottomSheetBinding
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        _binding = FragmentSongInfoBottomSheetBinding.inflate(inflater, container, false)
+        binding = FragmentSongInfoBottomSheetBinding.inflate(inflater, container, false)
 
+        return binding.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        // Listener 등록
+        setListener()
+    }
+
+    // Listener 초기화 함수
+    private fun setListener() {
         // TODO: 코드 수정 필요
         var isLike = false
         with(binding) {
@@ -38,30 +47,24 @@ class SongInfoBottomSheetFragment : BottomSheetDialogFragment() {
                 SystemClock.sleep(1_000L)
                 startActivity(
                     Intent(Intent.ACTION_VIEW,
-                    Uri.parse("https://www.youtube.com/results?search_query=NMIXX+COOL+(Your+rainbow)"))
+                        Uri.parse("https://www.youtube.com/results?search_query=NMIXX+COOL+(Your+rainbow)"))
                 )
             }
             btnSongLike.setOnClickListener {
-                if (!isLike) {
-                    toastMessage("공감 +1")
-                    it.setBackgroundResource(R.drawable.ic_liked)
-                    isLike = true
-                } else {
-                    toastMessage("공감 취소")
-                    it.setBackgroundResource(R.drawable.ic_like)
-                    isLike = false
-                }
+                isLike =
+                    if (!isLike) {
+                        toastMessage("공감 +1")
+                        it.setBackgroundResource(R.drawable.ic_liked)
+                        true
+                    } else {
+                        toastMessage("공감 취소")
+                        it.setBackgroundResource(R.drawable.ic_like)
+                        false
+                    }
             }
             btnSongShare.setOnClickListener {
                 toastMessage("이미지 캡쳐 완료")
             }
         }
-
-        return binding.root
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
     }
 }

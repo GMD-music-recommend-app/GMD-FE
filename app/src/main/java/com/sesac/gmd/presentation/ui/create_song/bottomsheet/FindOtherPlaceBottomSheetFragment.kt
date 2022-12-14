@@ -16,21 +16,15 @@ class FindOtherPlaceBottomSheetFragment : BottomSheetDialogFragment() {
     companion object {
         fun newInstance() = FindOtherPlaceBottomSheetFragment()
     }
-    private var _binding: FragmentFindOtherPlaceBottomSheetBinding? = null
-    private val binding get() = _binding!!
+    private lateinit var binding: FragmentFindOtherPlaceBottomSheetBinding
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        _binding = FragmentFindOtherPlaceBottomSheetBinding.inflate(inflater, container, false)
+        binding = FragmentFindOtherPlaceBottomSheetBinding.inflate(inflater, container, false)
 
         binding.btnOk.setOnClickListener {
             dismiss()
         }
 
         return binding.root
-    }
-
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
     }
 }

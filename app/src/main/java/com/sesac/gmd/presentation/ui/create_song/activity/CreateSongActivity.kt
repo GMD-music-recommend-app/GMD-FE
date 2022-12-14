@@ -7,34 +7,23 @@ package com.sesac.gmd.presentation.ui.create_song.activity
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.MenuItem
-import androidx.lifecycle.ViewModelProvider
 import com.sesac.gmd.R
 import com.sesac.gmd.common.util.Utils.Companion.toastMessage
-import com.sesac.gmd.data.repository.CreateSongRepository
 import com.sesac.gmd.databinding.ActivityCreateSongBinding
 import com.sesac.gmd.presentation.ui.create_song.fragment.FindOtherPlaceFragment
 import com.sesac.gmd.presentation.ui.create_song.fragment.SearchSongFragment
-import com.sesac.gmd.presentation.ui.create_song.viewmodel.CreateSongViewModel
-import com.sesac.gmd.presentation.ui.factory.ViewModelFactory
-
-private const val TAG = "CreateSongActivity"
 
 class CreateSongActivity : AppCompatActivity() {
     private lateinit var binding: ActivityCreateSongBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        Log.d("TEST_CODE", "$TAG onCreate() called!")
         binding = ActivityCreateSongBinding.inflate(layoutInflater).also {
             setContentView(it.root)
         }
-        val getIntent = intent.getStringExtra("GO_TO_PAGE")
-        val viewModel: CreateSongViewModel = ViewModelProvider(
-            this, ViewModelFactory(CreateSongRepository())
-        )[CreateSongViewModel::class.java]
 
+        val getIntent = intent.getStringExtra("GO_TO_PAGE")
         if (savedInstanceState == null) {
             with(supportFragmentManager.beginTransaction()) {
                 // 노래 추천하기 버튼 클릭 시 첫 화면

@@ -10,8 +10,6 @@ import android.os.Bundle
 import com.sesac.gmd.R
 import com.sesac.gmd.databinding.ActivitySignUpBinding
 
-private const val TAG = "SignUpActivity"
-
 class SignUpActivity : AppCompatActivity() {
     private lateinit var binding: ActivitySignUpBinding
 

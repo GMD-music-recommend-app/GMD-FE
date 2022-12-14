@@ -13,13 +13,12 @@ import com.bumptech.glide.Glide
 import com.sesac.gmd.data.model.Item
 import com.sesac.gmd.databinding.ViewholderSearchSongResultBinding
 
-private const val TAG = "SearchSongRecyclerItem"
-
 class SearchSongAdapter(private val items : MutableList<Item>)
     : RecyclerView.Adapter<SearchSongAdapter.SearchSongViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SearchSongViewHolder {
-        val binding = ViewholderSearchSongResultBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val binding =
+            ViewholderSearchSongResultBinding.inflate(LayoutInflater.from(parent.context), parent, false)
 
         return SearchSongViewHolder(binding).also { searchSongViewHolder ->
             // Listener 등록

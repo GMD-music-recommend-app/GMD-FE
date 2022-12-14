@@ -7,11 +7,11 @@ class AddMusicViewHolder(
     private val binding: ViewholderMyAddMusicItemBinding
 ): ViewHolder(binding.root) {
 
-    fun bind(addMuisc: AddMusic) = with(binding) {
-        addMusicLocation.text = addMuisc.location
-        addMusicTitleTextView.text = addMuisc.title
-        addMusicSingerTextView.text = addMuisc.singerName
-        addMusicStory.text = addMuisc.story
+    fun bind(addMusic: AddMusic) = with(binding) {
+        addMusicLocation.text = addMusic.location
+        addMusicTitleTextView.text = addMusic.title
+        addMusicSingerTextView.text = addMusic.singerName
+        addMusicStory.text = addMusic.story
     }
 
     data class AddMusic(
