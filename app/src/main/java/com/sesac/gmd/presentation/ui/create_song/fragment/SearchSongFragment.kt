@@ -8,8 +8,6 @@ package com.sesac.gmd.presentation.ui.create_song.fragment
 import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
 import android.util.Log
 import android.view.KeyEvent
 import android.view.LayoutInflater
@@ -18,6 +16,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.sesac.gmd.R
+import com.sesac.gmd.common.util.DEFAULT_TAG
 import com.sesac.gmd.common.util.Utils.Companion.hideKeyBoard
 import com.sesac.gmd.common.util.Utils.Companion.toastMessage
 import com.sesac.gmd.data.repository.CreateSongRepository
@@ -31,6 +30,7 @@ import com.sesac.gmd.presentation.ui.factory.ViewModelFactory
 class SearchSongFragment : Fragment() {
     companion object {
         fun newInstance() = SearchSongFragment()
+        const val TAG = "SearchSongFragment"
     }
     private lateinit var binding: FragmentSearchSongBinding
     private lateinit var viewModel: CreateSongViewModel
@@ -83,7 +83,15 @@ class SearchSongFragment : Fragment() {
                         .create()
                         .show()
                 } else {
-                    Log.d("TEST_CODE", "Location is already initialized!")
+                    Log.d(DEFAULT_TAG + TAG, "Location is already initialized!")
+                }
+            }
+            // progressBar status
+            isLoading.observe(viewLifecycleOwner) {
+                if (it) {
+                    binding.progressBar.visibility = View.VISIBLE
+                } else {
+                    binding.progressBar.visibility = View.GONE
                 }
             }
             // 음악 검색 결과 리스트
@@ -93,18 +101,26 @@ class SearchSongFragment : Fragment() {
                     if (it.songs.size == 0) {
                         txtEmptyResult.visibility = View.VISIBLE
                     } else {
-                        recyclerAdapter = SearchSongAdapter(it)
+                        recyclerAdapter = SearchSongAdapter(it,
+                            onClickItem = {
+                                AlertDialog.Builder(context)
+                                    .setMessage("${it.artist}의 ${it.songTitle}(을/를) 선택하시겠습니까?")
+                                    .setPositiveButton("예") { _, _ ->
+                                        viewModel.addSong(it)
+                                        parentFragmentManager
+                                            .beginTransaction()
+                                            .replace(R.id.container, WriteStoryFragment.newInstance())
+                                            .addToBackStack(null)
+                                            .commit()
+                                    }
+                                    .setNegativeButton("아니오") { _, _ -> }
+                                    .create()
+                                    .show()
+                            }
+                        )
                         rvResult.adapter = recyclerAdapter
                         rvResult.addItemDecoration(SearchSongDecoration())
                     }
-                }
-            }
-            // progressBar status
-            isLoading.observe(viewLifecycleOwner) {
-                if (it) {
-                    binding.progressBar.visibility = View.VISIBLE
-                } else {
-                    binding.progressBar.visibility = View.GONE
                 }
             }
         }
@@ -116,30 +132,18 @@ class SearchSongFragment : Fragment() {
             txtFieldSearchSong.setStartIconOnClickListener { searchSong() }
             // 키보드 검색버튼 클릭 시
             edtSearchSong.setOnKeyListener { _, keyCode, event ->
-                if ((event.action== KeyEvent.ACTION_DOWN) && (keyCode == KeyEvent.KEYCODE_ENTER)) {
+                if ((event.action == KeyEvent.ACTION_DOWN) && (keyCode == KeyEvent.KEYCODE_ENTER)) {
                     searchSong()
                     true
                 } else {
                     false
                 }
             }
-            // 다음 페이지로 이동
-            btnNextPage.setOnClickListener {
-                if (edtSearchSong.text!!.isNotEmpty()) {
-                    parentFragmentManager
-                        .beginTransaction()
-                        .replace(R.id.container, WriteStoryFragment.newInstance())
-                        .addToBackStack(null)
-                        .commit()
-                } else {
-                    it.isClickable = false
-                }
-            }
         }
     }
+
     private fun searchSong() {
         with(binding) {
-            edtSearchSong.clearFocus()
             hideKeyBoard(requireActivity())
             // 검색 결과가 이미 표시 되어있다면 제거
             if (rvResult.adapter != null) {
@@ -158,10 +162,6 @@ class SearchSongFragment : Fragment() {
                 viewModel.getSong(edtSearchSong.text.toString())
             }
         }
-    }
-
-    fun selectSong() {
-
     }
 }
 

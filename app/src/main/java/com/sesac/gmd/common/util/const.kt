@@ -5,6 +5,9 @@
 
 package com.sesac.gmd.common.util
 
+// Default TAG
+const val DEFAULT_TAG = "TAG_"
+
 // MainActivity TabLayout Contents
 const val TAB_CHART = 0
 const val TAB_HOME = 1

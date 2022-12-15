@@ -79,16 +79,6 @@
      android:splitMotionEvents="false"
      app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"/>
 
- <com.google.android.material.button.MaterialButton
-     android:id="@+id/btn_next_page"
-     android:layout_width="match_parent"
-     android:layout_height="wrap_content"
-     android:layout_marginHorizontal="32dp"
-     android:layout_marginBottom="16dp"
-     android:layout_alignParentBottom="true"
-     android:backgroundTint="#D9D9D9"
-     android:text="다음으로" />
-
  <com.google.android.material.textview.MaterialTextView
      android:id="@+id/txt_empty_result"
      android:layout_width="wrap_content"

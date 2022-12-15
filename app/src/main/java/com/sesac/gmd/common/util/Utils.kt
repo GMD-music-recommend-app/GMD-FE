@@ -87,7 +87,7 @@ class Utils {
                     songList.songs.add(song)
                 }
             } catch (e: Exception) {
-                Log.e("XML Parser", e.toString())
+                Log.e(DEFAULT_TAG+TAG+"XML Parser", e.toString())
             }
             return songList
         }

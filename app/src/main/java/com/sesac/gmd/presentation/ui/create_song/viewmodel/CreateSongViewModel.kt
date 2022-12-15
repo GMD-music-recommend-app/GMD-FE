@@ -5,21 +5,19 @@
 
 package com.sesac.gmd.presentation.ui.create_song.viewmodel
 
-import android.accounts.NetworkErrorException
 import android.annotation.SuppressLint
-import android.app.Activity
 import android.content.Context
 import android.location.Address
 import android.location.Geocoder
 import android.location.Geocoder.GeocodeListener
 import android.os.Build
 import android.util.Log
-import android.view.View
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
+import com.sesac.gmd.common.util.DEFAULT_TAG
 import com.sesac.gmd.common.util.Utils.Companion.parseXMLFromMania
 import com.sesac.gmd.common.util.Utils.Companion.toastMessage
 import com.sesac.gmd.data.model.Location
@@ -31,6 +29,8 @@ import java.util.*
 /*
 * 멤버는 호출 순서대로 배치
 * */
+private const val TAG = "CreateSongViewModel"
+
 class CreateSongViewModel(private val repository: CreateSongRepository) : ViewModel() {
     // Location
     private val _location = MutableLiveData<Location>()
@@ -50,19 +50,8 @@ class CreateSongViewModel(private val repository: CreateSongRepository) : ViewMo
     private val errorMessage = MutableLiveData<String>()
     private val exceptionHandler = CoroutineExceptionHandler { _, thrownException ->
         onError("Coroutine 내 예외 : ${thrownException.localizedMessage}")
-        Log.e("TEST_CODE", thrownException.message.toString())
+        Log.e(DEFAULT_TAG + TAG, thrownException.message.toString())
     }
-
-    // 음악 선택
-    fun selectSong() {
-        // TODO: Implement Item Click
-        // TODO: 1곡 이상 선택했는지 유효성 검사 필요
-        // TODO: 동일유저 동일 장소 동일 음악 생성 유효성 검사 필요(추후 구현)
-        // TODO: 노래 추가 여부에 따라 버튼 형태 변경되도록 코드 수정 필요
-    }
-
-    // 핀 생성하기
-    fun createPin() {}
 
     // Coroutine 내 REST 처리 중 에러 발생 시 호출됨
     private fun onError(message: String) {
@@ -95,6 +84,7 @@ class CreateSongViewModel(private val repository: CreateSongRepository) : ViewMo
     }
 
     // Geocoding(위/경도 -> 행정구역 변환) 함수
+    @Suppress("DEPRECATION")
     private fun geocoding(context: Context, lat: Double, lng: Double) : Location {
         val userLocation = Location(lat, lng)
         val geocoder = Geocoder(context, Locale.getDefault())
@@ -112,7 +102,7 @@ class CreateSongViewModel(private val repository: CreateSongRepository) : ViewMo
                 override fun onError(errorMessage: String?) {
                     super.onError(errorMessage)
                     toastMessage("예기치 못한 문제가 발생했습니다.")
-                    Log.d("Geocoder occurred error", errorMessage!!)
+                    Log.d(DEFAULT_TAG + TAG, "Geocoder occurred error : $errorMessage!!")
                 }
             })
         } else {
@@ -145,7 +135,25 @@ class CreateSongViewModel(private val repository: CreateSongRepository) : ViewMo
                 withContext(Dispatchers.Main) { isLoading.value = false }
             } catch (e: Exception) {
                 // TODO: 예외 처리 필요(인터넷 연결x)
-                Log.d("TEST_CODE", e.toString())
+                Log.d(DEFAULT_TAG + TAG, "getSong() error! : ${e.message}")
+                toastMessage("예기치 못한 오류가 발생했습니다!")
+            }
+        }
+    }
+
+    // 음악 선택
+    fun addSong(selectedSong: Song) {
+        // TODO: 동일유저 동일 장소 동일 음악 생성 유효성 검사 필요(추후 구현)
+        _selectedSong.value = selectedSong
+    }
+
+    // 핀 생성하기
+    fun createPin() {
+        CoroutineScope(Dispatchers.IO).launch(exceptionHandler) { 
+            try {
+                // TODO: 핀 생성하기 
+            } catch (e: Exception) {
+                Log.d(DEFAULT_TAG + TAG, "createPin() error! : ${e.message}")
                 toastMessage("예기치 못한 오류가 발생했습니다!")
             }
         }

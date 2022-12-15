@@ -7,7 +7,6 @@ package com.sesac.gmd.presentation.ui.home
 
 import android.location.Location
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -63,7 +62,6 @@ class HomeFragment : Fragment(),
     private fun setListener() {
         with(binding) {
             btnCreateSong.setOnClickListener {
-                Log.d("HomeFragment", "노래 추천하기 버튼 Clicked!")
                 val createSong = CreateSongBottomSheetFragment.newInstance()
                 createSong.show(childFragmentManager, "HomeFragment")
             }
