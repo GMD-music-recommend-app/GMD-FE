@@ -7,13 +7,13 @@ package com.sesac.gmd.presentation.main
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.FragmentTransaction
 import com.google.android.material.tabs.TabLayout
 import com.sesac.gmd.R
-import com.sesac.gmd.common.util.TAB_CHART
-import com.sesac.gmd.common.util.TAB_HOME
-import com.sesac.gmd.common.util.TAB_SETTING
+import com.sesac.gmd.common.util.*
+import com.sesac.gmd.common.util.Utils.Companion.toastMessage
 import com.sesac.gmd.databinding.ActivityMainBinding
 import com.sesac.gmd.presentation.ui.chart.ChartFragment
 import com.sesac.gmd.presentation.ui.home.HomeFragment
@@ -27,7 +27,6 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater).also {
             setContentView(it.root)
         }
-
         // 최초 실행 시 Fragment 초기화
         if (savedInstanceState == null) {
             with(supportFragmentManager.beginTransaction()){
@@ -36,6 +35,14 @@ class MainActivity : AppCompatActivity() {
             }
             // 탭 focus 홈으로 가도록 설정
             binding.tabLayout.selectTab(binding.tabLayout.getTabAt(TAB_HOME))
+            Log.d(DEFAULT_TAG+"MainActivity", "code : ${intent.getIntExtra("CREATE_PIN", 0)}")
+            // 음악 핀 추가 결과에 따른 Toast 출력
+            when(intent.getIntExtra("CREATE_PIN", 0)) {
+                SUCCESS -> toastMessage("생성 성공")
+                FAILURE -> toastMessage("예기치 못한 오류가 발생했습니다.")
+                -1 -> toastMessage("error : isSuccess not initialized!")
+                else -> {}
+            }
         }
         // Listener 등록
         setListener()

@@ -48,6 +48,9 @@
           android:layout_marginVertical="24dp"
           android:layout_marginHorizontal="32dp"
           android:gravity="top"
+          android:maxLength="500"
+          android:imeOptions="actionNext"
+          android:inputType="text"
           android:hint="140자 까지 입력 가능합니다."
           android:paddingStart="12dp" />
     <com.google.android.material.textview.MaterialTextView
@@ -78,9 +81,13 @@
         android:layout_below="@id/txt_hashtag_guide"
         android:layout_marginVertical="32dp"
         android:layout_marginHorizontal="48dp"
-        android:paddingStart="12dp"
+        android:maxLength="200"
+        android:maxLines="1"
+        android:imeOptions="actionDone"
         android:hint="태그는 최대 3개 까지 입력 가능합니다."
-        android:textSize="14sp"/>
+        android:inputType="text"
+        android:textSize="14sp"
+        android:paddingStart="12dp"/>
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btn_finish_create"

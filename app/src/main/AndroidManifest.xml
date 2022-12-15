@@ -36,7 +36,7 @@
         </activity>
         <activity
             android:name=".presentation.ui.create_song.activity.CreateSongActivity"
-            android:windowSoftInputMode="adjustNothing"
+            android:windowSoftInputMode="adjustPan"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"

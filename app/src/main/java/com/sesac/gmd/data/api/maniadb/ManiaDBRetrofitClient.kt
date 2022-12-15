@@ -34,7 +34,8 @@ class ManiaDBRetrofitClient {
                     chain.proceed(newRequest)
                 }).addInterceptor(httpInterceptor())
                 .connectTimeout(10, TimeUnit.SECONDS)
-                .readTimeout(5, TimeUnit.SECONDS).build()
+                .readTimeout(10, TimeUnit.SECONDS)
+                .build()
             maniaRetrofitBuilder.client(okHttpClient)
         }
 

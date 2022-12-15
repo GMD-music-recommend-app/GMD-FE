@@ -43,6 +43,8 @@ class SearchSongFragment : Fragment() {
             requireActivity(), ViewModelFactory(CreateSongRepository())
         )[CreateSongViewModel::class.java]
 
+        Log.d(DEFAULT_TAG+TAG, "onCreateView(), _location lat: ${viewModel.location.value?.latitude}")
+
         return binding.root
     }
 
@@ -65,6 +67,7 @@ class SearchSongFragment : Fragment() {
         with(viewModel) {
             location.observe(viewLifecycleOwner) {
                 // 위치 정보가 저장되어 있지 않다면 현재 사용자의 위치 정보를 저장
+//                if (it.latitude == 0.0 && it.state == null) {
                 if (it == null) {
                     AlertDialog.Builder(context)
                         .setTitle("위치 정보를 가져오는 데 실패했습니다.")
@@ -83,7 +86,7 @@ class SearchSongFragment : Fragment() {
                         .create()
                         .show()
                 } else {
-                    Log.d(DEFAULT_TAG + TAG, "Location is already initialized!")
+                    Log.d(DEFAULT_TAG + TAG, "Location is initialized!")
                 }
             }
             // progressBar status
@@ -104,7 +107,10 @@ class SearchSongFragment : Fragment() {
                         recyclerAdapter = SearchSongAdapter(it,
                             onClickItem = {
                                 AlertDialog.Builder(context)
-                                    .setMessage("${it.artist}의 ${it.songTitle}(을/를) 선택하시겠습니까?")
+                                    .setMessage(
+                                        "${it.artist.joinToString ( "," )}의 " +
+                                                "${it.songTitle}(을/를) 선택하시겠습니까?"
+                                    )
                                     .setPositiveButton("예") { _, _ ->
                                         viewModel.addSong(it)
                                         parentFragmentManager
@@ -126,6 +132,7 @@ class SearchSongFragment : Fragment() {
         }
     }
 
+    // Listener 초기화 함수
     private fun setListener() {
         with(binding) {
             // TextField 내 검색 버튼 클릭 시
@@ -142,6 +149,7 @@ class SearchSongFragment : Fragment() {
         }
     }
 
+    // 음악 검색
     private fun searchSong() {
         with(binding) {
             hideKeyBoard(requireActivity())

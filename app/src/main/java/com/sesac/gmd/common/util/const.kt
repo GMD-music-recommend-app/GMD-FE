@@ -8,6 +8,10 @@ package com.sesac.gmd.common.util
 // Default TAG
 const val DEFAULT_TAG = "TAG_"
 
+// Flag
+const val SUCCESS = 1000
+const val FAILURE = 2000
+
 // MainActivity TabLayout Contents
 const val TAB_CHART = 0
 const val TAB_HOME = 1

@@ -1,3 +1,8 @@
+/*
+* Created by gabriel
+* date : 22/12/08
+* */
+
 package com.sesac.gmd.presentation.ui.create_song.adapter
 
 import android.graphics.Rect

@@ -6,20 +6,18 @@
 package com.sesac.gmd.presentation.ui.create_song.fragment
 
 import android.annotation.SuppressLint
+import android.app.AlertDialog
+import android.content.Intent
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.DEFAULT_ARGS_KEY
 import androidx.lifecycle.ViewModelProvider
 import com.sesac.gmd.R
-import com.sesac.gmd.common.util.DEFAULT_TAG
 import com.sesac.gmd.data.repository.CreateSongRepository
 import com.sesac.gmd.databinding.FragmentWriteStoryBinding
+import com.sesac.gmd.presentation.main.MainActivity
 import com.sesac.gmd.presentation.ui.create_song.viewmodel.CreateSongViewModel
 import com.sesac.gmd.presentation.ui.factory.ViewModelFactory
 
@@ -50,12 +48,38 @@ class WriteStoryFragment : Fragment() {
         setButtonState()
     }
 
+    // Listener 초기화 함수
     private fun setListener() {
-        binding.btnFinishCreate.setOnClickListener {
-            Log.d(DEFAULT_TAG+TAG, "${it.isClickable}")
+        with(binding) {
+            // 생성하기 버튼
+            btnFinishCreate.setOnClickListener {
+                val reason = edtStory.text.toString()
+                val hashtag = txtHashtag.text.toString()
+
+                // TODO: 유효성 검사 필요
+                AlertDialog.Builder(context)
+                    .setMessage(
+                        "음악을 추가하시겠습니까?"
+                    )
+                    .setPositiveButton("예") { _, _ ->
+                        viewModel.createPin(reason, hashtag)
+                        startActivity(Intent(context, MainActivity::class.java))
+                    }
+                    .setNegativeButton("아니오") { _, _ -> }
+                    .create()
+                    .show()
+
+//                val isSuccess = viewModel.createPin(reason, hashtag)
+//
+//                val intent = Intent(context, MainActivity::class.java)
+//                intent.putExtra("CREATE_PIN", isSuccess)
+//                Log.d(DEFAULT_TAG+TAG, "code : $isSuccess")
+//                startActivity(intent)
+            }
         }
     }
 
+    // 버튼 상태 초기화 함수
     @SuppressLint("ResourceAsColor")
     private fun setButtonState() {
         with(binding) {
@@ -71,6 +95,7 @@ class WriteStoryFragment : Fragment() {
     }
 
     // TODO: 비동기로 구현 필요
+    // 유효성 검사사
     private fun checkValidation(): Boolean {
         // TODO:  check location
         // TODO:  check JWT and userIdx

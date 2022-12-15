@@ -18,6 +18,8 @@ import androidx.lifecycle.ViewModel
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.sesac.gmd.common.util.DEFAULT_TAG
+import com.sesac.gmd.common.util.FAILURE
+import com.sesac.gmd.common.util.SUCCESS
 import com.sesac.gmd.common.util.Utils.Companion.parseXMLFromMania
 import com.sesac.gmd.common.util.Utils.Companion.toastMessage
 import com.sesac.gmd.data.model.Location
@@ -63,7 +65,7 @@ class CreateSongViewModel(private val repository: CreateSongRepository) : ViewMo
     fun setLocation() {}
 
     // 현재 위치 정보 저장
-    @SuppressLint("MissingPermission")
+    @SuppressLint("MissingPermission")  // TODO: Splash -> getPermission 구현하면 해당 줄 삭제
     fun getCurrentLocation(context: Context) : Boolean {
         var flag = false    // FusedLocation 성공 여부
 
@@ -147,14 +149,46 @@ class CreateSongViewModel(private val repository: CreateSongRepository) : ViewMo
         _selectedSong.value = selectedSong
     }
 
+    // TODO: 임시 작성 코드. OAuth 구현하면 userIdx Preference 에서 가져오고 해당 줄 삭제
+    private val userIdx = 10
+
     // 핀 생성하기
-    fun createPin() {
-        CoroutineScope(Dispatchers.IO).launch(exceptionHandler) { 
+    fun createPin(reason: String, hashtag: String?) {
+        // TODO: 생성 결과에 따라 flag 생성 후 intent 에 집어 넣기 
+        var flag = -1
+
+        Log.d(DEFAULT_TAG+TAG, "1")
+        CoroutineScope(Dispatchers.IO).launch(exceptionHandler) {
+            Log.d(DEFAULT_TAG+TAG, "2")
             try {
-                // TODO: 핀 생성하기 
+                val response = repository.createPin(
+                    userIdx,
+                    location.value!!,
+                    selectedSong.value!!,
+                    reason,
+                    hashtag
+                )
+                withContext(Dispatchers.Main) {
+                    Log.d(DEFAULT_TAG+TAG, "3")
+                    if (!response.isSuccessful) {
+                        Log.d(DEFAULT_TAG+TAG, "4")
+                        Log.d(DEFAULT_TAG+TAG, "---------------------Song Create Fail!---------------------")
+                        Log.d(DEFAULT_TAG+TAG, "errorCode : ${response.body()!!.response.code}")
+                        Log.d(DEFAULT_TAG+TAG, "errorMessage : ${response.body()!!.response.message}")
+
+                        onError("onError: ${response.errorBody()!!.string()}")
+                        flag = FAILURE
+                    } else {
+                        Log.d(DEFAULT_TAG+TAG, "5")
+                        Log.d(DEFAULT_TAG+TAG, "---------------------Song Create Success!---------------------")
+                        Log.d(DEFAULT_TAG+TAG, "pin Number : ${response.body()!!.result.pinIdx}")
+                        flag = SUCCESS
+                    }
+                }
             } catch (e: Exception) {
+                Log.d(DEFAULT_TAG+TAG, "6")
                 Log.d(DEFAULT_TAG + TAG, "createPin() error! : ${e.message}")
-                toastMessage("예기치 못한 오류가 발생했습니다!")
+                flag = FAILURE
             }
         }
     }

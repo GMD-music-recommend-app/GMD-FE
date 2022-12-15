@@ -4,7 +4,6 @@
 * */
 
 package com.sesac.gmd.data.model
-
 /*
 * <필요 정보>
 * songId : 곡 인덱스
@@ -13,7 +12,6 @@ package com.sesac.gmd.data.model
 * maniadb:album.image : 앨범 이미지
 * maniadb:artist.name : 가수
 * */
-
 data class SongList(
     val songs: MutableList<Song> = mutableListOf()
 )
