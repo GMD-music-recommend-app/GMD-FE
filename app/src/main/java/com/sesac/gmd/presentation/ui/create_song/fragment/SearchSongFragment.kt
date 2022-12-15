@@ -8,6 +8,8 @@ package com.sesac.gmd.presentation.ui.create_song.fragment
 import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.view.KeyEvent
 import android.view.LayoutInflater
@@ -17,6 +19,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.sesac.gmd.R
 import com.sesac.gmd.common.util.Utils.Companion.hideKeyBoard
+import com.sesac.gmd.common.util.Utils.Companion.toastMessage
 import com.sesac.gmd.data.repository.CreateSongRepository
 import com.sesac.gmd.databinding.FragmentSearchSongBinding
 import com.sesac.gmd.presentation.main.MainActivity
@@ -47,12 +50,15 @@ class SearchSongFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         // 사용자 위치 정보 초기화
-        viewModel.getCurrentLocation(requireActivity())
-
+        initUserLocation()
         // ViewModel Observer 등록
         setObserver()
         // Listener 등록
         setListener()
+    }
+
+    private fun initUserLocation() {
+        viewModel.getCurrentLocation(requireActivity())
     }
 
     private fun setObserver(){
@@ -84,7 +90,7 @@ class SearchSongFragment : Fragment() {
             songList.observe(viewLifecycleOwner){
                 with(binding) {
                     // 검색 결과 없을 때 검색 결과 없음 안내하는 view 표시
-                    if (it.size == 0) {
+                    if (it.songs.size == 0) {
                         txtEmptyResult.visibility = View.VISIBLE
                     } else {
                         recyclerAdapter = SearchSongAdapter(it)
@@ -106,18 +112,12 @@ class SearchSongFragment : Fragment() {
 
     private fun setListener() {
         with(binding) {
-            // 검색버튼 클릭 시
+            // TextField 내 검색 버튼 클릭 시
+            txtFieldSearchSong.setStartIconOnClickListener { searchSong() }
+            // 키보드 검색버튼 클릭 시
             edtSearchSong.setOnKeyListener { _, keyCode, event ->
                 if ((event.action== KeyEvent.ACTION_DOWN) && (keyCode == KeyEvent.KEYCODE_ENTER)) {
-                    // 검색 결과 없음 표시하는 view 가 이미 존재 한다면 view 제거
-                    if (txtEmptyResult.visibility == View.VISIBLE) {
-                        txtEmptyResult.visibility = View.GONE
-                    }
-                    // 음악 검색
-                    if (edtSearchSong.text!!.isNotEmpty()) {
-                        viewModel.getSong(edtSearchSong.text.toString())
-                    }
-                    hideKeyBoard(requireActivity())
+                    searchSong()
                     true
                 } else {
                     false
@@ -136,6 +136,32 @@ class SearchSongFragment : Fragment() {
                 }
             }
         }
+    }
+    private fun searchSong() {
+        with(binding) {
+            edtSearchSong.clearFocus()
+            hideKeyBoard(requireActivity())
+            // 검색 결과가 이미 표시 되어있다면 제거
+            if (rvResult.adapter != null) {
+                rvResult.adapter = null
+            }
+            // 검색 결과 없음 표시하는 view 가 이미 존재 한다면 view 제거
+            if (txtEmptyResult.visibility == View.VISIBLE) {
+                txtEmptyResult.visibility = View.GONE
+            }
+            // 음악 검색
+            if (edtSearchSong.text!!.isEmpty()) {
+                toastMessage("검색어를 입력해주세요!")
+            } else if (edtSearchSong.text!!.length > 200) {
+                toastMessage("검색어는 200자 까지 입력 가능합니다.")
+            } else {
+                viewModel.getSong(edtSearchSong.text.toString())
+            }
+        }
+    }
+
+    fun selectSong() {
+
     }
 }
 
@@ -197,7 +223,7 @@ class SearchSongFragment : Fragment() {
 //                }
 //            }
 //            // 음악 검색 결과 리스트
-//            songList.observe(viewLifecycleOwner){
+//            .observe(viewLifecycleOwner){
 //                with(binding) {
 //                    // 검색 결과 없을 때 검색 결과 없음 안내하는 view 표시
 //                    if (it.size == 0) {

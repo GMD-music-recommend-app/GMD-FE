@@ -14,12 +14,12 @@ package com.sesac.gmd.data.model
 * maniadb:artist.name : 가수
 * */
 
-data class SongInfo(
-    val items: MutableList<Item> = mutableListOf()
+data class SongList(
+    val songs: MutableList<Song> = mutableListOf()
 )
 
-data class Item(
-    var songID: Int = 0,
+data class Song(
+    var songIdx: Int = 0,
     var songTitle: String = "",
     var album: ManiaDBAlbum = ManiaDBAlbum(),
     var artist: MutableList<String> = mutableListOf()
@@ -28,5 +28,5 @@ data class Item(
 // <maniadb:album>
 data class ManiaDBAlbum(
     var albumTitle: String = "",
-    var albumImageURL: String = "",
+    var albumImage: String = "",
 )

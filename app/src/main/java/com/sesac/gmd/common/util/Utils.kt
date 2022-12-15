@@ -11,9 +11,9 @@ import android.util.Log
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
 import com.sesac.gmd.application.GMDApplication
-import com.sesac.gmd.data.model.Item
+import com.sesac.gmd.data.model.Song
 import com.sesac.gmd.data.model.ManiaDBAlbum
-import com.sesac.gmd.data.model.SongInfo
+import com.sesac.gmd.data.model.SongList
 import org.xml.sax.InputSource
 import java.io.StringReader
 import javax.xml.parsers.DocumentBuilderFactory
@@ -35,17 +35,17 @@ class Utils {
         }
 
         // XML -> DTO parsing 함수
-        fun parseXMLFromMania(xmlFromManiaDB: String): SongInfo {
+        fun parseXMLFromMania(xmlFromManiaDB: String): SongList {
             val xmlDOMBuilder = DocumentBuilderFactory.newInstance()
-            val songInfo = SongInfo()
+            val songList = SongList()
             try {
                 val inputSource = InputSource()
                 inputSource.characterStream = StringReader(xmlFromManiaDB)
                 val rootDoc = xmlDOMBuilder.newDocumentBuilder().parse(inputSource)
                 val itemTags = rootDoc.getElementsByTagName("item")
                 for (idx in 0 until itemTags.length) {
-                    val item = Item()
-                    item.songID = itemTags.item(idx).attributes.getNamedItem("id").nodeValue.trim().toInt()
+                    val song = Song()
+                    song.songIdx = itemTags.item(idx).attributes.getNamedItem("id").nodeValue.trim().toInt()
                     val itemSubTagLength = itemTags.item(idx).childNodes.length
                     for (subIdx in 0 until itemSubTagLength) {
                         val itemChildNode = itemTags.item(idx).childNodes.item(subIdx)
@@ -60,11 +60,11 @@ class Utils {
                                             album.albumTitle =
                                                 albumNodes.item(childIdx).textContent.trim()
                                         } else if (childNodeName == "image") {
-                                            album.albumImageURL =
+                                            album.albumImage =
                                                 albumNodes.item(childIdx).textContent.trim()
                                         }
                                     }
-                                    item.album = album
+                                    song.album = album
                                 }
                                 XML_TAG_ALBUM_INFO -> {
                                     val artists = itemChildNode.childNodes
@@ -73,23 +73,23 @@ class Utils {
                                         for (artSubIdx in 0 until artists.length) {
                                             val artistName = artists.item(artSubIdx).nodeName
                                             if (artistName == "name") {
-                                                item.artist.add(artists.item(artSubIdx).textContent.trim())
+                                                song.artist.add(artists.item(artSubIdx).textContent.trim())
                                             }
                                         }
                                     }
                                 }
                                 XML_TAG_SONG_TITLE -> {
-                                    item.songTitle = itemChildNode.textContent.trim()
+                                    song.songTitle = itemChildNode.textContent.trim()
                                 }
                             }
                         }
                     }
-                    songInfo.items.add(item)
+                    songList.songs.add(song)
                 }
             } catch (e: Exception) {
                 Log.e("XML Parser", e.toString())
             }
-            return songInfo
+            return songList
         }
     }
 }
