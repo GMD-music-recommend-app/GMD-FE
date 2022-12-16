@@ -47,9 +47,8 @@ class GMDSongRetrofitClient {
                     // Response
                     chain.proceed(newRequest)
                 }).addInterceptor(httpInterceptor())
-                // TODO: 연결 요청시간 추후 수정 필요
-                .connectTimeout(100, TimeUnit.SECONDS)
-                .readTimeout(100, TimeUnit.SECONDS)
+                .connectTimeout(5, TimeUnit.SECONDS)
+                .readTimeout(3, TimeUnit.SECONDS)
                 .build()
             gmdSongRetrofitBuilder.client(okHttpClient)
         }

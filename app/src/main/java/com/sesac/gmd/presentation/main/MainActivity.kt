@@ -35,14 +35,6 @@ class MainActivity : AppCompatActivity() {
             }
             // 탭 focus 홈으로 가도록 설정
             binding.tabLayout.selectTab(binding.tabLayout.getTabAt(TAB_HOME))
-            Log.d(DEFAULT_TAG+"MainActivity", "code : ${intent.getIntExtra("CREATE_PIN", 0)}")
-            // 음악 핀 추가 결과에 따른 Toast 출력
-            when(intent.getIntExtra("CREATE_PIN", 0)) {
-                SUCCESS -> toastMessage("생성 성공")
-                FAILURE -> toastMessage("예기치 못한 오류가 발생했습니다.")
-                -1 -> toastMessage("error : isSuccess not initialized!")
-                else -> {}
-            }
         }
         // Listener 등록
         setListener()

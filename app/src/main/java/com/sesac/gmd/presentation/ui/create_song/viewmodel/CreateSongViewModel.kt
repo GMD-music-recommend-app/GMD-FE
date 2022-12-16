@@ -154,9 +154,6 @@ class CreateSongViewModel(private val repository: CreateSongRepository) : ViewMo
 
     // 핀 생성하기
     fun createPin(reason: String, hashtag: String?) {
-        // TODO: 생성 결과에 따라 flag 생성 후 intent 에 집어 넣기 
-        var flag = -1
-
         Log.d(DEFAULT_TAG+TAG, "1")
         CoroutineScope(Dispatchers.IO).launch(exceptionHandler) {
             Log.d(DEFAULT_TAG+TAG, "2")
@@ -170,25 +167,33 @@ class CreateSongViewModel(private val repository: CreateSongRepository) : ViewMo
                 )
                 withContext(Dispatchers.Main) {
                     Log.d(DEFAULT_TAG+TAG, "3")
-                    if (!response.isSuccessful) {
+                    if (response.isSuccessful) {
                         Log.d(DEFAULT_TAG+TAG, "4")
+                        Log.d(DEFAULT_TAG+TAG, "---------------------Song Create Success!---------------------")
+                        Log.d(DEFAULT_TAG+TAG, "pin Number : ${response.body()!!.result.pinIdx}")
+                    } else {
+                        Log.d(DEFAULT_TAG+TAG, "5")
                         Log.d(DEFAULT_TAG+TAG, "---------------------Song Create Fail!---------------------")
                         Log.d(DEFAULT_TAG+TAG, "errorCode : ${response.body()!!.response.code}")
                         Log.d(DEFAULT_TAG+TAG, "errorMessage : ${response.body()!!.response.message}")
-
+                        toastMessage("예기치 못한 오류가 발생했습니다.")
+                        when(response.body().toString()[0]) {
+                            '1' -> Log.d(DEFAULT_TAG+TAG, "code 1")
+                            '2' -> Log.d(DEFAULT_TAG+TAG, "code 2")
+                            '3' -> Log.d(DEFAULT_TAG+TAG, "code 3")
+                            '4' -> Log.d(DEFAULT_TAG+TAG, "code 4")
+                            '5' -> Log.d(DEFAULT_TAG+TAG, "code 5")
+                            else ->{}
+                        }
                         onError("onError: ${response.errorBody()!!.string()}")
-                        flag = FAILURE
-                    } else {
-                        Log.d(DEFAULT_TAG+TAG, "5")
-                        Log.d(DEFAULT_TAG+TAG, "---------------------Song Create Success!---------------------")
-                        Log.d(DEFAULT_TAG+TAG, "pin Number : ${response.body()!!.result.pinIdx}")
-                        flag = SUCCESS
                     }
                 }
             } catch (e: Exception) {
+                withContext(Dispatchers.Main) {
+                    toastMessage("예기치 못한 오류가 발생했습니다.")
+                }
                 Log.d(DEFAULT_TAG+TAG, "6")
                 Log.d(DEFAULT_TAG + TAG, "createPin() error! : ${e.message}")
-                flag = FAILURE
             }
         }
     }
