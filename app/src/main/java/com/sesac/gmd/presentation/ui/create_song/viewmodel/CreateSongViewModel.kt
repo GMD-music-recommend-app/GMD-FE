@@ -64,23 +64,20 @@ class CreateSongViewModel(private val repository: CreateSongRepository) : ViewMo
 
     // 현재 위치 정보 저장
     @SuppressLint("MissingPermission")  // TODO: Splash -> getPermission 구현하면 해당 줄 삭제
-    fun getCurrentLocation(context: Context) : Boolean {
-        var flag = false    // FusedLocation 성공 여부
-
+    fun getCurrentLocation(context: Context)  {
         // 사용자의 정확한 현재 위치 요청
         val fusedLocationClient: FusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(context)
-        fusedLocationClient.lastLocation.addOnSuccessListener {
+        fusedLocationClient.lastLocation.addOnSuccessListener { // 비동기로 실행
             if (it == null) {
-                flag = false    // 요청 실패
+                // fusedLocationClient 가 현재 위치를 파악하지 못하는 경우
+                toastMessage("사용자의 현재 위치를 알 수 없습니다.")
             }
             else {
                 // 받아온 현재 위치를 기준으로 geocoding 실행 후 해당 위치 정보를 LiveData 에 저장
                 val userLocation = geocoding(context, it.latitude, it.longitude)
                 _location.value = userLocation
-                flag = true     // 요청 성공
             }
         }
-        return flag
     }
 
     // Geocoding(위/경도 -> 행정구역 변환) 함수

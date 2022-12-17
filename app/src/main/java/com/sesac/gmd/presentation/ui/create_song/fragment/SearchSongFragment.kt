@@ -43,14 +43,15 @@ class SearchSongFragment : Fragment() {
             requireActivity(), ViewModelFactory(CreateSongRepository())
         )[CreateSongViewModel::class.java]
 
+        // 사용자 위치 정보 초기화
+        initUserLocation()
+
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // 사용자 위치 정보 초기화
-        initUserLocation()
         // ViewModel Observer 등록
         setObserver()
         // Listener 등록
@@ -59,8 +60,10 @@ class SearchSongFragment : Fragment() {
 
     // 사용자 위치 정보 초기화
     private fun initUserLocation() {
-        if (viewModel.location == null) {
-            viewModel.getCurrentLocation(requireActivity())
+        with(viewModel) {
+            if (location.value == null) {
+                getCurrentLocation(requireActivity())
+            }
         }
     }
 
