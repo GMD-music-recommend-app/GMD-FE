@@ -5,6 +5,7 @@
 
 package com.sesac.gmd.data.api.server.client
 
+import com.sesac.gmd.common.util.GMD_BASE_URL
 import com.sesac.gmd.data.api.server.service.GMDSongService
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
@@ -17,8 +18,8 @@ import java.util.concurrent.TimeUnit
 private const val BASE_URL = "https://yourplaylistgmd.shop/"
 
 // TODO: 임시 작성 코드. 추후 삭제 필요
-// userIdx = 10's JWT
-private const val TEMP_JWT = "eyJ0eXBlIjoiand0IiwiYWxnIjoiSFMyNTYifQ.eyJ1c2VySWR4IjoxMCwiaWF0IjoxNjcwODM1MzY3LCJleHAiOjE2NzIzMDY1OTZ9.UuG_dhxswqK7S64NB9ahfHFk5-Ks0XDaPKCGehXetG4"
+// userIdx = 5's JWT
+private const val TEMP_JWT = "eyJ0eXBlIjoiand0IiwiYWxnIjoiSFMyNTYifQ.eyJ1c2VySWR4Ijo1LCJpYXQiOjE2NzAwODQ3NzMsImV4cCI6MTY3MTU1NjAwMn0.SxLK8YxY6KJwNmuva0dC3YlhfYeBauA2IhS5F44mYRY"
 
 class GMDSongRetrofitClient {
     companion object {
@@ -28,7 +29,7 @@ class GMDSongRetrofitClient {
 
         private val gmdSongRetrofitBuilder: Retrofit.Builder = Retrofit.Builder()
             .addConverterFactory(GsonConverterFactory.create())
-            .baseUrl(BASE_URL)
+            .baseUrl(GMD_BASE_URL)
 
         val gmdSongService: GMDSongService
             get() = gmdSongRetrofitBuilder.build().create(GMDSongService::class.java)
@@ -36,15 +37,12 @@ class GMDSongRetrofitClient {
         init {
             okHttpClient = OkHttpClient.Builder()
                 .addInterceptor(Interceptor { chain: Interceptor.Chain ->
-                    // Request
                     val request = chain.request()
                     val newRequest: Request = request
                         .newBuilder()
                         .addHeader("Accept", "application/json")
-                        .addHeader("JWT", TEMP_JWT)
+                        .addHeader("X-ACCESS-TOKEN", TEMP_JWT)
                         .build()
-
-                    // Response
                     chain.proceed(newRequest)
                 }).addInterceptor(httpInterceptor())
                 .connectTimeout(5, TimeUnit.SECONDS)

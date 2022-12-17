@@ -5,14 +5,13 @@
 
 package com.sesac.gmd.data.api.maniadb
 
+import com.sesac.gmd.common.util.MANIADB_BASE_URL
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.Request
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import java.util.concurrent.TimeUnit
-
-private const val BASE_URL = "http://www.maniadb.com/api/search/"
 
 class ManiaDBRetrofitClient {
     companion object {
@@ -21,7 +20,7 @@ class ManiaDBRetrofitClient {
         private var okHttpClient: OkHttpClient
 
         private val maniaRetrofitBuilder: Retrofit.Builder = Retrofit.Builder()
-            .baseUrl(BASE_URL)
+            .baseUrl(MANIADB_BASE_URL)
 
         val maniaDBService: ManiaDBService
             get() = maniaRetrofitBuilder.build().create(ManiaDBService::class.java)
