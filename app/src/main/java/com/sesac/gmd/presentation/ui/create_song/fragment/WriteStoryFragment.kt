@@ -6,7 +6,6 @@
 package com.sesac.gmd.presentation.ui.create_song.fragment
 
 import android.annotation.SuppressLint
-import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -17,6 +16,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.sesac.gmd.R
 import com.sesac.gmd.common.util.DEFAULT_TAG
+import com.sesac.gmd.common.util.Utils.Companion.setAlertDialog
 import com.sesac.gmd.common.util.Utils.Companion.toastMessage
 import com.sesac.gmd.data.repository.CreateSongRepository
 import com.sesac.gmd.databinding.FragmentWriteStoryBinding
@@ -60,17 +60,12 @@ class WriteStoryFragment : Fragment() {
                 val hashtag = txtHashtag.text.toString()
 
                 if(checkValidation()) {
-                    AlertDialog.Builder(context)
-                        .setMessage(
-                            "음악을 추가하시겠습니까?"
-                        )
-                        .setPositiveButton("예") { _, _ ->
+                    setAlertDialog(requireContext(), null, "음악을 추가하시겠습니까?",
+                        posFunc = {
                             viewModel.createPin(reason, hashtag)
                             startActivity(Intent(context, MainActivity::class.java))
-                        }
-                        .setNegativeButton("아니오") { _, _ -> }
-                        .create()
-                        .show()
+                        },
+                        negFunc = {})
                 }
             }
         }
