@@ -10,6 +10,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import com.google.android.gms.common.api.Status
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -17,6 +18,7 @@ import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.libraries.places.api.model.Place
 import com.google.android.libraries.places.widget.AutocompleteSupportFragment
@@ -28,6 +30,8 @@ import com.sesac.gmd.presentation.ui.create_song.bottomsheet.FindOtherPlaceBotto
 class FindOtherPlaceFragment : Fragment(), OnMapReadyCallback {
     companion object {
         fun newInstance() = FindOtherPlaceFragment()
+
+        val startingPoint = LatLng(36.573898277022, 126.9731314753)
     }
     private lateinit var binding: FragmentFindOtherPlaceBinding
     private lateinit var mMap: GoogleMap
@@ -51,12 +55,13 @@ class FindOtherPlaceFragment : Fragment(), OnMapReadyCallback {
         // Initialize the AutocompleteSupportFragment.
         val autocompleteFragment = childFragmentManager.findFragmentById(R.id.autocomplete_fragment) as AutocompleteSupportFragment
         // Specify the types of place data to return.
-        autocompleteFragment.setPlaceFields(listOf(Place.Field.ID, Place.Field.NAME))
+        autocompleteFragment.setPlaceFields(listOf(Place.Field.ID, Place.Field.NAME, Place.Field.LAT_LNG))
         // Set up a PlaceSelectionListener to handle the response.
         autocompleteFragment.setOnPlaceSelectedListener(object : PlaceSelectionListener {
             override fun onPlaceSelected(place: Place) {
                 // TODO: Get info about the selected place.
                 Log.i("FindOtherPlaceFragment", "Place: ${place.name}, ${place.id}")
+                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(place.latLng ?: startingPoint, 16F))
             }
 
             override fun onError(status: Status) {
@@ -84,21 +89,24 @@ class FindOtherPlaceFragment : Fragment(), OnMapReadyCallback {
             }
         }
     }
-
+    
+    private var addedMarker: Marker? = null
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
-
-        val startingPoint = LatLng(36.573898277022, 126.9731314753)
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(startingPoint, 16F))
 
         mMap.setOnMapLongClickListener { point ->
+            if (addedMarker != null) {
+                mMap.clear()
+            }
             val position = LatLng(point.latitude, point.longitude)
-            mMap.addMarker(
+            addedMarker = mMap.addMarker(
                 MarkerOptions()
                     .position(position)
                     .title("여기에 생성한 음악 핀")
             )
-                ?.showInfoWindow()
+            addedMarker?.showInfoWindow()
+            binding.btnCreatePlace.isVisible = addedMarker != null
         }
     }
 /*
