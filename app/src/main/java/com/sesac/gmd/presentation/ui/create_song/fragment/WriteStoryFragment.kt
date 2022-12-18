@@ -65,7 +65,7 @@ class WriteStoryFragment : Fragment() {
                     setAlertDialog(requireContext(), null, "음악을 추가하시겠습니까?",
                         posFunc = {
                             viewModel.createPin(reason, hashtag)
-                            startActivity(Intent(context, MainActivity::class.java))
+                            //startActivity(Intent(context, MainActivity::class.java))
                         },
                         negFunc = {})
                 }
@@ -117,18 +117,18 @@ class WriteStoryFragment : Fragment() {
                 flag = false
             }
             // Check Hashtag Count
-            if (txtHashtag.text!!.count{it == '#'} > 3) {
-                Log.d(DEFAULT_TAG+TAG, "hashtag count : ${txtHashtag.text!!.count{it == '#'}}")
+            if (edtHashtag.text!!.count{it == '#'} > 3) {
+                Log.d(DEFAULT_TAG+TAG, "hashtag count : ${edtHashtag.text!!.count{it == '#'}}")
                 toastMessage("해시태그는 최대 3개까지 입력 가능합니다.")
                 flag = false
             // Check Hashtag First Character
-            } else if (txtHashtag.text!![0] != '#') {
-                Log.d(DEFAULT_TAG+TAG, "hashtag first Character : ${txtHashtag.text!![0]}")
+            } else if (edtHashtag.text!![0] != '#') {
+                Log.d(DEFAULT_TAG+TAG, "hashtag first Character : ${edtHashtag.text!![0]}")
                 toastMessage("해시태그가 잘못 입력되었습니다.")
                 flag = false
             // Check Hashtag Content
-            } else if (txtHashtag.text!![0] == '#' && txtHashtag.text!![1] in "!@#$%^&*()_-~`+><,./?") {
-                Log.d(DEFAULT_TAG+TAG, "hashtag second Character : ${txtHashtag.text!![1]}")
+            } else if (edtHashtag.text!![0] == '#' && edtHashtag.text!![1] in "!@#$%^&*()_-~`+><,./?") {
+                Log.d(DEFAULT_TAG+TAG, "hashtag second Character : ${edtHashtag.text!![1]}")
                 toastMessage("해시태그가 잘못 입력되었습니다.")
                 flag = false
             }
