@@ -5,9 +5,10 @@
 
 package com.sesac.gmd.presentation.ui.create_song.fragment
 
-import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -38,6 +39,7 @@ class WriteStoryFragment : Fragment() {
         viewModel = ViewModelProvider(
             requireActivity(), ViewModelFactory(CreateSongRepository())
         )[CreateSongViewModel::class.java]
+
 
         return binding.root
     }
@@ -72,17 +74,22 @@ class WriteStoryFragment : Fragment() {
     }
 
     // 버튼 상태 초기화 함수
-    @SuppressLint("ResourceAsColor")
     private fun setButtonState() {
         with(binding) {
             // TODO: 사연 입력되지 않았을 때 버튼 비활성화 구현 필요
-            if (edtStory.text?.isEmpty() == true) {
-                btnFinishCreate.setBackgroundColor(R.color.teal_200)
-                btnFinishCreate.isCheckable = false
-            } else {
-                btnFinishCreate.setBackgroundColor(R.color.main_color)
-                btnFinishCreate.isCheckable = true
-            }
+            edtStory.addTextChangedListener(object : TextWatcher{
+                override fun afterTextChanged(s: Editable?) {
+                    if (s!!.isEmpty()) {
+                        btnFinishCreate.setBackgroundResource(R.drawable.bg_btn_gray)
+                        btnFinishCreate.isEnabled = false
+                    } else {
+                        btnFinishCreate.setBackgroundResource(R.drawable.bg_btn_main_color)
+                        btnFinishCreate.isEnabled = true
+                    }
+                }
+                override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+                })
         }
     }
 
