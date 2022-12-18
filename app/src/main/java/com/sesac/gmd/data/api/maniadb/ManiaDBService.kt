@@ -10,7 +10,6 @@ import retrofit2.http.GET
 import retrofit2.http.Path
 
 private const val MANIADB_SERVICE_KEY = "gmd6to30@gmail.com"
-
 /*
 * keyword : 컴색어
 * sr : 검색 조건
@@ -18,9 +17,8 @@ private const val MANIADB_SERVICE_KEY = "gmd6to30@gmail.com"
 * key : API Key(= 본인 이메일)
 * v : API 버전(default 0.5)
 * */
-
 interface ManiaDBService {
-    // 곡 제목 검색(검색 결과 10개 표시)
+    // 곡 제목 검색(검색 결과 10(=display)개 표시)
     @GET("{keyword}/?sr=song&display=10&key=${MANIADB_SERVICE_KEY}&v=0.5")
     suspend fun getSong(@Path("keyword") keyword: String) : ResponseBody
 

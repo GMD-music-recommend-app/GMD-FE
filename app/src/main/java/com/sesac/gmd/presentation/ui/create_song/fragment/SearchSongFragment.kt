@@ -5,7 +5,6 @@
 
 package com.sesac.gmd.presentation.ui.create_song.fragment
 
-import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -18,6 +17,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.sesac.gmd.R
 import com.sesac.gmd.common.util.DEFAULT_TAG
 import com.sesac.gmd.common.util.Utils.Companion.hideKeyBoard
+import com.sesac.gmd.common.util.Utils.Companion.setAlertDialog
 import com.sesac.gmd.common.util.Utils.Companion.toastMessage
 import com.sesac.gmd.data.repository.CreateSongRepository
 import com.sesac.gmd.databinding.FragmentSearchSongBinding
@@ -43,14 +43,15 @@ class SearchSongFragment : Fragment() {
             requireActivity(), ViewModelFactory(CreateSongRepository())
         )[CreateSongViewModel::class.java]
 
+        // 사용자 위치 정보 초기화
+        initUserLocation()
+
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // 사용자 위치 정보 초기화
-        initUserLocation()
         // ViewModel Observer 등록
         setObserver()
         // Listener 등록
@@ -59,8 +60,10 @@ class SearchSongFragment : Fragment() {
 
     // 사용자 위치 정보 초기화
     private fun initUserLocation() {
-        if (viewModel.location == null) {
-            viewModel.getCurrentLocation(requireActivity())
+        with(viewModel) {
+            if (location.value == null) {
+                getCurrentLocation(requireActivity())
+            }
         }
     }
 
@@ -69,34 +72,29 @@ class SearchSongFragment : Fragment() {
         with(viewModel) {
             location.observe(viewLifecycleOwner) {
                 // 위치 정보가 저장되어 있지 않다면 현재 사용자의 위치 정보를 저장
-                if (it == null) {
-                    AlertDialog.Builder(context)
-                        .setTitle("위치 정보를 가져오는 데 실패했습니다.")
-                        .setMessage("위치 지정 페이지로 이동하시겠습니까?")
-                        .setPositiveButton("예") { _, _ ->
+                if (it.latitude == 0.0 && it.state == null) {
+                    setAlertDialog(requireContext(),
+                        "위치 정보를 가져오는 데 실패했습니다.",
+                        "위치 지정 페이지로 이동하시겠습니까?",
+                        posFunc = {
                             // 위치 지정 페이지(FindOtherPlaceFragment)로 이동
                             parentFragmentManager
                                 .beginTransaction()
                                 .replace(R.id.container, FindOtherPlaceFragment.newInstance())
                                 .commit()
-                        }
-                        .setNegativeButton("아니오") { _, _ ->
+                        },
+                        negFunc = {
                             requireActivity().finish()
                             startActivity(Intent(requireContext(), MainActivity::class.java))
-                        }
-                        .create()
-                        .show()
+                        })
                 } else {
                     Log.d(DEFAULT_TAG + TAG, "Location is initialized!")
                 }
             }
             // progressBar status
             isLoading.observe(viewLifecycleOwner) {
-                if (it) {
-                    binding.progressBar.visibility = View.VISIBLE
-                } else {
-                    binding.progressBar.visibility = View.GONE
-                }
+                if (it) { binding.progressBar.visibility = View.VISIBLE }
+                else { binding.progressBar.visibility = View.GONE }
             }
             // 음악 검색 결과 리스트
             songList.observe(viewLifecycleOwner){
@@ -107,24 +105,19 @@ class SearchSongFragment : Fragment() {
                     } else {
                         recyclerAdapter = SearchSongAdapter(it,
                             onClickItem = {
-                                AlertDialog.Builder(context)
-                                    .setMessage(
-                                        "${it.artist.joinToString ( "," )}의 " +
-                                                "${it.songTitle}(을/를) 선택하시겠습니까?"
-                                    )
-                                    .setPositiveButton("예") { _, _ ->
+                                setAlertDialog(requireContext(), null,
+                                    "${it.artist.joinToString ( "," )}의 " +
+                                            "${it.songTitle}(을/를) 선택하시겠습니까?",
+                                    posFunc = {
                                         viewModel.addSong(it)
                                         parentFragmentManager
                                             .beginTransaction()
                                             .replace(R.id.container, WriteStoryFragment.newInstance())
                                             .addToBackStack(null)
                                             .commit()
-                                    }
-                                    .setNegativeButton("아니오") { _, _ -> }
-                                    .create()
-                                    .show()
-                            }
-                        )
+                                    },
+                                    negFunc = {})
+                            })
                         rvResult.adapter = recyclerAdapter
                         rvResult.addItemDecoration(SearchSongDecoration())
                     }
@@ -169,21 +162,19 @@ class SearchSongFragment : Fragment() {
                 toastMessage("검색어는 200자 까지 입력 가능합니다.")
             } else {
                 if (!validate()) {
-                    AlertDialog.Builder(context)
-                        .setMessage("위치가 지정되지 않았습니다. 위치 지정 페이지로 이동하시겠습니까?")
-                        .setPositiveButton("예") { _, _ ->
+                    setAlertDialog(requireContext(), null,
+                        "위치가 지정되지 않았습니다. 위치 지정 페이지로 이동하시겠습니까?",
+                        posFunc = {
                             // 위치 지정 페이지(FindOtherPlaceFragment)로 이동
                             parentFragmentManager
                                 .beginTransaction()
                                 .replace(R.id.container, FindOtherPlaceFragment.newInstance())
                                 .commit()
-                        }
-                        .setNegativeButton("아니오") { _, _ ->
+                        },
+                        negFunc = {
                             requireActivity().finish()
                             startActivity(Intent(requireContext(), MainActivity::class.java))
-                        }
-                        .create()
-                        .show()
+                        })
                 } else {
                     viewModel.getSong(edtSearchSong.text.toString())
                 }

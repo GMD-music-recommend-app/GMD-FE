@@ -8,14 +8,14 @@ package com.sesac.gmd.common.util
 // Default TAG
 const val DEFAULT_TAG = "TAG_"
 
-// Flag
-const val SUCCESS = 1000
-const val FAILURE = 2000
-
 // MainActivity TabLayout Contents
 const val TAB_CHART = 0
 const val TAB_HOME = 1
 const val TAB_SETTING = 2
+
+// BASE_URL
+const val MANIADB_BASE_URL = "http://www.maniadb.com/api/search/"
+const val GMD_BASE_URL = "http://yourplaylistgmd.shop/"
 
 // Utils.parseXMLFromMania.itemChildNode.nodeName
 const val XML_TAG_MANIA_DB_ALBUM = "maniadb:album"

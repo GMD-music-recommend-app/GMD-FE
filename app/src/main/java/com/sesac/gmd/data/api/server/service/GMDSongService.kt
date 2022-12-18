@@ -5,12 +5,10 @@
 
 package com.sesac.gmd.data.api.server.service
 
-import com.sesac.gmd.data.model.response.CreateSongResponse
+import com.sesac.gmd.data.model.response.song.CreatePinResponse
+import okhttp3.RequestBody
 import retrofit2.Response
-import retrofit2.http.Field
-import retrofit2.http.FormUrlEncoded
-import retrofit2.http.GET
-import retrofit2.http.POST
+import retrofit2.http.*
 
 interface GMDSongService {
 
@@ -23,23 +21,8 @@ interface GMDSongService {
     fun getSongInfo()
 
     // 핀 생성
-    @FormUrlEncoded
     @POST("/songs")
-    suspend fun createSongs(
-        @Field("albumCover") albumCover: String,
-        @Field("albumTitle") albumTitle: String,
-        @Field("artist") artist: String,
-        @Field("city") city: String?,
-        @Field("hashtag") hashtag: String?,
-        @Field("latitude") latitude: Double,
-        @Field("longitude")longitude: Double,
-        @Field("reason") reason: String,
-        @Field("songIdx") songIdx: Int,
-        @Field("state") state: String?,
-//        @Field("street") street: String?,
-        @Field("title") title: String,
-        @Field("userIdx") userIdx: Int
-    ) : Response<CreateSongResponse>
+    suspend fun createPin(@Body params: RequestBody): Response<CreatePinResponse>
 
     // 핀 댓글 작성
     @POST("/songs/comment/write")
