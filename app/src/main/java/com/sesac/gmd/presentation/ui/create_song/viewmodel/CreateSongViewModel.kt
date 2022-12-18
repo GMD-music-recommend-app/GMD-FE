@@ -15,6 +15,7 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.sesac.gmd.common.util.DEFAULT_TAG
@@ -124,12 +125,12 @@ class CreateSongViewModel(private val repository: CreateSongRepository) : ViewMo
     // 음악 검색
     fun getSong(keyword: String) {
         isLoading.postValue(true)
-        CoroutineScope(Dispatchers.IO).launch(exceptionHandler) {
+        viewModelScope.launch(exceptionHandler) {
             try {
                 val responseBody = repository.getSong(keyword)
                 val result = parseXMLFromMania(responseBody.string())
                 songList.postValue(result)
-                withContext(Dispatchers.Main) { isLoading.value = false }
+                isLoading.value = false
             } catch (e: Exception) {
                 // TODO: 예외 처리 필요(인터넷 연결x)
                 Log.d(DEFAULT_TAG + TAG, "getSong() error! : ${e.message}")
@@ -150,7 +151,7 @@ class CreateSongViewModel(private val repository: CreateSongRepository) : ViewMo
     // 핀 생성하기
     fun createPin(reason: String, hashtag: String?) {
         Log.d(DEFAULT_TAG+TAG, "1")
-        CoroutineScope(Dispatchers.IO).launch(exceptionHandler) {
+        viewModelScope.launch(exceptionHandler) {
             Log.d(DEFAULT_TAG+TAG, "2")
             try {
                 val response = repository.createPin(
@@ -160,33 +161,29 @@ class CreateSongViewModel(private val repository: CreateSongRepository) : ViewMo
                     reason,
                     hashtag
                 )
-                withContext(Dispatchers.Main) {
-                    Log.d(DEFAULT_TAG+TAG, "3")
-                    if (response.isSuccessful) {
-                        Log.d(DEFAULT_TAG+TAG, "4")
-                        Log.d(DEFAULT_TAG+TAG, "---------------------Song Create Success!---------------------")
-                        Log.d(DEFAULT_TAG+TAG, "pin Number : ${response.body()!!.result.pinIdx}")
-                    } else {
-                        Log.d(DEFAULT_TAG+TAG, "5")
-                        Log.d(DEFAULT_TAG+TAG, "---------------------Song Create Fail!---------------------")
-                        Log.d(DEFAULT_TAG+TAG, "errorCode : ${response.body()!!.response.code}")
-                        Log.d(DEFAULT_TAG+TAG, "errorMessage : ${response.body()!!.response.message}")
-                        toastMessage("예기치 못한 오류가 발생했습니다.")
-                        when(response.body().toString()[0]) {
-                            '1' -> Log.d(DEFAULT_TAG+TAG, "code 1")
-                            '2' -> Log.d(DEFAULT_TAG+TAG, "code 2")
-                            '3' -> Log.d(DEFAULT_TAG+TAG, "code 3")
-                            '4' -> Log.d(DEFAULT_TAG+TAG, "code 4")
-                            '5' -> Log.d(DEFAULT_TAG+TAG, "code 5")
-                            else ->{}
-                        }
-                        onError("onError: ${response.errorBody()!!.string()}")
+                Log.d(DEFAULT_TAG+TAG, "3")
+                if (response.isSuccessful) {
+                    Log.d(DEFAULT_TAG+TAG, "4")
+                    Log.d(DEFAULT_TAG+TAG, "---------------------Song Create Success!---------------------")
+                    Log.d(DEFAULT_TAG+TAG, "pin Number : ${response.body()!!.result.pinIdx}")
+                } else {
+                    Log.d(DEFAULT_TAG+TAG, "5")
+                    Log.d(DEFAULT_TAG+TAG, "---------------------Song Create Fail!---------------------")
+//                        Log.d(DEFAULT_TAG+TAG, "errorCode : ${response.body()!!.response.code}")
+//                        Log.d(DEFAULT_TAG+TAG, "errorMessage : ${response.body()!!.response.message}")
+                    toastMessage("예기치 못한 오류가 발생했습니다.")
+                    when(response.body().toString()[0]) {
+                        '1' -> Log.d(DEFAULT_TAG+TAG, "code 1")
+                        '2' -> Log.d(DEFAULT_TAG+TAG, "code 2")
+                        '3' -> Log.d(DEFAULT_TAG+TAG, "code 3")
+                        '4' -> Log.d(DEFAULT_TAG+TAG, "code 4")
+                        '5' -> Log.d(DEFAULT_TAG+TAG, "code 5")
+                        else ->{}
                     }
+                    onError("onError: ${response.errorBody()!!.string()}")
                 }
             } catch (e: Exception) {
-                withContext(Dispatchers.Main) {
-                    toastMessage("예기치 못한 오류가 발생했습니다.")
-                }
+                toastMessage("예기치 못한 오류가 발생했습니다.")
                 Log.d(DEFAULT_TAG+TAG, "6")
                 Log.d(DEFAULT_TAG + TAG, "createPin() error! : ${e.message}")
             }
