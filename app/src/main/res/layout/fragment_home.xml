@@ -16,16 +16,16 @@
         tools:context="com.example.mapwithmarker.MapsMarkerActivity" />
 
     <!--  노래 추천하기 버튼  -->
-    <com.google.android.material.button.MaterialButton
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btn_create_song"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:background="@drawable/bg_btn_main_color"
+        android:layout_width="152dp"
+        android:layout_height="48dp"
         android:layout_centerHorizontal="true"
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="32dp"
-        android:paddingVertical="12dp"
-        android:elevation="24dp"
-        android:text="노래 추천하기"
-        android:textSize="16sp"
+        android:text="@string/btn_create_pin"
+        android:textColor="@color/white"
+        android:textSize="18sp"
         app:cornerRadius="100dp" />
 </RelativeLayout>

@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <com.google.android.material.imageview.ShapeableImageView
+    <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/iv_song_albumCover"
         android:layout_width="64dp"
         android:layout_height="64dp"
@@ -16,7 +16,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <com.google.android.material.textview.MaterialTextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/txt_song_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -28,7 +28,7 @@
         app:layout_constraintStart_toEndOf="@+id/iv_song_albumCover"
         app:layout_constraintTop_toTopOf="@+id/iv_song_albumCover" />
 
-    <com.google.android.material.textview.MaterialTextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/txt_song_artist"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -37,7 +37,7 @@
         app:layout_constraintStart_toStartOf="@+id/txt_song_title"
         app:layout_constraintTop_toBottomOf="@+id/txt_song_title" />
 
-    <com.google.android.material.textview.MaterialTextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/txt_song_albumName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -46,7 +46,7 @@
         app:layout_constraintStart_toStartOf="@+id/txt_song_title"
         app:layout_constraintTop_toBottomOf="@+id/txt_song_artist" />
 
-    <com.google.android.material.imageview.ShapeableImageView
+    <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/iv_star"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -55,7 +55,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <com.google.android.material.textview.MaterialTextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/txt_song_userName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -65,7 +65,7 @@
         app:layout_constraintStart_toStartOf="@+id/iv_song_albumCover"
         app:layout_constraintTop_toBottomOf="@+id/txt_song_hashtag" />
 
-    <com.google.android.material.textview.MaterialTextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/txt_song_hashtag"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -76,7 +76,7 @@
         app:layout_constraintStart_toStartOf="@+id/iv_song_albumCover"
         app:layout_constraintTop_toBottomOf="@+id/iv_song_albumCover" />
 
-    <com.google.android.material.textview.MaterialTextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/txt_song_userStory"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -95,7 +95,7 @@
         android:background="@drawable/ic_youtube"
         app:layout_constraintEnd_toStartOf="@+id/btn_song_like"
         app:layout_constraintTop_toBottomOf="@+id/txt_song_userName" />
-    <com.google.android.material.textview.MaterialTextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/txt_song_youtube"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -112,7 +112,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/btn_song_youtube" />
-    <com.google.android.material.textview.MaterialTextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/txt_song_like"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -129,7 +129,7 @@
         android:background="@drawable/ic_share"
         app:layout_constraintStart_toEndOf="@+id/btn_song_like"
         app:layout_constraintTop_toTopOf="@+id/btn_song_youtube" />
-    <com.google.android.material.textview.MaterialTextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/txt_song_share"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -140,7 +140,7 @@
         app:layout_constraintTop_toBottomOf="@+id/btn_song_share" />
 
     <!--  댓글  -->
-    <com.google.android.material.textview.MaterialTextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/txt_song_comment1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -150,7 +150,7 @@
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="@+id/txt_song_userName"
         app:layout_constraintTop_toBottomOf="@+id/txt_song_youtube" />
-    <com.google.android.material.textview.MaterialTextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/txt_song_comment1_spc"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -158,7 +158,7 @@
         android:text="님 음잘알 인정"
         app:layout_constraintStart_toEndOf="@+id/txt_song_comment1"
         app:layout_constraintTop_toTopOf="@+id/txt_song_comment1" />
-    <com.google.android.material.textview.MaterialTextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/txt_song_comment2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -168,7 +168,7 @@
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="@+id/txt_song_comment1"
         app:layout_constraintTop_toBottomOf="@+id/txt_song_comment1" />
-    <com.google.android.material.textview.MaterialTextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/txt_song_comment2_spc"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -176,7 +176,7 @@
         android:text="저도 퇴근 길에 들으면서 눈물 흘렸네요."
         app:layout_constraintStart_toEndOf="@+id/txt_song_comment2"
         app:layout_constraintTop_toTopOf="@+id/txt_song_comment2" />
-    <com.google.android.material.textview.MaterialTextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/txt_song_comment3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -186,7 +186,7 @@
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="@+id/txt_song_comment1"
         app:layout_constraintTop_toBottomOf="@+id/txt_song_comment2" />
-    <com.google.android.material.textview.MaterialTextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/txt_song_comment3_spc"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
