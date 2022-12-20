@@ -2,12 +2,13 @@
 * Created by gabriel
 * date : 22/12/15
 * */
+package com.sesac.gmd.data.api.server.song.create_pin
 
-package com.sesac.gmd.data.model.response.song
+// 핀 생성
 
 data class CreatePinResponse (
-    val isSuccess: Boolean,
     val code: Int,
+    val isSuccess: Boolean,
     val message: String,
     val result : CreatePinResult
     )

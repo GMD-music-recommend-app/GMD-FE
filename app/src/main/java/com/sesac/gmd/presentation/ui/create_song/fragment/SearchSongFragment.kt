@@ -19,7 +19,7 @@ import com.sesac.gmd.common.util.DEFAULT_TAG
 import com.sesac.gmd.common.util.Utils.Companion.hideKeyBoard
 import com.sesac.gmd.common.util.Utils.Companion.setAlertDialog
 import com.sesac.gmd.common.util.Utils.Companion.toastMessage
-import com.sesac.gmd.data.repository.CreateSongRepository
+import com.sesac.gmd.data.repository.Repository
 import com.sesac.gmd.databinding.FragmentSearchSongBinding
 import com.sesac.gmd.presentation.main.MainActivity
 import com.sesac.gmd.presentation.ui.create_song.adapter.SearchSongAdapter
@@ -40,7 +40,7 @@ class SearchSongFragment : Fragment() {
         binding = FragmentSearchSongBinding.inflate(inflater, container, false)
 
         viewModel = ViewModelProvider(
-            requireActivity(), ViewModelFactory(CreateSongRepository())
+            requireActivity(), ViewModelFactory(Repository())
         )[CreateSongViewModel::class.java]
 
         // 사용자 위치 정보 초기화
@@ -93,8 +93,12 @@ class SearchSongFragment : Fragment() {
             }
             // progressBar status
             isLoading.observe(viewLifecycleOwner) {
-                if (it) { binding.progressBar.visibility = View.VISIBLE }
-                else { binding.progressBar.visibility = View.GONE }
+                if (it) {
+                    binding.progressBar.visibility = View.VISIBLE
+                }
+                else {
+                    binding.progressBar.visibility = View.GONE
+                }
             }
             // 음악 검색 결과 리스트
             songList.observe(viewLifecycleOwner){
@@ -185,6 +189,6 @@ class SearchSongFragment : Fragment() {
     // 유효성 검사 Location
     private fun validate(): Boolean {
         // TODO:  check JWT and userIdx
-        return viewModel.location != null
+        return viewModel.location.value != null
     }
 }
