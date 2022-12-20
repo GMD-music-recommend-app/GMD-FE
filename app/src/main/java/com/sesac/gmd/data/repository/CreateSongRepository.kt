@@ -36,9 +36,9 @@ class CreateSongRepository {
         map["longitude"] = location.longitude
         map["reason"] = reason
         map["songIdx"] = song.songIdx
+        map["songTitle"] = song.songTitle
         map["state"] = location.state
         map["street"] = location.street
-        map["title"] = song.songTitle
         map["userIdx"] = userID
 
         val requestBody = Gson()

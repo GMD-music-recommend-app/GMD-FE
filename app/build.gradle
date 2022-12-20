@@ -67,4 +67,8 @@ dependencies {
 
     //implementation group: 'gun0912.ted', name: 'TedPermission', version: '2.2.3'
     implementation 'io.github.ParkSangGwon:tedpermission-normal:3.3.0'
+
+    // 카카오 로그인
+    implementation "com.kakao.sdk:v2-user:2.11.2"
+
 }

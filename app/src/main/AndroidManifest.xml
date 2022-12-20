@@ -24,6 +24,10 @@
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
+        <!--카카오 로그인-->
+        <meta-data
+            android:name="com.kakao.sdk.AppKey"
+            android:value="kakao0a2c945c82b638fdb08b2eccf8a0a87e" />
 
         <activity
             android:name=".presentation.main.MainActivity"
