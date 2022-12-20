@@ -24,7 +24,7 @@ import com.sesac.gmd.common.util.Utils.Companion.toastMessage
 import com.sesac.gmd.data.model.Location
 import com.sesac.gmd.data.model.Song
 import com.sesac.gmd.data.model.SongList
-import com.sesac.gmd.data.repository.CreateSongRepository
+import com.sesac.gmd.data.repository.Repository
 import kotlinx.coroutines.*
 import java.util.*
 /*
@@ -32,7 +32,7 @@ import java.util.*
 * */
 private const val TAG = "CreateSongViewModel"
 
-class CreateSongViewModel(private val repository: CreateSongRepository) : ViewModel() {
+class CreateSongViewModel(private val repository: Repository) : ViewModel() {
     // Location
     private val _location = MutableLiveData<Location>()
     val location: LiveData<Location> get() = _location
@@ -116,7 +116,7 @@ class CreateSongViewModel(private val repository: CreateSongRepository) : ViewMo
                 }
             } catch (e: Exception) {
                 toastMessage("예기치 못한 문제가 발생했습니다.")
-                e.printStackTrace()
+                Log.d(DEFAULT_TAG + TAG, "Geocoder occurred error : $errorMessage!!")
             }
         }
         return userLocation
@@ -150,9 +150,7 @@ class CreateSongViewModel(private val repository: CreateSongRepository) : ViewMo
 
     // 핀 생성하기
     fun createPin(reason: String, hashtag: String?) {
-        Log.d(DEFAULT_TAG+TAG, "1")
         viewModelScope.launch(exceptionHandler) {
-            Log.d(DEFAULT_TAG+TAG, "2")
             try {
                 val response = repository.createPin(
                     userIdx,
@@ -161,30 +159,19 @@ class CreateSongViewModel(private val repository: CreateSongRepository) : ViewMo
                     reason,
                     hashtag
                 )
-                Log.d(DEFAULT_TAG+TAG, "3")
                 if (response.isSuccessful) {
-                    Log.d(DEFAULT_TAG+TAG, "4")
+                    // TODO: 예외처리 필요(중복 곡 생성 시)
                     Log.d(DEFAULT_TAG+TAG, "---------------------Song Create Success!---------------------")
                     Log.d(DEFAULT_TAG+TAG, "pin Number : ${response.body()!!.result.pinIdx}")
                 } else {
-                    Log.d(DEFAULT_TAG+TAG, "5")
                     Log.d(DEFAULT_TAG+TAG, "---------------------Song Create Fail!---------------------")
-//                        Log.d(DEFAULT_TAG+TAG, "errorCode : ${response.body()!!.response.code}")
-//                        Log.d(DEFAULT_TAG+TAG, "errorMessage : ${response.body()!!.response.message}")
+                    Log.d(DEFAULT_TAG+TAG, "errorMessage : ${response.body()!!.message}")
+
                     toastMessage("예기치 못한 오류가 발생했습니다.")
-                    when(response.body().toString()[0]) {
-                        '1' -> Log.d(DEFAULT_TAG+TAG, "code 1")
-                        '2' -> Log.d(DEFAULT_TAG+TAG, "code 2")
-                        '3' -> Log.d(DEFAULT_TAG+TAG, "code 3")
-                        '4' -> Log.d(DEFAULT_TAG+TAG, "code 4")
-                        '5' -> Log.d(DEFAULT_TAG+TAG, "code 5")
-                        else ->{}
-                    }
                     onError("onError: ${response.errorBody()!!.string()}")
                 }
             } catch (e: Exception) {
                 toastMessage("예기치 못한 오류가 발생했습니다.")
-                Log.d(DEFAULT_TAG+TAG, "6")
                 Log.d(DEFAULT_TAG + TAG, "createPin() error! : ${e.message}")
             }
         }

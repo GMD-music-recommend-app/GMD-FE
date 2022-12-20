@@ -19,7 +19,7 @@ import com.sesac.gmd.R
 import com.sesac.gmd.common.util.DEFAULT_TAG
 import com.sesac.gmd.common.util.Utils.Companion.setAlertDialog
 import com.sesac.gmd.common.util.Utils.Companion.toastMessage
-import com.sesac.gmd.data.repository.CreateSongRepository
+import com.sesac.gmd.data.repository.Repository
 import com.sesac.gmd.databinding.FragmentWriteStoryBinding
 import com.sesac.gmd.presentation.main.MainActivity
 import com.sesac.gmd.presentation.ui.create_song.viewmodel.CreateSongViewModel
@@ -37,7 +37,7 @@ class WriteStoryFragment : Fragment() {
         binding = FragmentWriteStoryBinding.inflate(inflater, container, false)
 
         viewModel = ViewModelProvider(
-            requireActivity(), ViewModelFactory(CreateSongRepository())
+            requireActivity(), ViewModelFactory(Repository())
         )[CreateSongViewModel::class.java]
 
 
@@ -56,7 +56,7 @@ class WriteStoryFragment : Fragment() {
     // Listener 초기화 함수
     private fun setListener() {
         with(binding) {
-            // 생성하기 버튼
+            // 음악 핀 생성하기 버튼
             btnFinishCreate.setOnClickListener {
                 val reason = edtStory.text.toString()
                 val hashtag = txtHashtag.text.toString()
@@ -99,12 +99,13 @@ class WriteStoryFragment : Fragment() {
         var flag = true
 
         // Check Song
-        if (viewModel.selectedSong == null) {
+        if (viewModel.selectedSong.value == null) {
             Log.d(DEFAULT_TAG+TAG, "selectSong : ${viewModel.selectedSong}")
             toastMessage("음악이 선택되지 않았습니다.")
             flag = false
         }
-        with(binding) {
+        // TODO: 유효성 검사 수정 필요
+        /*with(binding) {
             // Check Story isNull
             if (edtStory.text!!.isEmpty()) {
                 Log.d(DEFAULT_TAG+TAG, "story : ${edtStory.text}")
@@ -132,7 +133,7 @@ class WriteStoryFragment : Fragment() {
                 toastMessage("해시태그가 잘못 입력되었습니다.")
                 flag = false
             }
-        }
+        }*/
         return flag
     }
 }

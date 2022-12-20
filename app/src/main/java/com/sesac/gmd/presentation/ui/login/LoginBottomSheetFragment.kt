@@ -30,7 +30,7 @@ class LoginBottomSheetFragment : BottomSheetDialogFragment() {
 
         // TODO: 임시 생성 코드입니다. 추후 삭제 필요.
         with(binding) {
-            btnLogin.setOnClickListener {
+            btnKakaoLogin.setOnClickListener {
                 // 액티비티 이동
                 startActivity(Intent(requireContext(), SignUpActivity::class.java))
             }

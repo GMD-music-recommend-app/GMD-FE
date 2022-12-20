@@ -7,13 +7,11 @@ package com.sesac.gmd.presentation.main
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.FragmentTransaction
 import com.google.android.material.tabs.TabLayout
 import com.sesac.gmd.R
 import com.sesac.gmd.common.util.*
-import com.sesac.gmd.common.util.Utils.Companion.toastMessage
 import com.sesac.gmd.databinding.ActivityMainBinding
 import com.sesac.gmd.presentation.ui.chart.ChartFragment
 import com.sesac.gmd.presentation.ui.home.HomeFragment

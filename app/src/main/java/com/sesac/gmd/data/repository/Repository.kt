@@ -2,21 +2,20 @@
 * Created by gabriel
 * date : 22/12/09
 * */
-
 package com.sesac.gmd.data.repository
 
 import com.google.gson.Gson
 import com.sesac.gmd.data.api.maniadb.ManiaDBRetrofitClient.Companion.maniaDBService
-import com.sesac.gmd.data.api.server.client.GMDSongRetrofitClient.Companion.gmdSongService
 import com.sesac.gmd.data.model.Location
 import com.sesac.gmd.data.model.Song
-import com.sesac.gmd.data.model.response.song.CreatePinResponse
+import com.sesac.gmd.data.api.server.song.create_pin.CreatePinResponse
+import com.sesac.gmd.data.api.server.song.create_pin.CreatePinRetrofitClient.Companion.createPinService
 import okhttp3.MediaType.Companion.toMediaTypeOrNull
 import okhttp3.RequestBody.Companion.toRequestBody
 import okhttp3.ResponseBody
 import retrofit2.Response
 
-class CreateSongRepository {
+class Repository {
 
     // 음악 검색
     suspend fun getSong(keyword: String) : ResponseBody {
@@ -46,6 +45,6 @@ class CreateSongRepository {
             .toString()
             .toRequestBody("application/json; charset=utf-8".toMediaTypeOrNull())
 
-        return gmdSongService.createPin(requestBody)
+        return createPinService.createPin(requestBody)
     }
 }
