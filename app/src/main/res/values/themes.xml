@@ -25,14 +25,14 @@
         <item name="colorControlHighlight">@color/main_color</item>
     </style>
 
-<!--    &lt;!&ndash;  Splash Theme  &ndash;&gt;
-    <style name="SplashTheme" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="android:windowBackground">@drawable/background_splash</item>
-        <item name="android:statusBarColor">@color/black</item>
+    <!--  Splash Theme  -->
+    <style name="SplashTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="android:statusBarColor">@color/transparent</item>
         <item name="android:windowLightStatusBar" tools:ignore="NewApi">true</item>
-        <item name="android:navigationBarColor">@color/black</item>
+        <item name="android:windowBackground">@drawable/background_splash</item>
+        <item name="android:navigationBarColor">#FFFFFF</item>
         <item name="android:windowLightNavigationBar" tools:ignore="NewApi">true</item>
-    </style>-->
+    </style>
 
     <!--  OutlineBox Edit Text outline color set  -->
     <style name="LoginTextInputLayoutStyle" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense">
