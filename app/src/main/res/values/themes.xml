@@ -33,10 +33,4 @@
         <item name="android:navigationBarColor">#FFFFFF</item>
         <item name="android:windowLightNavigationBar" tools:ignore="NewApi">true</item>
     </style>
-
-    <!--  OutlineBox Edit Text outline color set  -->
-    <style name="LoginTextInputLayoutStyle" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense">
-        <item name="boxStrokeColor">@color/main_color</item>
-        <item name="boxStrokeWidth">2dp</item>
-    </style>
 </resources>
