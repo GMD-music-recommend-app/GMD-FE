@@ -21,11 +21,11 @@ import com.sesac.gmd.common.util.Utils.Companion.setAlertDialog
 import com.sesac.gmd.common.util.Utils.Companion.toastMessage
 import com.sesac.gmd.data.repository.Repository
 import com.sesac.gmd.databinding.FragmentSearchSongBinding
-import com.sesac.gmd.presentation.main.MainActivity
 import com.sesac.gmd.presentation.ui.create_song.adapter.SearchSongAdapter
 import com.sesac.gmd.presentation.ui.create_song.adapter.SearchSongDecoration
 import com.sesac.gmd.presentation.ui.create_song.viewmodel.CreateSongViewModel
 import com.sesac.gmd.presentation.ui.factory.ViewModelFactory
+import com.sesac.gmd.presentation.ui.main.activity.MainActivity
 
 class SearchSongFragment : Fragment() {
     companion object {

@@ -18,7 +18,7 @@ import retrofit2.http.*
 interface SongService {
     // 반경 내 핀 리스트 반환
     @GET("/songs/info-list")
-    fun getPinList(
+    suspend fun getPinList(
         @Query("latitude") latitude: Double,
         @Query("longitude") longitude: Double,
         @Query("radius") radius: Int    // 검색 반경(단위: m)
@@ -26,7 +26,7 @@ interface SongService {
 
     // 핀 정보 반환
     @GET("/songs/info/{pinIdx}")
-    fun getSongInfo(
+    suspend fun getSongInfo(
         @Path("pinIdx") pinIdx: Int,
         @Query("userIdx") userIdx: Int
     ) : Response<GetPinInfoResponse>
@@ -37,11 +37,11 @@ interface SongService {
 
     // 핀 댓글 작성
     @POST("/songs/comment/write")
-    fun writeComment(@Body params: RequestBody) : Response<WriteCommentResponse>
+    suspend fun writeComment(@Body params: RequestBody) : Response<WriteCommentResponse>
 
     // 핀 공감, 공감 취소
     @POST("/songs/like/{userIdx}/{pinIdx}")
-    fun insertLike(
+    suspend fun insertLike(
         @Path("pinIdx") pinIdx: Int,
         @Path("userIdx") userIdx: Int
     ) : Response<InsertLikePinResponse>

@@ -5,7 +5,6 @@
 
 package com.sesac.gmd.presentation.ui.create_song.fragment
 
-import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -21,7 +20,6 @@ import com.sesac.gmd.common.util.Utils.Companion.setAlertDialog
 import com.sesac.gmd.common.util.Utils.Companion.toastMessage
 import com.sesac.gmd.data.repository.Repository
 import com.sesac.gmd.databinding.FragmentWriteStoryBinding
-import com.sesac.gmd.presentation.main.MainActivity
 import com.sesac.gmd.presentation.ui.create_song.viewmodel.CreateSongViewModel
 import com.sesac.gmd.presentation.ui.factory.ViewModelFactory
 

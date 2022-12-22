@@ -3,14 +3,16 @@
 * date : 22/11/21
 * */
 
-package com.sesac.gmd.presentation.ui.home
+package com.sesac.gmd.presentation.ui.main.home
 
 import android.location.Location
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.GoogleMap.OnMarkerClickListener
@@ -22,9 +24,16 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
 import com.sesac.gmd.R
+import com.sesac.gmd.common.util.DEFAULT_TAG
+import com.sesac.gmd.data.repository.Repository
 import com.sesac.gmd.databinding.FragmentHomeBinding
-import com.sesac.gmd.presentation.ui.create_song.bottomsheet.CreateSongBottomSheetFragment
-import com.sesac.gmd.presentation.ui.songinfo.SongInfoBottomSheetFragment
+import com.sesac.gmd.presentation.ui.main.bottomsheet.CreateSongBottomSheetFragment
+import com.sesac.gmd.presentation.ui.factory.ViewModelFactory
+import com.sesac.gmd.presentation.ui.main.viewmodel.MainViewModel
+import com.sesac.gmd.presentation.ui.main.bottomsheet.SongInfoBottomSheetFragment
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class HomeFragment : Fragment(),
     OnMapReadyCallback,

@@ -2,20 +2,23 @@
 * Created by gabriel
 * date : 22/11/21
 * */
-
-package com.sesac.gmd.presentation.main
+package com.sesac.gmd.presentation.ui.main.activity
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.FragmentTransaction
 import com.google.android.material.tabs.TabLayout
 import com.sesac.gmd.R
 import com.sesac.gmd.common.util.*
 import com.sesac.gmd.databinding.ActivityMainBinding
-import com.sesac.gmd.presentation.ui.chart.ChartFragment
-import com.sesac.gmd.presentation.ui.home.HomeFragment
-import com.sesac.gmd.presentation.ui.setting.SettingFragment
+import com.sesac.gmd.presentation.ui.main.chart.ChartFragment
+import com.sesac.gmd.presentation.ui.main.home.HomeFragment
+import com.sesac.gmd.presentation.ui.main.viewmodel.MainViewModel
+import com.sesac.gmd.presentation.ui.main.setting.SettingFragment
+
+private const val TAG = "MainActivity"
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding

@@ -1,4 +1,4 @@
-package com.sesac.gmd.presentation.ui.setting.adapter
+package com.sesac.gmd.presentation.ui.main.setting.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

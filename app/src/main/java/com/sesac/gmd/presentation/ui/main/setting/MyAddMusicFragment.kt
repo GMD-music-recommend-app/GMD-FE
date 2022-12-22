@@ -1,4 +1,4 @@
-package com.sesac.gmd.presentation.ui.setting
+package com.sesac.gmd.presentation.ui.main.setting
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -6,8 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.sesac.gmd.databinding.FragmentMyAddMusicBinding
-import com.sesac.gmd.presentation.ui.setting.adapter.AddMusicAdapter
-import com.sesac.gmd.presentation.ui.setting.adapter.AddMusicViewHolder
+import com.sesac.gmd.presentation.ui.main.setting.adapter.AddMusicAdapter
+import com.sesac.gmd.presentation.ui.main.setting.adapter.AddMusicViewHolder
 
 class MyAddMusicFragment : Fragment() {
     companion object {

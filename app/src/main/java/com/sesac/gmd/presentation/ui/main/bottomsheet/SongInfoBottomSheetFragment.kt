@@ -3,7 +3,7 @@
 * date : 22/11/24
 * */
 
-package com.sesac.gmd.presentation.ui.songinfo
+package com.sesac.gmd.presentation.ui.main.bottomsheet
 
 import android.content.Intent
 import android.net.Uri

@@ -3,7 +3,7 @@
 * date : 22/11/21
 * */
 
-package com.sesac.gmd.presentation.ui.chart
+package com.sesac.gmd.presentation.ui.main.chart
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -11,8 +11,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.sesac.gmd.databinding.FragmentChartBinding
-import com.sesac.gmd.presentation.ui.chart.adapter.ChartAdapter
-import com.sesac.gmd.presentation.ui.chart.adapter.ChartViewHolder
+import com.sesac.gmd.presentation.ui.main.chart.adapter.ChartAdapter
+import com.sesac.gmd.presentation.ui.main.chart.adapter.ChartViewHolder
 
 class ChartFragment : Fragment() {
     companion object {

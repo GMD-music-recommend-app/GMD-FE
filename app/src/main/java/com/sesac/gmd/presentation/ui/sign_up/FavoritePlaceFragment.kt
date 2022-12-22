@@ -13,7 +13,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.sesac.gmd.common.util.Utils.Companion.toastMessage
 import com.sesac.gmd.databinding.FragmentFavoritePlaceBinding
-import com.sesac.gmd.presentation.main.MainActivity
+import com.sesac.gmd.presentation.ui.main.activity.MainActivity
 
 class FavoritePlaceFragment : Fragment() {
     companion object {
