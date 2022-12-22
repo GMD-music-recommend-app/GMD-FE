@@ -27,9 +27,6 @@ import com.sesac.gmd.presentation.ui.main.bottomsheet.CreateSongBottomSheetFragm
 import com.sesac.gmd.presentation.ui.factory.ViewModelFactory
 import com.sesac.gmd.presentation.ui.main.viewmodel.MainViewModel
 import com.sesac.gmd.presentation.ui.main.bottomsheet.SongInfoBottomSheetFragment
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
 
 class HomeFragment : Fragment(),
     OnMapReadyCallback,
@@ -68,10 +65,12 @@ class HomeFragment : Fragment(),
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // 구글 맵 생성
-        initMap()
         // Listener 등록
         setListener()
+        // Observer 등록
+        setObserver()
+        // 구글 맵 생성
+        initMap()
     }
 
     // 현재 위치 정보 초기화
@@ -84,12 +83,6 @@ class HomeFragment : Fragment(),
         }
     }
 
-    // 구글 맵 초기화
-    private fun initMap() {
-        val mapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
-        mapFragment.getMapAsync(this)
-    }
-
     // Listener 초기화
     private fun setListener() {
         with(binding) {
@@ -100,9 +93,16 @@ class HomeFragment : Fragment(),
         }
     }
 
+    // 구글 맵 초기화
+    private fun initMap() {
+        val mapFragment = childFragmentManager.findFragmentById(R.id.map) as SupportMapFragment
+        mapFragment.getMapAsync(this)
+    }
+
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
 
+        // 지도 중심점 설정
         val startingPoint =
             if (viewModel.location.value != null) {
                 LatLng(viewModel.location.value!!.latitude, viewModel.location.value!!.longitude)
@@ -114,20 +114,23 @@ class HomeFragment : Fragment(),
             moveCamera(CameraUpdateFactory.newLatLngZoom(startingPoint, 16F))
             setOnMarkerClickListener(this@HomeFragment)
 
-            CoroutineScope(Dispatchers.Main).launch {
-                setPins(mMap)
+            // 지도에 표시할 음악 핀 가져오기
+            getPins()
+        }
+    }
+
+    private fun setObserver() {
+        with(viewModel) {
+            pinLists.observe(viewLifecycleOwner) {
+                // 핀 리스트 데이터를 가져오면 해당 핀 리스트 지도에 표시시
+               setMarkers()
             }
         }
     }
 
-    // 지도에 생성된 음악 핀 출력
-    private suspend fun setPins(map: GoogleMap) {
-        CoroutineScope(Dispatchers.Main).launch {
-            viewModel.getPinList(37.4948867, 126.85362)
-
-        }.join()
-
-//        setMarkers()
+    // 지도에 표시할 음악 핀 가져오기
+    private fun getPins() {
+        viewModel.getPinList(37.4948867, 126.85362)
     }
 
     fun setMarkers() {
