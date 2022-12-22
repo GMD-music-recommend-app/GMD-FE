@@ -2,7 +2,7 @@
 * Created by gabriel
 * date : 22/12/21
 * */
-package com.sesac.gmd.presentation.ui.home.activity
+package com.sesac.gmd.presentation.splash
 
 import android.Manifest
 import android.annotation.SuppressLint
@@ -13,8 +13,12 @@ import android.os.Bundle
 import android.provider.Settings
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationServices
 import com.gun0912.tedpermission.PermissionListener
 import com.gun0912.tedpermission.normal.TedPermission
+import com.sesac.gmd.common.util.Utils.Companion.toastMessage
+import com.sesac.gmd.presentation.ui.main.activity.MainActivity
 import kotlinx.coroutines.*
 
 @SuppressLint("CustomSplashScreen")
@@ -31,14 +35,14 @@ class SplashActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
 
         CoroutineScope(Dispatchers.Main).launch {
-            delay(1_000L)
-
+            // Splash 화면 1.5 초 동안 표시
+            delay(1_500L)
             // Permissions Check
             checkPermissions()
         }
     }
 
-    private  fun checkPermissions() {
+    private fun checkPermissions() {
         // 마시멜로(안드로이드 6.0) 이상 권한 체크
         if (Build.VERSION.SDK_INT >= 23) {
             TedPermission.create()
@@ -53,8 +57,8 @@ class SplashActivity : AppCompatActivity() {
     private var permissionListener: PermissionListener = object : PermissionListener {
         // 권한 허가시 실행 할 내용
        override fun onPermissionGranted() {
-            startActivity(Intent(this@SplashActivity, MainActivity::class.java))
-            finish()
+            // 현재 위치 정보 가져오기
+            getCurrentLocation()
         }
 
         // 권한 거부시 실행  할 내용
@@ -73,6 +77,27 @@ class SplashActivity : AppCompatActivity() {
                     finish()
                 }
                 .show()
+        }
+    }
+
+    // 현재 위치 정보 가져와 intent 에 실어서 MainActivity 로 이동
+    @SuppressLint("MissingPermission")
+    fun getCurrentLocation() {
+        val intent = Intent(this@SplashActivity, MainActivity::class.java)
+        // 사용자의 정확한 현재 위치 요청
+        val fusedLocationClient: FusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this@SplashActivity)
+        fusedLocationClient.lastLocation.addOnSuccessListener {
+            if (it == null) {
+                // fusedLocationClient 가 현재 위치를 파악하지 못하는 경우
+                toastMessage("사용자의 현재 위치를 알 수 없습니다.")
+                throw SecurityException("Location Data 를 얻지 못함")
+            }
+            else {
+                intent.putExtra("latitude", it.latitude)
+                intent.putExtra("longitude", it.longitude)
+            }
+            startActivity(intent)
+            finish()
         }
     }
 }
