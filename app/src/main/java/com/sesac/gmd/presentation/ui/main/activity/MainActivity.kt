@@ -6,7 +6,6 @@ package com.sesac.gmd.presentation.ui.main.activity
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.FragmentTransaction
 import com.google.android.material.tabs.TabLayout
@@ -15,10 +14,7 @@ import com.sesac.gmd.common.util.*
 import com.sesac.gmd.databinding.ActivityMainBinding
 import com.sesac.gmd.presentation.ui.main.chart.ChartFragment
 import com.sesac.gmd.presentation.ui.main.home.HomeFragment
-import com.sesac.gmd.presentation.ui.main.viewmodel.MainViewModel
 import com.sesac.gmd.presentation.ui.main.setting.SettingFragment
-
-private const val TAG = "MainActivity"
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
@@ -28,10 +24,15 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater).also {
             setContentView(it.root)
         }
+
+        // Splash 에서 넘겨 준 위치 정보 가져오기
+        val getLat = intent.getDoubleExtra("latitude", 0.0)
+        val getLng = intent.getDoubleExtra("longitude", 0.0)
+
         // 최초 실행 시 Fragment 초기화
         if (savedInstanceState == null) {
             with(supportFragmentManager.beginTransaction()){
-                add(R.id.tabContent, HomeFragment.newInstance())
+                add(R.id.tabContent, HomeFragment.newInstance(getLat, getLng))
                 commit()
             }
             // 탭 focus 홈으로 가도록 설정
@@ -55,6 +56,7 @@ class MainActivity : AppCompatActivity() {
             })
         }
 
+        // 뒤로가기 시 View Stack 없으면 앱 종료
         onBackPressedDispatcher.addCallback(object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
                 supportFragmentManager.popBackStack()
