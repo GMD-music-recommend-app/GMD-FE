@@ -1,4 +1,4 @@
-package com.sesac.gmd.presentation.ui.setting
+package com.sesac.gmd.presentation.ui.main.setting
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -6,8 +6,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.sesac.gmd.databinding.FragmentMyCommentsBinding
-import com.sesac.gmd.presentation.ui.setting.adapter.MyCommentsAdapter
-import com.sesac.gmd.presentation.ui.setting.adapter.MyCommentsViewHolder
+import com.sesac.gmd.presentation.ui.main.setting.adapter.MyCommentsAdapter
+import com.sesac.gmd.presentation.ui.main.setting.adapter.MyCommentsViewHolder
 
 class MyCommentsFragment : Fragment() {
     companion object {

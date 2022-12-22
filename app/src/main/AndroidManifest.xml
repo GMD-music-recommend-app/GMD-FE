@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
-
     <!-- GPS & Internet Permissions -->
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
@@ -24,13 +23,15 @@
         <meta-data
             android:name="com.google.android.geo.API_KEY"
             android:value="@string/google_maps_key" />
-        <!--카카오 로그인-->
+
+        <!-- 카카오 로그인 -->
         <meta-data
             android:name="com.kakao.sdk.AppKey"
             android:value="kakao0a2c945c82b638fdb08b2eccf8a0a87e" />
 
         <activity
-            android:name=".presentation.main.MainActivity"
+            android:name=".presentation.splash.SplashActivity"
+            android:theme="@style/SplashTheme"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -39,19 +40,13 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".presentation.ui.create_song.activity.CreateSongActivity"
-            android:windowSoftInputMode="adjustPan"
-            android:exported="false">
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
+            android:name=".presentation.ui.main.activity.MainActivity">
         </activity>
         <activity
-            android:name=".presentation.ui.sign_up.SignUpActivity"
-            android:exported="false">
-            <meta-data
-                android:name="android.app.lib_name"
-                android:value="" />
+            android:name=".presentation.ui.create_song.activity.CreateSongActivity"
+            android:windowSoftInputMode="adjustPan">
+        </activity>
+        <activity android:name=".presentation.ui.sign_up.SignUpActivity">
         </activity>
     </application>
 </manifest>

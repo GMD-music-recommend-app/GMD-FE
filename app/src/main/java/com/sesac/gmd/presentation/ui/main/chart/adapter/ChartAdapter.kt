@@ -1,4 +1,4 @@
-package com.sesac.gmd.presentation.ui.chart.adapter
+package com.sesac.gmd.presentation.ui.main.chart.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

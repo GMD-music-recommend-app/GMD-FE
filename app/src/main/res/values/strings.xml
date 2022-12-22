@@ -5,6 +5,8 @@
 
     <!--  Google Map API KEY-->
     <string name="google_maps_key">AIzaSyA1vL3vDpfHOn0zzplBR2Z5cpJ2v9Qz5Cw</string>
+    <!--  Kakao API KEY-->
+    <string name="kakao_app_key">0a2c945c82b638fdb08b2eccf8a0a87e</string>
 
     <!--  Tab name  -->
     <string name="tab_home">홈</string>
