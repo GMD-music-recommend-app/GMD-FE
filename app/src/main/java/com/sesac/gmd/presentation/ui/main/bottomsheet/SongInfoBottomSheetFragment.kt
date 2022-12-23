@@ -8,7 +8,6 @@ package com.sesac.gmd.presentation.ui.main.bottomsheet
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
-import android.os.SystemClock
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -18,6 +17,7 @@ import com.bumptech.glide.Glide
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.sesac.gmd.R
 import com.sesac.gmd.common.util.DEFAULT_TAG
+import com.sesac.gmd.common.util.Utils.Companion.setAlertDialog
 import com.sesac.gmd.common.util.Utils.Companion.toastMessage
 import com.sesac.gmd.data.repository.Repository
 import com.sesac.gmd.databinding.FragmentSongInfoBottomSheetBinding
@@ -104,13 +104,16 @@ class SongInfoBottomSheetFragment : BottomSheetDialogFragment() {
         with(binding) {
             // 유튜브로 듣기
             btnSongYoutube.setOnClickListener {
-                toastMessage("유튜브 페이지로 이동하시겠습니까? 다이얼로그 표시 했다고 침")
-                SystemClock.sleep(1_000L)
-                startActivity(
-                    Intent(Intent.ACTION_VIEW,
-                        Uri.parse("https://www.youtube.com/results?search_query=NMIXX+COOL+(Your+rainbow)"))
-                )
-            }
+                setAlertDialog(requireContext(), null,
+                    "유튜브 페이지로 이동하시겠습니까?",
+                    posFunc = {
+                        startActivity(
+                            Intent(Intent.ACTION_VIEW,
+                                Uri.parse(
+                                    "https://www.youtube.com/results?search_query=${viewModel.pinInfo.value!!.artist}+${viewModel.pinInfo.value!!.songTitle}"))
+                        )},
+                    negFunc = {}
+                )}
             // 공감하기
             btnSongLike.setOnClickListener {
                 isLike =
@@ -126,7 +129,7 @@ class SongInfoBottomSheetFragment : BottomSheetDialogFragment() {
             }
             // 공유하기
             btnSongShare.setOnClickListener {
-                toastMessage("이미지 캡쳐 완료")
+                toastMessage("준비 중입니다.")
             }
         }
     }
