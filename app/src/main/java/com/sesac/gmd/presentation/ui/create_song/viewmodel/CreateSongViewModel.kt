@@ -19,6 +19,7 @@ import androidx.lifecycle.viewModelScope
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.sesac.gmd.common.util.DEFAULT_TAG
+import com.sesac.gmd.common.util.TEMP_USER_IDX
 import com.sesac.gmd.common.util.Utils.Companion.parseXMLFromMania
 import com.sesac.gmd.common.util.Utils.Companion.toastMessage
 import com.sesac.gmd.data.model.Location
@@ -145,15 +146,12 @@ class CreateSongViewModel(private val repository: Repository) : ViewModel() {
         _selectedSong.value = selectedSong
     }
 
-    // TODO: 임시 작성 코드. OAuth 구현하면 userIdx Preference 에서 가져오고 해당 줄 삭제
-    private val userIdx = 5
-
     // 핀 생성하기
     fun createPin(reason: String, hashtag: String?) {
         viewModelScope.launch(exceptionHandler) {
             try {
                 val response = repository.createPin(
-                    userIdx,
+                    TEMP_USER_IDX,
                     location.value!!,
                     selectedSong.value!!,
                     reason,

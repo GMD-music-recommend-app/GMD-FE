@@ -5,6 +5,10 @@
 
 package com.sesac.gmd.common.util
 
+// TEMP, Account : 10   TODO : 추후 삭제 예정
+const val TEMP_USER_IDX = 10
+const val TEMP_JWT = "eyJ0eXBlIjoiand0IiwiYWxnIjoiSFMyNTYifQ.eyJ1c2VySWR4IjoxMCwiaWF0IjoxNjcwODM1MzY3LCJleHAiOjE2NzIzMDY1OTZ9.UuG_dhxswqK7S64NB9ahfHFk5-Ks0XDaPKCGehXetG4"
+
 // Default TAG
 const val DEFAULT_TAG = "TAG_"
 

@@ -35,7 +35,6 @@ class GetPinListRetrofitClient {
                     val request = chain.request()
                     val newRequest: Request = request
                         .newBuilder()
-//                        .addHeader("Accept", "application/json")
                         .build()
                     chain.proceed(newRequest)
                 }).addInterceptor(httpInterceptor())
