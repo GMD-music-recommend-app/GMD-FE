@@ -5,7 +5,6 @@
 package com.sesac.gmd.presentation.ui.main.home
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -20,7 +19,6 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
 import com.sesac.gmd.R
-import com.sesac.gmd.common.util.DEFAULT_TAG
 import com.sesac.gmd.data.repository.Repository
 import com.sesac.gmd.databinding.FragmentHomeBinding
 import com.sesac.gmd.presentation.ui.main.bottomsheet.CreateSongBottomSheetFragment
@@ -75,11 +73,13 @@ class HomeFragment : Fragment(),
 
     // 현재 위치 정보 초기화
     private fun initLocation() {
-        // TODO: 탭 전환 시 "Fragment does not have any arguments." 에러 수정 필요
-        if (!requireArguments().isEmpty) {
-            val lat = requireArguments().getDouble("latitude")
-            val lng = requireArguments().getDouble("longitude")
-            viewModel.setLocation(requireContext(), lat, lng)
+        if (arguments?.isEmpty != true) {
+            // Splash 에서 arguments 로 전달받은 latitude, longitude
+            val lat = arguments?.getDouble("latitude")
+            val lng = arguments?.getDouble("longitude")
+            if (lat != null && lng != null) {
+                viewModel.setLocation(requireContext(), lat, lng)
+            }
         }
     }
 
@@ -88,7 +88,17 @@ class HomeFragment : Fragment(),
         with(binding) {
             btnCreateSong.setOnClickListener {
                 val createSong = CreateSongBottomSheetFragment.newInstance()
-                createSong.show(childFragmentManager, "HomeFragment")
+                createSong.show(childFragmentManager, createSong.tag)
+            }
+        }
+    }
+
+    // Observer set
+    private fun setObserver() {
+        with(viewModel) {
+            pinLists.observe(viewLifecycleOwner) {
+                // 핀 리스트 데이터를 가져오면(= when getPins() called,) 해당 핀 리스트 지도에 표시
+                setMarkers()
             }
         }
     }
@@ -113,18 +123,8 @@ class HomeFragment : Fragment(),
         with(mMap) {
             moveCamera(CameraUpdateFactory.newLatLngZoom(startingPoint, 16F))
             setOnMarkerClickListener(this@HomeFragment)
-
             // 지도에 표시할 음악 핀 가져오기
             getPins()
-        }
-    }
-
-    private fun setObserver() {
-        with(viewModel) {
-            pinLists.observe(viewLifecycleOwner) {
-                // 핀 리스트 데이터를 가져오면 해당 핀 리스트 지도에 표시시
-               setMarkers()
-            }
         }
     }
 
@@ -133,24 +133,24 @@ class HomeFragment : Fragment(),
         viewModel.getPinList(37.4948867, 126.85362)
     }
 
-    fun setMarkers() {
-        Log.d(DEFAULT_TAG+ TAG, "maker ready ! : ${viewModel.pinLists.value}")
+    // 음악 핀 지도에 표시
+    private fun setMarkers() {
         viewModel.pinLists.value?.forEach {
             val location = LatLng(it.latitude, it.longitude)
             with(mMap) {
                 addMarker(
                     MarkerOptions()
                         .position(location)
-                        .title(it.pinIdx.toString())
-                )
+                        .anchor(0.5f, 0.5f)     // 마커의 하단이 아닌 중앙을 꼭짓점으로 하도록 수정
+                )!!.tag = it.pinIdx
             }
         }
     }
 
+    // 핀 클릭 시 곡 상세정보 BottomSheet show
     override fun onMarkerClick(marker: Marker): Boolean {
-        // TODO: 임시 작성 코드. 추후 수정 필요
-        val songInfo = SongInfoBottomSheetFragment.newInstance()
-        songInfo.show(childFragmentManager, "HomeFragment")
+        val songInfo = SongInfoBottomSheetFragment.newInstance(marker.tag.toString())
+        songInfo.show(childFragmentManager, songInfo.tag)
         return true
     }
 }
