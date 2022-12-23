@@ -20,8 +20,8 @@ data class GetPinInfoResult(
     val city: String,           // 생성 장소(군, 구)
     val comments: MutableList<Comment>, // 댓글
     val hashtag: String,        // 해시태그
-    val isLiked: String,        //
-    val isMade: String,         //
+    val isLiked: String,        // 공감 여부
+    val isMade: String,         // 본인이 생성한 핀인지 확인
     val latitude: Double,       // 생성 장소(위도)
     val longitude: Double,      // 생성 장소(경도)
     val nickName: String,       // 생성한 유저 닉네임

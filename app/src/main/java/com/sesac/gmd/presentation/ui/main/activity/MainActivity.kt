@@ -25,6 +25,14 @@ class MainActivity : AppCompatActivity() {
             setContentView(it.root)
         }
 
+        // 보여줄 Fragment set
+        setFirstFragment(savedInstanceState)
+        // Listener 등록
+        setListener()
+    }
+
+    // 보여줄 Fragment setting
+    private fun setFirstFragment(savedInstanceState: Bundle?) {
         // Splash 에서 넘겨 준 위치 정보 가져오기
         val getLat = intent.getDoubleExtra("latitude", 0.0)
         val getLng = intent.getDoubleExtra("longitude", 0.0)
@@ -38,8 +46,6 @@ class MainActivity : AppCompatActivity() {
             // 탭 focus 홈으로 가도록 설정
             binding.tabLayout.selectTab(binding.tabLayout.getTabAt(TAB_HOME))
         }
-        // Listener 등록
-        setListener()
     }
 
     // Listener 초기화 함수

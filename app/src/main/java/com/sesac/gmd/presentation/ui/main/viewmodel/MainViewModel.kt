@@ -10,7 +10,9 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.sesac.gmd.common.util.DEFAULT_TAG
+import com.sesac.gmd.common.util.TEMP_USER_IDX
 import com.sesac.gmd.common.util.Utils.Companion.toastMessage
+import com.sesac.gmd.data.api.server.song.get_pininfo.GetPinInfoResult
 import com.sesac.gmd.data.api.server.song.get_pinlist.Pin
 import com.sesac.gmd.data.model.Location
 import com.sesac.gmd.data.repository.Repository
@@ -25,8 +27,17 @@ class MainViewModel(private val repository: Repository) : ViewModel() {
     private val _location = MutableLiveData<Location>()
     val location: LiveData<Location> get() = _location
 
+    // 지도에 표시 될 핀 리스트
     private val _pinLists = MutableLiveData<MutableList<Pin>>()
     val pinLists: LiveData<MutableList<Pin>> get() = _pinLists
+
+    // 핀 상세 정보
+    private val _pinInfo = MutableLiveData<GetPinInfoResult>()
+    val pinInfo: LiveData<GetPinInfoResult> get() = _pinInfo
+
+    // 핀 공감 여부
+    private val _isPinLiked = MutableLiveData<Boolean>()
+    val isPinLiked: LiveData<Boolean> get() = _isPinLiked
 
     // ProgressBar
     var isLoading = MutableLiveData<Boolean>()
@@ -90,7 +101,7 @@ class MainViewModel(private val repository: Repository) : ViewModel() {
         return userLocation
     }
 
-    // 반갱 내 핀 리스트 가져오기
+    // 반경 내 핀 리스트 가져오기
     fun getPinList(lat: Double, lng: Double, radius: Int = 5_000) {
         viewModelScope.launch(exceptionHandler) {
             try {
@@ -104,6 +115,42 @@ class MainViewModel(private val repository: Repository) : ViewModel() {
             } catch (e: Exception) {
                 toastMessage("예기치 못한 오류가 발생했습니다.")
                 Log.d(DEFAULT_TAG + TAG, "getPinList() error! : ${e.message}")
+            }
+        }
+    }
+
+    // 핀 정보 가져오기(핀 클릭 시 bottomSheet 화면)
+    fun getPinInfo(pinIdx: Int) {
+        viewModelScope.launch(exceptionHandler) {
+            try {
+                val response = repository.getSongInfo(pinIdx, TEMP_USER_IDX)
+                if (response.isSuccessful) {
+                    _pinInfo.value = response.body()!!.result
+                } else {
+                    toastMessage("음악 핀 데이터를 가져오지 못했습니다.")
+                    onError("onError: ${response.errorBody()!!.string()}")
+                }
+            } catch (e: Exception) {
+                toastMessage("예기치 못한 오류가 발생했습니다.")
+                Log.d(DEFAULT_TAG + TAG, "getPinInfo() error! : ${e.message}")
+            }
+        }
+    }
+
+    // 핀 공감하기 TODO : 미완성
+    fun insertLikePin(pinIdx: Int) {
+        viewModelScope.launch(exceptionHandler) {
+            try {
+                val response = repository.insertLikePin(pinIdx, TEMP_USER_IDX)
+                if (response.isSuccessful) {
+//                   _isPinLiked.value = response.body().result
+                } else {
+                    toastMessage("예기치 못한 오류가 발생했습니다.")
+                    onError("onError: ${response.errorBody()!!.string()}")
+                }
+            } catch (e: Exception) {
+                toastMessage("예기치 못한 오류가 발생했습니다.")
+                Log.d(DEFAULT_TAG + TAG, "insertLikePin() error! : ${e.message}")
             }
         }
     }
