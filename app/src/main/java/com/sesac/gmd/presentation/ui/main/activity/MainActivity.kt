@@ -33,14 +33,18 @@ class MainActivity : AppCompatActivity() {
 
     // 보여줄 Fragment setting
     private fun setFirstFragment(savedInstanceState: Bundle?) {
-        // Splash 에서 넘겨 준 위치 정보 가져오기
-        val getLat = intent.getDoubleExtra("latitude", 0.0)
-        val getLng = intent.getDoubleExtra("longitude", 0.0)
-
         // 최초 실행 시 Fragment 초기화
         if (savedInstanceState == null) {
+            // Splash 에서 넘겨 준 위치 정보 가져오기
+            val getLat = intent.getDoubleExtra("latitude", 0.0)
+            val getLng = intent.getDoubleExtra("longitude", 0.0)
+
             with(supportFragmentManager.beginTransaction()){
-                add(R.id.tabContent, HomeFragment.newInstance(getLat, getLng))
+                if (getLat != 0.0 && getLng != 0.0) {
+                    add(R.id.tabContent, HomeFragment.newInstance(getLat, getLng))
+                } else {
+                    add(R.id.tabContent, HomeFragment.newInstance())
+                }
                 commit()
             }
             // 탭 focus 홈으로 가도록 설정

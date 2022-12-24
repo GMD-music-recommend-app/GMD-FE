@@ -2,7 +2,6 @@
 * Created by gabriel
 * date : 22/11/26
 * */
-
 package com.sesac.gmd.presentation.ui.create_song.fragment
 
 import android.content.Intent
@@ -40,8 +39,7 @@ class SearchSongFragment : Fragment() {
         binding = FragmentSearchSongBinding.inflate(inflater, container, false)
 
         viewModel = ViewModelProvider(
-            requireActivity(), ViewModelFactory(Repository())
-        )[CreateSongViewModel::class.java]
+            requireActivity(), ViewModelFactory(Repository()))[CreateSongViewModel::class.java]
 
         // 사용자 위치 정보 초기화
         initUserLocation()
@@ -180,7 +178,12 @@ class SearchSongFragment : Fragment() {
                             startActivity(Intent(requireContext(), MainActivity::class.java))
                         })
                 } else {
-                    viewModel.getSong(edtSearchSong.text.toString())
+                    try {
+                        viewModel.getSong(edtSearchSong.text.toString())
+                    } catch (e : Exception) {
+                        requireActivity().finish()
+                        Intent(requireContext(), MainActivity::class.java)
+                    }
                 }
             }
         }

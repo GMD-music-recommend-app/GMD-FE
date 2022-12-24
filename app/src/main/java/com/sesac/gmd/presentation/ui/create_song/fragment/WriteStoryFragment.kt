@@ -2,9 +2,9 @@
 * Created by gabriel
 * date : 22/11/26
 * */
-
 package com.sesac.gmd.presentation.ui.create_song.fragment
 
+import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
@@ -22,6 +22,7 @@ import com.sesac.gmd.data.repository.Repository
 import com.sesac.gmd.databinding.FragmentWriteStoryBinding
 import com.sesac.gmd.presentation.ui.create_song.viewmodel.CreateSongViewModel
 import com.sesac.gmd.presentation.ui.factory.ViewModelFactory
+import com.sesac.gmd.presentation.ui.main.activity.MainActivity
 
 class WriteStoryFragment : Fragment() {
     companion object {
@@ -35,9 +36,7 @@ class WriteStoryFragment : Fragment() {
         binding = FragmentWriteStoryBinding.inflate(inflater, container, false)
 
         viewModel = ViewModelProvider(
-            requireActivity(), ViewModelFactory(Repository())
-        )[CreateSongViewModel::class.java]
-
+            requireActivity(), ViewModelFactory(Repository()))[CreateSongViewModel::class.java]
 
         return binding.root
     }
@@ -57,13 +56,13 @@ class WriteStoryFragment : Fragment() {
             // 음악 핀 생성하기 버튼
             btnFinishCreate.setOnClickListener {
                 val reason = edtStory.text.toString()
-                val hashtag = txtHashtag.text.toString()
+                val hashtag = edtHashtag.text.toString()
 
                 if(checkValidation()) {
                     setAlertDialog(requireContext(), null, "음악을 추가하시겠습니까?",
                         posFunc = {
                             viewModel.createPin(reason, hashtag)
-                            //startActivity(Intent(context, MainActivity::class.java))
+                            startActivity(Intent(context, MainActivity::class.java))
                         },
                         negFunc = {})
                 }
@@ -74,7 +73,6 @@ class WriteStoryFragment : Fragment() {
     // 버튼 상태 초기화 함수
     private fun setButtonState() {
         with(binding) {
-            // TODO: 사연 입력되지 않았을 때 버튼 비활성화 구현 필요
             edtStory.addTextChangedListener(object : TextWatcher{
                 override fun afterTextChanged(s: Editable?) {
                     if (s!!.isEmpty()) {
