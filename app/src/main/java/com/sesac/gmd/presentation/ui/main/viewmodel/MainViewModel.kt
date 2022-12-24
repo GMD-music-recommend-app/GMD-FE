@@ -9,6 +9,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.google.android.gms.maps.model.LatLng
 import com.sesac.gmd.common.util.DEFAULT_TAG
 import com.sesac.gmd.common.util.TEMP_USER_IDX
 import com.sesac.gmd.common.util.Utils.Companion.toastMessage

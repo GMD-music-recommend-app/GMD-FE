@@ -15,6 +15,18 @@
         android:layout_height="match_parent"
         tools:context="com.example.mapwithmarker.MapsMarkerActivity" />
 
+    <!--  현재 위치 버튼  -->
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/currentLocationButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_present_location"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="32dp"
+        android:layout_marginBottom="32dp"
+        android:contentDescription="현재 위치" />
+
     <!--  노래 추천하기 버튼  -->
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btn_create_song"
