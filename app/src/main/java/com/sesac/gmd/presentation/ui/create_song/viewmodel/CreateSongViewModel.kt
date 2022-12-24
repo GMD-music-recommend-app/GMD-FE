@@ -56,6 +56,9 @@ class CreateSongViewModel(private val repository: Repository) : ViewModel() {
         Log.e(DEFAULT_TAG + TAG, thrownException.message.toString())
     }
 
+    private val _createSuccess = MutableLiveData<Boolean>()
+    val createSuccess: LiveData<Boolean> get() = _createSuccess
+
     // Coroutine 내 REST 처리 중 에러 발생 시 호출됨
     private fun onError(message: String) {
         errorMessage.value = message
@@ -172,6 +175,8 @@ class CreateSongViewModel(private val repository: Repository) : ViewModel() {
                     // TODO: 예외처리 필요(중복 곡 생성 시)
                     Log.d(DEFAULT_TAG+TAG, "---------------------Song Create Success!---------------------")
                     Log.d(DEFAULT_TAG+TAG, "pin Number : ${response.body()!!.result.pinIdx}")
+
+                    _createSuccess.value = true
                 } else {
                     Log.d(DEFAULT_TAG+TAG, "---------------------Song Create Fail!---------------------")
                     Log.d(DEFAULT_TAG+TAG, "errorMessage : ${response.body()!!.message}")
