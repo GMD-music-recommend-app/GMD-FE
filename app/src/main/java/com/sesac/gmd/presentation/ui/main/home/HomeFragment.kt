@@ -65,8 +65,7 @@ class HomeFragment : Fragment(),
 
         // Listener 등록
         setListener()
-        // Observer 등록
-        setObserver()
+
         // 구글 맵 생성
         initMap()
     }
@@ -117,7 +116,7 @@ class HomeFragment : Fragment(),
             if (viewModel.location.value != null) {
                 LatLng(viewModel.location.value!!.latitude, viewModel.location.value!!.longitude)
             } else {
-                LatLng(37.5662952, 126.97794509999994)    // 서울 시청
+                LatLng(37.5662952, 126.97794509999994)
             }
 
         with(mMap) {
@@ -126,6 +125,9 @@ class HomeFragment : Fragment(),
             // 지도에 표시할 음악 핀 가져오기
             getPins()
         }
+
+        // Observer 등록
+        setObserver()
     }
 
     // 지도에 표시할 음악 핀 가져오기
@@ -135,6 +137,7 @@ class HomeFragment : Fragment(),
 
     // 음악 핀 지도에 표시
     private fun setMarkers() {
+        if (::mMap.isInitialized.not()) return
         viewModel.pinLists.value?.forEach {
             val location = LatLng(it.latitude, it.longitude)
             with(mMap) {
