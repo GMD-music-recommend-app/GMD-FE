@@ -2,7 +2,6 @@
 * Created by gabriel
 * date : 22/11/24
 * */
-
 package com.sesac.gmd.presentation.ui.main.bottomsheet
 
 import android.content.Intent
@@ -85,7 +84,7 @@ class SongInfoBottomSheetFragment : BottomSheetDialogFragment() {
                 txtSongArtist.text = this.value?.artist.toString()
                 txtSongAlbumName.text = this.value?.albumTitle.toString()
                 txtSongHashtag.text = this.value?.hashtag.toString()
-                txtSongUserName.text = this.value?.nickName.toString()
+                txtSongUserName.text = this.value?.nickname.toString()
                 txtSongUserStory.text = this.value?.reason.toString()
                 if (!this.value?.isMade.toBoolean()) {
                     ivStar.setImageResource(R.drawable.ic_star)

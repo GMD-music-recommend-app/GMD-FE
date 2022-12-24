@@ -28,6 +28,7 @@ import com.sesac.gmd.data.model.SongList
 import com.sesac.gmd.data.repository.Repository
 import kotlinx.coroutines.*
 import java.util.*
+import java.util.concurrent.TimeoutException
 /*
 * 멤버는 호출 순서대로 배치
 * */
@@ -65,10 +66,13 @@ class CreateSongViewModel(private val repository: Repository) : ViewModel() {
     }
 
     // 다른 위치 지정
-    fun setLocation() {}
+    fun setLocation(context: Context, lat: Double, lng: Double) {
+        val getLocation = geocoding(context, lat, lng)
+        _location.value = getLocation
+    }
 
     // 현재 위치 정보 저장
-    @SuppressLint("MissingPermission")  // TODO: Splash -> getPermission 구현하면 해당 줄 삭제
+    @SuppressLint("MissingPermission")
     fun getCurrentLocation(context: Context)  {
         // 사용자의 정확한 현재 위치 요청
         val fusedLocationClient: FusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(context)
@@ -135,10 +139,17 @@ class CreateSongViewModel(private val repository: Repository) : ViewModel() {
                 val result = parseXMLFromMania(responseBody.string())
                 songList.postValue(result)
                 isLoading.value = false
+            } catch (e : TimeoutException) {
+                Log.d(DEFAULT_TAG + TAG, "getSong() error! : ${e.message}")
+                toastMessage("연결이 고르지 않습니다.\n 다시 시도해주시기 바랍니다.")
+                isLoading.value = false
+                throw TimeoutException("$e")
             } catch (e: Exception) {
                 // TODO: 예외 처리 필요(인터넷 연결x)
                 Log.d(DEFAULT_TAG + TAG, "getSong() error! : ${e.message}")
                 toastMessage("예기치 못한 오류가 발생했습니다!")
+                isLoading.value = false
+                throw Exception("$e")
             }
         }
     }

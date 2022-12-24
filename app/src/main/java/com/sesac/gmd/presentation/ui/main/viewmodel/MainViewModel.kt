@@ -1,5 +1,6 @@
 package com.sesac.gmd.presentation.ui.main.viewmodel
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.location.Address
 import android.location.Geocoder
@@ -9,7 +10,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationServices
 import com.sesac.gmd.common.util.DEFAULT_TAG
 import com.sesac.gmd.common.util.TEMP_USER_IDX
 import com.sesac.gmd.common.util.Utils.Companion.toastMessage
@@ -20,7 +22,9 @@ import com.sesac.gmd.data.repository.Repository
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.launch
 import java.util.*
-
+/*
+* 멤버는 호출 순서대로 배치
+* */
 private const val TAG = "MainViewModel"
 
 class MainViewModel(private val repository: Repository) : ViewModel() {
@@ -59,6 +63,24 @@ class MainViewModel(private val repository: Repository) : ViewModel() {
     // Geocoding 된 위치 정보를 LiveData 에 저장
     fun setLocation(context: Context, lat: Double, lng: Double) {
         _location.value = geocoding(context, lat, lng)
+    }
+
+    // 현재 위치 정보 저장
+    @SuppressLint("MissingPermission")
+    fun getCurrentLocation(context: Context)  {
+        // 사용자의 정확한 현재 위치 요청
+        val fusedLocationClient: FusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(context)
+        fusedLocationClient.lastLocation.addOnSuccessListener { // 비동기로 실행
+            if (it == null) {
+                // fusedLocationClient 가 현재 위치를 파악하지 못하는 경우
+                toastMessage("사용자의 현재 위치를 알 수 없습니다.")
+            }
+            else {
+                // 받아온 현재 위치를 기준으로 geocoding 실행 후 해당 위치 정보를 LiveData 에 저장
+                val userLocation = geocoding(context, it.latitude, it.longitude)
+                _location.value = userLocation
+            }
+        }
     }
 
     // Geocoding(위/경도 -> 행정구역 변환) 함수

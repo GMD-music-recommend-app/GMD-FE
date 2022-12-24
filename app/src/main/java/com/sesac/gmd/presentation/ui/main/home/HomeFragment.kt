@@ -57,6 +57,7 @@ class HomeFragment : Fragment(),
     private lateinit var binding: FragmentHomeBinding
     private lateinit var viewModel: MainViewModel
     private lateinit var mMap: GoogleMap
+    private lateinit var startingPoint: LatLng
 
     private lateinit var locationManager: LocationManager
     private lateinit var myLocationListener: MyLocationListener
@@ -81,15 +82,14 @@ class HomeFragment : Fragment(),
         viewModel = ViewModelProvider(
             requireActivity(), ViewModelFactory(Repository()))[MainViewModel::class.java]
 
-        // 현재 위치 초기화
-        initLocation()
-
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        // 현재 위치 초기화
+        initLocation()
         // Listener 등록
         setListener()
 
@@ -106,6 +106,8 @@ class HomeFragment : Fragment(),
             if (lat != null && lng != null) {
                 viewModel.setLocation(requireContext(), lat, lng)
             }
+        } else {
+            viewModel.getCurrentLocation(requireContext())
         }
     }
 
@@ -131,6 +133,9 @@ class HomeFragment : Fragment(),
                 mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLocation, 16F))
                 getPins(currentLocation)
             }
+            location.observe(viewLifecycleOwner) {
+                startingPoint = LatLng(viewModel.location.value!!.latitude, viewModel.location.value!!.longitude)
+            }
         }
     }
 
@@ -144,7 +149,7 @@ class HomeFragment : Fragment(),
         mMap = googleMap
 
         // 지도 중심점 설정
-        val startingPoint =
+        startingPoint =
             if (viewModel.location.value != null) {
                 LatLng(viewModel.location.value!!.latitude, viewModel.location.value!!.longitude)
             } else {
@@ -172,7 +177,7 @@ class HomeFragment : Fragment(),
     }
 
     // 지도에 표시할 음악 핀 가져오기
-    private fun getPins(startingPoint: LatLng) {
+    private fun getPins() {
         viewModel.getPinList(startingPoint.latitude, startingPoint.longitude)
     }
 
