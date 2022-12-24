@@ -45,6 +45,8 @@ class WriteStoryFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        observeData()
+
         // Listener 등록
         setListener()
         // 생성하기 버튼 초기화
@@ -63,10 +65,18 @@ class WriteStoryFragment : Fragment() {
                     setAlertDialog(requireContext(), null, "음악을 추가하시겠습니까?",
                         posFunc = {
                             viewModel.createPin(reason, hashtag)
-                            //startActivity(Intent(context, MainActivity::class.java))
                         },
                         negFunc = {})
                 }
+            }
+        }
+    }
+
+    private fun observeData() = with(viewModel) {
+        createSuccess.observe(viewLifecycleOwner) { success ->
+            if (success) {
+                toastMessage("노래 생성 성공")
+                requireActivity().finish()
             }
         }
     }
@@ -103,7 +113,7 @@ class WriteStoryFragment : Fragment() {
             flag = false
         }
         // TODO: 유효성 검사 수정 필요
-        /*with(binding) {
+        with(binding) {
             // Check Story isNull
             if (edtStory.text!!.isEmpty()) {
                 Log.d(DEFAULT_TAG+TAG, "story : ${edtStory.text}")
@@ -131,7 +141,7 @@ class WriteStoryFragment : Fragment() {
                 toastMessage("해시태그가 잘못 입력되었습니다.")
                 flag = false
             }
-        }*/
+        }
         return flag
     }
 }

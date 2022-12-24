@@ -166,6 +166,11 @@ class HomeFragment : Fragment(),
         setObserver()
     }
 
+    override fun onResume() {
+        super.onResume()
+        getMyLocation()
+    }
+
     // 지도에 표시할 음악 핀 가져오기
     private fun getPins(startingPoint: LatLng) {
         viewModel.getPinList(startingPoint.latitude, startingPoint.longitude)
