@@ -4,10 +4,19 @@
 * */
 package com.sesac.gmd.presentation.ui.main.home
 
+import android.Manifest
+import android.annotation.SuppressLint
+import android.content.pm.PackageManager
+import android.location.Location
+import android.location.LocationListener
+import android.location.LocationManager
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.content.ContextCompat
+import androidx.core.content.ContextCompat.getSystemService
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -19,6 +28,7 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
 import com.sesac.gmd.R
+import com.sesac.gmd.data.api.server.song.get_pinlist.Pin
 import com.sesac.gmd.data.repository.Repository
 import com.sesac.gmd.databinding.FragmentHomeBinding
 import com.sesac.gmd.presentation.ui.main.bottomsheet.CreateSongBottomSheetFragment
@@ -48,6 +58,23 @@ class HomeFragment : Fragment(),
     private lateinit var viewModel: MainViewModel
     private lateinit var mMap: GoogleMap
     private lateinit var startingPoint: LatLng
+
+    private lateinit var locationManager: LocationManager
+    private lateinit var myLocationListener: MyLocationListener
+
+    private val requestLocationPermissionLauncher = registerForActivityResult(
+        ActivityResultContracts.RequestMultiplePermissions()
+    ) { permissions ->
+        var allPermissionsGranted: Boolean = true
+        permissions.entries.forEach { (permission, isGranted) ->
+            if (isGranted) {
+
+            } else {
+                allPermissionsGranted = false
+            }
+        }
+        if (allPermissionsGranted) getMyLocation()
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentHomeBinding.inflate(inflater, container, false)
@@ -97,9 +124,14 @@ class HomeFragment : Fragment(),
     // Observer set
     private fun setObserver() {
         with(viewModel) {
-            pinLists.observe(viewLifecycleOwner) {
+            pinLists.observe(viewLifecycleOwner) { pins ->
                 // 핀 리스트 데이터를 가져오면(= when getPins() called,) 해당 핀 리스트 지도에 표시
-                setMarkers()
+                setMarkers(pins)
+            }
+            location.observe(viewLifecycleOwner) {
+                val currentLocation = LatLng(it.latitude, it.longitude)
+                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLocation, 16F))
+                getPins(currentLocation)
             }
             location.observe(viewLifecycleOwner) {
                 startingPoint = LatLng(viewModel.location.value!!.latitude, viewModel.location.value!!.longitude)
@@ -128,11 +160,20 @@ class HomeFragment : Fragment(),
             moveCamera(CameraUpdateFactory.newLatLngZoom(startingPoint, 16F))
             setOnMarkerClickListener(this@HomeFragment)
             // 지도에 표시할 음악 핀 가져오기
-            getPins()
+            getPins(startingPoint)
+        }
+
+        binding.currentLocationButton.setOnClickListener {
+            getMyLocation()
         }
 
         // Observer 등록
         setObserver()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        getMyLocation()
     }
 
     // 지도에 표시할 음악 핀 가져오기
@@ -141,9 +182,10 @@ class HomeFragment : Fragment(),
     }
 
     // 음악 핀 지도에 표시
-    private fun setMarkers() {
+    private fun setMarkers(pinList: List<Pin>) {
         if (::mMap.isInitialized.not()) return
-        viewModel.pinLists.value?.forEach {
+        mMap.clear()
+        pinList.forEach {
             val location = LatLng(it.latitude, it.longitude)
             with(mMap) {
                 addMarker(
@@ -160,5 +202,66 @@ class HomeFragment : Fragment(),
         val songInfo = SongInfoBottomSheetFragment.newInstance(marker.tag.toString())
         songInfo.show(childFragmentManager, songInfo.tag)
         return true
+    }
+
+    private fun getMyLocation() {
+        if (::locationManager.isInitialized.not()) {
+            locationManager = getSystemService(requireContext(), LocationManager::class.java) as LocationManager
+        }
+        val isGpsEnable = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)
+        if (isGpsEnable) {
+            if (ContextCompat.checkSelfPermission(
+                    requireContext(),
+                    Manifest.permission.ACCESS_FINE_LOCATION
+                ) != PackageManager.PERMISSION_GRANTED
+                && ContextCompat.checkSelfPermission(
+                    requireContext(),
+                    Manifest.permission.ACCESS_COARSE_LOCATION
+                ) != PackageManager.PERMISSION_GRANTED
+            ) {
+                requestLocationPermissionLauncher.launch(
+                    arrayOf(
+                        Manifest.permission.ACCESS_COARSE_LOCATION,
+                        Manifest.permission.ACCESS_FINE_LOCATION
+                    )
+                )
+            } else {
+                setMyLocationListener()
+            }
+        }
+    }
+
+    @SuppressLint("MissingPermission")
+    private fun setMyLocationListener() {
+        val minTime: Long = 1500
+        val minDistance = 100f
+        if (::myLocationListener.isInitialized.not()) {
+            myLocationListener = MyLocationListener()
+        }
+        with(locationManager) {
+            requestLocationUpdates(
+                android.location.LocationManager.GPS_PROVIDER,
+                minTime, minDistance, myLocationListener
+            )
+            requestLocationUpdates(
+                android.location.LocationManager.NETWORK_PROVIDER,
+                minTime, minDistance, myLocationListener
+            )
+        }
+    }
+
+    private fun removeLocationListener() {
+        if (::locationManager.isInitialized && ::myLocationListener.isInitialized) {
+            locationManager.removeUpdates(myLocationListener)
+        }
+    }
+
+    inner class MyLocationListener : LocationListener {
+
+        override fun onLocationChanged(location: Location) {
+            viewModel.setLocation(requireContext(), location.latitude, location.longitude)
+            removeLocationListener()
+        }
+
     }
 }
