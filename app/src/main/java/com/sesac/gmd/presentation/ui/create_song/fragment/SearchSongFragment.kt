@@ -68,6 +68,7 @@ class SearchSongFragment : Fragment() {
     // Observer Set
     private fun setObserver(){
         with(viewModel) {
+            // observing saved location
             location.observe(viewLifecycleOwner) {
                 // 위치 정보가 저장되어 있지 않다면 현재 사용자의 위치 정보를 저장
                 if (it.latitude == 0.0 && it.state == null) {
@@ -89,7 +90,7 @@ class SearchSongFragment : Fragment() {
                     Log.d(DEFAULT_TAG + TAG, "Location is initialized!")
                 }
             }
-            // progressBar status
+            // observing progressBar status
             isLoading.observe(viewLifecycleOwner) {
                 if (it) {
                     binding.progressBar.visibility = View.VISIBLE
@@ -98,7 +99,7 @@ class SearchSongFragment : Fragment() {
                     binding.progressBar.visibility = View.GONE
                 }
             }
-            // 음악 검색 결과 리스트
+            // observing 음악 검색 결과 리스트
             songList.observe(viewLifecycleOwner){
                 with(binding) {
                     // 검색 결과 없을 때 검색 결과 없음 안내하는 view 표시
@@ -148,6 +149,7 @@ class SearchSongFragment : Fragment() {
     // 음악 검색
     private fun searchSong() {
         with(binding) {
+            // 키보드 내리기
             hideKeyBoard(requireActivity())
             // 검색 결과가 이미 표시 되어있다면 제거
             if (rvResult.adapter != null) {

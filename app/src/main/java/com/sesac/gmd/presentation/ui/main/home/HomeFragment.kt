@@ -28,6 +28,7 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
 import com.sesac.gmd.R
+import com.sesac.gmd.common.util.Utils.Companion.toastMessage
 import com.sesac.gmd.data.api.server.song.get_pinlist.Pin
 import com.sesac.gmd.data.repository.Repository
 import com.sesac.gmd.databinding.FragmentHomeBinding
@@ -65,15 +66,15 @@ class HomeFragment : Fragment(),
     private val requestLocationPermissionLauncher = registerForActivityResult(
         ActivityResultContracts.RequestMultiplePermissions()
     ) { permissions ->
-        var allPermissionsGranted: Boolean = true
-        permissions.entries.forEach { (permission, isGranted) ->
-            if (isGranted) {
-
-            } else {
+        var allPermissionsGranted = true
+        permissions.entries.forEach { (_, isGranted) ->
+            if (isGranted.not()) {
                 allPermissionsGranted = false
+                return@forEach
             }
         }
         if (allPermissionsGranted) getMyLocation()
+        else toastMessage("앱을 이용하기 위해서는 위치 정보 접근 권한이 필요합니다")
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
@@ -82,17 +83,18 @@ class HomeFragment : Fragment(),
         viewModel = ViewModelProvider(
             requireActivity(), ViewModelFactory(Repository()))[MainViewModel::class.java]
 
+        // ???
+        // 현재 위치 초기화
+        initLocation()
+
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // 현재 위치 초기화
-        initLocation()
         // Listener 등록
         setListener()
-
         // 구글 맵 생성
         initMap()
     }
@@ -106,9 +108,11 @@ class HomeFragment : Fragment(),
             if (lat != null && lng != null) {
                 viewModel.setLocation(requireContext(), lat, lng)
             }
-        } else {
-            viewModel.getCurrentLocation(requireContext())
         }
+        // ???
+//        else {
+//            viewModel.getCurrentLocation(requireContext())
+//        }
     }
 
     // Listener 초기화
@@ -133,9 +137,10 @@ class HomeFragment : Fragment(),
                 mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLocation, 16F))
                 getPins(currentLocation)
             }
-            location.observe(viewLifecycleOwner) {
-                startingPoint = LatLng(viewModel.location.value!!.latitude, viewModel.location.value!!.longitude)
-            }
+            // ???
+//            location.observe(viewLifecycleOwner) {
+//                startingPoint = LatLng(viewModel.location.value!!.latitude, viewModel.location.value!!.longitude)
+//            }
         }
     }
 
@@ -153,7 +158,7 @@ class HomeFragment : Fragment(),
             if (viewModel.location.value != null) {
                 LatLng(viewModel.location.value!!.latitude, viewModel.location.value!!.longitude)
             } else {
-                LatLng(37.5662952, 126.97794509999994)
+                LatLng(37.5662952, 126.97794509999994)  // 서울 시청
             }
 
         with(mMap) {
@@ -163,6 +168,7 @@ class HomeFragment : Fragment(),
             getPins(startingPoint)
         }
 
+        // ???
         binding.currentLocationButton.setOnClickListener {
             getMyLocation()
         }
@@ -171,20 +177,17 @@ class HomeFragment : Fragment(),
         setObserver()
     }
 
-    override fun onResume() {
-        super.onResume()
-        getMyLocation()
-    }
-
     // 지도에 표시할 음악 핀 가져오기
-    private fun getPins() {
+    private fun getPins(startingPoint: LatLng) {
         viewModel.getPinList(startingPoint.latitude, startingPoint.longitude)
     }
 
     // 음악 핀 지도에 표시
     private fun setMarkers(pinList: List<Pin>) {
+        // ???
         if (::mMap.isInitialized.not()) return
         mMap.clear()
+
         pinList.forEach {
             val location = LatLng(it.latitude, it.longitude)
             with(mMap) {
@@ -204,6 +207,12 @@ class HomeFragment : Fragment(),
         return true
     }
 
+    override fun onResume() {
+        super.onResume()
+        getMyLocation()
+    }
+
+    // ???
     private fun getMyLocation() {
         if (::locationManager.isInitialized.not()) {
             locationManager = getSystemService(requireContext(), LocationManager::class.java) as LocationManager
@@ -231,6 +240,7 @@ class HomeFragment : Fragment(),
         }
     }
 
+    // ???
     @SuppressLint("MissingPermission")
     private fun setMyLocationListener() {
         val minTime: Long = 1500
@@ -240,22 +250,24 @@ class HomeFragment : Fragment(),
         }
         with(locationManager) {
             requestLocationUpdates(
-                android.location.LocationManager.GPS_PROVIDER,
+                LocationManager.GPS_PROVIDER,
                 minTime, minDistance, myLocationListener
             )
             requestLocationUpdates(
-                android.location.LocationManager.NETWORK_PROVIDER,
+                LocationManager.NETWORK_PROVIDER,
                 minTime, minDistance, myLocationListener
             )
         }
     }
 
+    // ???
     private fun removeLocationListener() {
         if (::locationManager.isInitialized && ::myLocationListener.isInitialized) {
             locationManager.removeUpdates(myLocationListener)
         }
     }
 
+    // ???
     inner class MyLocationListener : LocationListener {
 
         override fun onLocationChanged(location: Location) {

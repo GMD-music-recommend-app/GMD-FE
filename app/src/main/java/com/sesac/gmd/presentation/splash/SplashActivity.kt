@@ -42,6 +42,7 @@ class SplashActivity : AppCompatActivity() {
         }
     }
 
+    // Permissions Check 함수
     private fun checkPermissions() {
         // 마시멜로(안드로이드 6.0) 이상 권한 체크
         if (Build.VERSION.SDK_INT >= 23) {

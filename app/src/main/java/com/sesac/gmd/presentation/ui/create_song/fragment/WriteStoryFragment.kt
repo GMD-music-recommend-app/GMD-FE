@@ -44,12 +44,24 @@ class WriteStoryFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        observeData()
-
+        // Observer 등록
+        setObserver()
         // Listener 등록
         setListener()
         // 생성하기 버튼 초기화
         setButtonState()
+    }
+
+    // Observer Set
+    private fun setObserver() {
+        with(viewModel) {
+            createSuccess.observe(viewLifecycleOwner) { success ->
+                if (success) {
+                    toastMessage("노래 생성 성공")
+                    requireActivity().finish()
+                }
+            }
+        }
     }
 
     // Listener 초기화 함수
@@ -68,15 +80,6 @@ class WriteStoryFragment : Fragment() {
                         },
                         negFunc = {})
                 }
-            }
-        }
-    }
-
-    private fun observeData() = with(viewModel) {
-        createSuccess.observe(viewLifecycleOwner) { success ->
-            if (success) {
-                toastMessage("노래 생성 성공")
-                requireActivity().finish()
             }
         }
     }
