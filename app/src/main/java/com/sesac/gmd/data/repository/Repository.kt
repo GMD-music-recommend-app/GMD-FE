@@ -6,6 +6,8 @@ package com.sesac.gmd.data.repository
 
 import com.google.gson.Gson
 import com.sesac.gmd.data.api.maniadb.ManiaDBRetrofitClient.Companion.maniaDBService
+import com.sesac.gmd.data.api.server.chart.GetChartResponse
+import com.sesac.gmd.data.api.server.chart.GetChartRetrofitClient.Companion.getChartService
 import com.sesac.gmd.data.model.Location
 import com.sesac.gmd.data.model.Song
 import com.sesac.gmd.data.api.server.song.create_pin.CreatePinResponse
@@ -66,5 +68,10 @@ class Repository {
             .toRequestBody("application/json; charset=utf-8".toMediaTypeOrNull())
 
         return createPinService.createPin(requestBody)
+    }
+
+    // 지역 내 인기차트 반환
+    suspend fun getChartList(city: String) : Response<GetChartResponse> {
+        return getChartService.getChart(city)
     }
 }
