@@ -24,18 +24,17 @@ import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.GoogleMap.OnMarkerClickListener
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
-import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.Marker
-import com.google.android.gms.maps.model.MarkerOptions
+import com.google.android.gms.maps.model.*
 import com.sesac.gmd.R
 import com.sesac.gmd.common.util.Utils.Companion.toastMessage
 import com.sesac.gmd.data.api.server.song.get_pinlist.Pin
 import com.sesac.gmd.data.repository.Repository
 import com.sesac.gmd.databinding.FragmentHomeBinding
-import com.sesac.gmd.presentation.ui.main.bottomsheet.CreateSongBottomSheetFragment
 import com.sesac.gmd.presentation.ui.factory.ViewModelFactory
-import com.sesac.gmd.presentation.ui.main.viewmodel.MainViewModel
+import com.sesac.gmd.presentation.ui.main.bottomsheet.CreateSongBottomSheetFragment
 import com.sesac.gmd.presentation.ui.main.bottomsheet.SongInfoBottomSheetFragment
+import com.sesac.gmd.presentation.ui.main.viewmodel.MainViewModel
+import kotlinx.coroutines.*
 
 class HomeFragment : Fragment(),
     OnMapReadyCallback,
@@ -194,6 +193,7 @@ class HomeFragment : Fragment(),
                 addMarker(
                     MarkerOptions()
                         .position(location)
+                        .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_pin_temp))
                         .anchor(0.5f, 0.5f)     // 마커의 하단이 아닌 중앙을 꼭짓점으로 하도록 수정
                 )!!.tag = it.pinIdx
             }
@@ -274,6 +274,5 @@ class HomeFragment : Fragment(),
             viewModel.setLocation(requireContext(), location.latitude, location.longitude)
             removeLocationListener()
         }
-
     }
 }
