@@ -4,6 +4,7 @@
 * */
 package com.sesac.gmd.presentation.ui.main.bottomsheet
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -47,6 +48,8 @@ class SongInfoBottomSheetFragment : BottomSheetDialogFragment() {
         viewModel = ViewModelProvider(
             requireActivity(), ViewModelFactory(Repository()))[MainViewModel::class.java]
 
+        Log.d(DEFAULT_TAG+TAG, "${arguments?.getString("pinIdx")}")
+
         // 해당 곡 상세 정보 가져오기
         getSongInfo()
 
@@ -82,6 +85,7 @@ class SongInfoBottomSheetFragment : BottomSheetDialogFragment() {
     }
 
     // 화면에 표시 될 핀 정보 세팅
+    @SuppressLint("SetTextI18n")
     private fun setContents() {
         with(binding) {
             with(viewModel.pinInfo) {
@@ -100,6 +104,23 @@ class SongInfoBottomSheetFragment : BottomSheetDialogFragment() {
                     ivStar.setImageResource(R.drawable.ic_star_empty)
                 }
                 // TODO: 댓글 추가
+
+                // TODO: 임시 작성 코드 추후 삭제 필요
+                if(arguments?.getString("pinIdx") == "50") {
+                    txtSongComment1.text = "JetPack"
+                    txtSongComment1Spc.text = "노래방 가서 불러야겟다"
+                    txtSongComment2.text = ""
+                    txtSongComment2Spc.text = ""
+                    txtSongComment3.text = ""
+                    txtSongComment3Spc.text = ""
+                } else if (arguments?.getString("pinIdx") == "51") {
+                    txtSongComment1.text = "Milli"
+                    txtSongComment1Spc.text = "크러쉬 2411도 추천"
+                    txtSongComment2.text = "하늘보리"
+                    txtSongComment2Spc.text = "오 추천 감사합니다"
+                    txtSongComment3.text = "브리브리대마왕"
+                    txtSongComment3Spc.text = "명반임. 전곡 다 들어보는거 추천"
+                }
             }
         }
     }
