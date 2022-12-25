@@ -127,22 +127,22 @@ class WriteStoryFragment : Fragment() {
                 toastMessage("사연은 최대 140자 까지 입력 가능합니다.")
                 flag = false
             }
-            // Check Hashtag Count
-            if (edtHashtag.text!!.count{it == '#'} > 3) {
-                Log.d(DEFAULT_TAG+TAG, "hashtag count : ${edtHashtag.text!!.count{it == '#'}}")
-                toastMessage("해시태그는 최대 3개까지 입력 가능합니다.")
-                flag = false
-            // Check Hashtag First Character
-            } else if (edtHashtag.text!![0] != '#') {
-                Log.d(DEFAULT_TAG+TAG, "hashtag first Character : ${edtHashtag.text!![0]}")
-                toastMessage("해시태그가 잘못 입력되었습니다.")
-                flag = false
-            // Check Hashtag Content
-            } else if (edtHashtag.text!![0] == '#' && edtHashtag.text!![1] in "!@#$%^&*()_-~`+><,./?") {
-                Log.d(DEFAULT_TAG+TAG, "hashtag second Character : ${edtHashtag.text!![1]}")
-                toastMessage("해시태그가 잘못 입력되었습니다.")
-                flag = false
-            }
+//            // Check Hashtag Count
+//            if (edtHashtag.text!!.count{it == '#'} > 3) {
+//                Log.d(DEFAULT_TAG+TAG, "hashtag count : ${edtHashtag.text!!.count{it == '#'}}")
+//                toastMessage("해시태그는 최대 3개까지 입력 가능합니다.")
+//                flag = false
+//            // Check Hashtag First Character
+//            } else if (edtHashtag.text!![0] != '#') {
+//                Log.d(DEFAULT_TAG+TAG, "hashtag first Character : ${edtHashtag.text!![0]}")
+//                toastMessage("해시태그가 잘못 입력되었습니다.")
+//                flag = false
+//            // Check Hashtag Content
+//            } else if (edtHashtag.text!![0] == '#' && edtHashtag.text!![1] in "!@#$%^&*()_-~`+><,./?") {
+//                Log.d(DEFAULT_TAG+TAG, "hashtag second Character : ${edtHashtag.text!![1]}")
+//                toastMessage("해시태그가 잘못 입력되었습니다.")
+//                flag = false
+//            }
         }
         return flag
     }
