@@ -4,7 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <com.google.android.material.textview.MaterialTextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/txt_oauth_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -16,7 +16,7 @@
         android:textColor="@color/black"
         android:textStyle="bold"
         android:textSize="28sp"/>
-    <com.google.android.material.textview.MaterialTextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/txt_oauth_subtitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -26,7 +26,7 @@
         android:text="아이디와 비밀번호 입력하기 귀찮으시죠?\n카카오로 1초 만에 회원가입 하세요."
         android:textAlignment="center"
         android:textSize="16sp"/>
-    <com.google.android.material.imageview.ShapeableImageView
+    <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/img_app_logo"
         android:layout_width="240dp"
         android:layout_height="240dp"
@@ -35,7 +35,7 @@
         android:layout_centerInParent="true"
         android:src="@drawable/ic_app_logo_black"/>
 
-    <com.google.android.material.button.MaterialButton
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btn_sign_in"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -53,7 +53,7 @@
         android:textStyle="bold"
         app:cornerRadius="10dp"
         app:icon="@drawable/ic_kakaotalk" />
-    <com.google.android.material.button.MaterialButton
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btn_sign_up"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

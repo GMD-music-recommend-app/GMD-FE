@@ -2,13 +2,12 @@
 * Created by gabriel
 * date : 22/11/26
 * */
-
 package com.sesac.gmd.presentation.ui.create_song.fragment
 
-import android.annotation.SuppressLint
-import android.app.AlertDialog
 import android.content.Intent
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -17,12 +16,13 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.sesac.gmd.R
 import com.sesac.gmd.common.util.DEFAULT_TAG
+import com.sesac.gmd.common.util.Utils.Companion.setAlertDialog
 import com.sesac.gmd.common.util.Utils.Companion.toastMessage
-import com.sesac.gmd.data.repository.CreateSongRepository
+import com.sesac.gmd.data.repository.Repository
 import com.sesac.gmd.databinding.FragmentWriteStoryBinding
-import com.sesac.gmd.presentation.main.MainActivity
 import com.sesac.gmd.presentation.ui.create_song.viewmodel.CreateSongViewModel
 import com.sesac.gmd.presentation.ui.factory.ViewModelFactory
+import com.sesac.gmd.presentation.ui.main.activity.MainActivity
 
 class WriteStoryFragment : Fragment() {
     companion object {
@@ -36,8 +36,7 @@ class WriteStoryFragment : Fragment() {
         binding = FragmentWriteStoryBinding.inflate(inflater, container, false)
 
         viewModel = ViewModelProvider(
-            requireActivity(), ViewModelFactory(CreateSongRepository())
-        )[CreateSongViewModel::class.java]
+            requireActivity(), ViewModelFactory(Repository()))[CreateSongViewModel::class.java]
 
         return binding.root
     }
@@ -45,49 +44,62 @@ class WriteStoryFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        // Observer 등록
+        setObserver()
         // Listener 등록
         setListener()
         // 생성하기 버튼 초기화
         setButtonState()
     }
 
+    // Observer Set
+    private fun setObserver() {
+        with(viewModel) {
+            createSuccess.observe(viewLifecycleOwner) { success ->
+                if (success) {
+                    toastMessage("노래 생성 성공")
+                    requireActivity().finish()
+                }
+            }
+        }
+    }
+
     // Listener 초기화 함수
     private fun setListener() {
         with(binding) {
-            // 생성하기 버튼
+            // 음악 핀 생성하기 버튼
             btnFinishCreate.setOnClickListener {
                 val reason = edtStory.text.toString()
-                val hashtag = txtHashtag.text.toString()
+                val hashtag = edtHashtag.text.toString()
 
                 if(checkValidation()) {
-                    AlertDialog.Builder(context)
-                        .setMessage(
-                            "음악을 추가하시겠습니까?"
-                        )
-                        .setPositiveButton("예") { _, _ ->
+                    setAlertDialog(requireContext(), null, "음악을 추가하시겠습니까?",
+                        posFunc = {
                             viewModel.createPin(reason, hashtag)
                             startActivity(Intent(context, MainActivity::class.java))
-                        }
-                        .setNegativeButton("아니오") { _, _ -> }
-                        .create()
-                        .show()
+                        },
+                        negFunc = {})
                 }
             }
         }
     }
 
     // 버튼 상태 초기화 함수
-    @SuppressLint("ResourceAsColor")
     private fun setButtonState() {
         with(binding) {
-            // TODO: 사연 입력되지 않았을 때 버튼 비활성화 구현 필요
-            if (edtStory.text?.isEmpty() == true) {
-                btnFinishCreate.setBackgroundColor(R.color.teal_200)
-                btnFinishCreate.isCheckable = false
-            } else {
-                btnFinishCreate.setBackgroundColor(R.color.main_color)
-                btnFinishCreate.isCheckable = true
-            }
+            edtStory.addTextChangedListener(object : TextWatcher{
+                override fun afterTextChanged(s: Editable?) {
+                    if (s!!.isEmpty()) {
+                        btnFinishCreate.setBackgroundResource(R.drawable.bg_btn_gray)
+                        btnFinishCreate.isEnabled = false
+                    } else {
+                        btnFinishCreate.setBackgroundResource(R.drawable.bg_btn_main_color)
+                        btnFinishCreate.isEnabled = true
+                    }
+                }
+                override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+                })
         }
     }
 
@@ -97,11 +109,12 @@ class WriteStoryFragment : Fragment() {
         var flag = true
 
         // Check Song
-        if (viewModel.selectedSong == null) {
+        if (viewModel.selectedSong.value == null) {
             Log.d(DEFAULT_TAG+TAG, "selectSong : ${viewModel.selectedSong}")
             toastMessage("음악이 선택되지 않았습니다.")
             flag = false
         }
+        // TODO: 유효성 검사 수정 필요
         with(binding) {
             // Check Story isNull
             if (edtStory.text!!.isEmpty()) {
@@ -115,18 +128,18 @@ class WriteStoryFragment : Fragment() {
                 flag = false
             }
             // Check Hashtag Count
-            if (txtHashtag.text!!.count{it == '#'} > 3) {
-                Log.d(DEFAULT_TAG+TAG, "hashtag count : ${txtHashtag.text!!.count{it == '#'}}")
+            if (edtHashtag.text!!.count{it == '#'} > 3) {
+                Log.d(DEFAULT_TAG+TAG, "hashtag count : ${edtHashtag.text!!.count{it == '#'}}")
                 toastMessage("해시태그는 최대 3개까지 입력 가능합니다.")
                 flag = false
             // Check Hashtag First Character
-            } else if (txtHashtag.text!![0] != '#') {
-                Log.d(DEFAULT_TAG+TAG, "hashtag first Character : ${txtHashtag.text!![0]}")
+            } else if (edtHashtag.text!![0] != '#') {
+                Log.d(DEFAULT_TAG+TAG, "hashtag first Character : ${edtHashtag.text!![0]}")
                 toastMessage("해시태그가 잘못 입력되었습니다.")
                 flag = false
             // Check Hashtag Content
-            } else if (txtHashtag.text!![0] == '#' && txtHashtag.text!![1] in "!@#$%^&*()_-~`+><,./?") {
-                Log.d(DEFAULT_TAG+TAG, "hashtag second Character : ${txtHashtag.text!![1]}")
+            } else if (edtHashtag.text!![0] == '#' && edtHashtag.text!![1] in "!@#$%^&*()_-~`+><,./?") {
+                Log.d(DEFAULT_TAG+TAG, "hashtag second Character : ${edtHashtag.text!![1]}")
                 toastMessage("해시태그가 잘못 입력되었습니다.")
                 flag = false
             }

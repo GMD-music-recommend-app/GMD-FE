@@ -26,6 +26,17 @@ class CreateSongActivity : AppCompatActivity() {
             setContentView(it.root)
         }
 
+        // 보여줄 Fragment set
+        setFirstFragment(savedInstanceState)
+
+        // toolbar 뒤로가기 버튼
+        val toolbar = binding.toolbar
+        setSupportActionBar(toolbar)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+    }
+
+    // 보여줄 Fragment setting
+    private fun setFirstFragment(savedInstanceState: Bundle?) {
         val getIntent = intent.getStringExtra("GO_TO_PAGE")
         if (savedInstanceState == null) {
             with(supportFragmentManager.beginTransaction()) {
@@ -45,11 +56,6 @@ class CreateSongActivity : AppCompatActivity() {
                 }
             }
         }
-
-        // toolbar 뒤로가기 버튼
-        val toolbar = binding.toolbar
-        setSupportActionBar(toolbar)
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
     }
 
     // TODO: 코드 수정 필요

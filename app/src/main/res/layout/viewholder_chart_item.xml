@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="50dp"
-    xmlns:tools="http://schemas.android.com/tools"
     android:background="@color/white">
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/chartNumberTextView"
         android:layout_width="42dp"
         android:layout_height="wrap_content"
@@ -18,7 +18,7 @@
         android:layout_alignParentStart="true"
         android:layout_marginStart="8dp"/>
 
-    <ImageView
+    <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/chartImageView"
         android:layout_width="24dp"
         android:layout_height="24dp"
@@ -26,7 +26,7 @@
         android:layout_toEndOf="@id/chartNumberTextView"
         android:layout_centerVertical="true" />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/chartTitleTextView"
         android:layout_width="wrap_content"
         android:layout_height="23dp"
@@ -39,7 +39,7 @@
         android:layout_marginTop="4dp"
         />
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/chartSingerTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -52,7 +52,7 @@
         android:layout_toEndOf="@id/chartImageView"
         android:layout_marginStart="8dp"/>
 
-    <TextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/chartEmpathyCountTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -63,8 +63,7 @@
         android:text="4,239회 공감"
         android:textColor="@color/gray"
         android:textSize="12sp"
-        android:textStyle="normal"
-        />
+        android:textStyle="normal" />
 
     <View
         android:layout_width="match_parent"

@@ -1,12 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".presentation.ui.sign_up.SetNickNameFragment">
-    <com.google.android.material.textview.MaterialTextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/txt_favorite_place"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -18,7 +17,7 @@
         android:textStyle="bold"
         android:textSize="24sp"/>
 
-    <com.google.android.material.textview.MaterialTextView
+    <androidx.appcompat.widget.AppCompatTextView
         android:id="@+id/txt_favorite_place_guide"
         android:background="#EDEDEDED"
         android:layout_width="wrap_content"
@@ -29,7 +28,7 @@
         android:textAlignment="center"
         android:textSize="48sp"
         />
-    <com.google.android.material.button.MaterialButton
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btn_ok"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

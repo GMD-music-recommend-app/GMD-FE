@@ -11,6 +11,7 @@ import android.app.Application
 import android.content.pm.ActivityInfo
 import android.os.Bundle
 import com.google.android.libraries.places.api.Places
+import com.kakao.sdk.common.KakaoSdk
 import com.sesac.gmd.R
 import java.util.*
 
@@ -24,6 +25,8 @@ class GMDApplication : Application(){
 
     override fun onCreate() {
         super.onCreate()
+        // 카카오 sdk 네이티브 앱 키 추가
+        KakaoSdk.init(this, R.string.kakao_app_key.toString())
         appInstance = this
         settingScreenPortrait()
         initPlaceSDK()

@@ -7,33 +7,31 @@ package com.sesac.gmd.presentation.ui.create_song.viewmodel
 
 import android.annotation.SuppressLint
 import android.content.Context
-import android.location.Address
-import android.location.Geocoder
-import android.location.Geocoder.GeocodeListener
-import android.os.Build
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.sesac.gmd.common.util.DEFAULT_TAG
-import com.sesac.gmd.common.util.FAILURE
-import com.sesac.gmd.common.util.SUCCESS
+import com.sesac.gmd.common.util.GeoUtil.geocoding
+import com.sesac.gmd.common.util.TEMP_USER_IDX
 import com.sesac.gmd.common.util.Utils.Companion.parseXMLFromMania
 import com.sesac.gmd.common.util.Utils.Companion.toastMessage
 import com.sesac.gmd.data.model.Location
 import com.sesac.gmd.data.model.Song
 import com.sesac.gmd.data.model.SongList
-import com.sesac.gmd.data.repository.CreateSongRepository
+import com.sesac.gmd.data.repository.Repository
 import kotlinx.coroutines.*
 import java.util.*
+import java.util.concurrent.TimeoutException
 /*
 * 멤버는 호출 순서대로 배치
 * */
 private const val TAG = "CreateSongViewModel"
 
-class CreateSongViewModel(private val repository: CreateSongRepository) : ViewModel() {
+class CreateSongViewModel(private val repository: Repository) : ViewModel() {
     // Location
     private val _location = MutableLiveData<Location>()
     val location: LiveData<Location> get() = _location
@@ -55,6 +53,9 @@ class CreateSongViewModel(private val repository: CreateSongRepository) : ViewMo
         Log.e(DEFAULT_TAG + TAG, thrownException.message.toString())
     }
 
+    private val _createSuccess = MutableLiveData<Boolean>()
+    val createSuccess: LiveData<Boolean> get() = _createSuccess
+
     // Coroutine 내 REST 처리 중 에러 발생 시 호출됨
     private fun onError(message: String) {
         errorMessage.value = message
@@ -62,83 +63,49 @@ class CreateSongViewModel(private val repository: CreateSongRepository) : ViewMo
     }
 
     // 다른 위치 지정
-    fun setLocation() {}
+    fun setLocation(context: Context, lat: Double, lng: Double) {
+        val getLocation = geocoding(context, lat, lng)
+        _location.value = getLocation
+    }
 
     // 현재 위치 정보 저장
-    @SuppressLint("MissingPermission")  // TODO: Splash -> getPermission 구현하면 해당 줄 삭제
-    fun getCurrentLocation(context: Context) : Boolean {
-        var flag = false    // FusedLocation 성공 여부
-
+    @SuppressLint("MissingPermission")
+    fun getCurrentLocation(context: Context)  {
         // 사용자의 정확한 현재 위치 요청
         val fusedLocationClient: FusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(context)
-        fusedLocationClient.lastLocation.addOnSuccessListener {
+        fusedLocationClient.lastLocation.addOnSuccessListener { // 비동기로 실행
             if (it == null) {
-                flag = false    // 요청 실패
+                // fusedLocationClient 가 현재 위치를 파악하지 못하는 경우
+                toastMessage("사용자의 현재 위치를 알 수 없습니다.")
             }
             else {
                 // 받아온 현재 위치를 기준으로 geocoding 실행 후 해당 위치 정보를 LiveData 에 저장
                 val userLocation = geocoding(context, it.latitude, it.longitude)
                 _location.value = userLocation
-                flag = true     // 요청 성공
             }
         }
-        return flag
-    }
-
-    // Geocoding(위/경도 -> 행정구역 변환) 함수
-    @Suppress("DEPRECATION")
-    private fun geocoding(context: Context, lat: Double, lng: Double) : Location {
-        val userLocation = Location(lat, lng)
-        val geocoder = Geocoder(context, Locale.getDefault())
-
-        // Over Android API 33
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            geocoder.getFromLocation(lat, lng, 1, object: GeocodeListener {
-                // 제대로 Geocoding 성공했을 경우
-                override fun onGeocode(address: MutableList<Address>) {
-                    userLocation.state = if (address[0].adminArea == null) address[0].subAdminArea else address[0].adminArea
-                    userLocation.city = if (address[0].locality == null) address[0].subLocality else address[0].locality
-                    userLocation.street = if (address[0].thoroughfare == null) address[0].subThoroughfare else address[0].thoroughfare
-                }
-                // Geocoding 실패했을 경우
-                override fun onError(errorMessage: String?) {
-                    super.onError(errorMessage)
-                    toastMessage("예기치 못한 문제가 발생했습니다.")
-                    Log.d(DEFAULT_TAG + TAG, "Geocoder occurred error : $errorMessage!!")
-                }
-            })
-        } else {
-            // Under Android API 33
-            val address = geocoder.getFromLocation(lat, lng, 1)
-            try {
-                if (address != null) {
-                    if (address.isNotEmpty()) {
-                        userLocation.state = if (address[0].adminArea == null) address[0].subAdminArea else address[0].adminArea
-                        userLocation.city = if (address[0].locality == null) address[0].subLocality else address[0].locality
-                        userLocation.street = if (address[0].thoroughfare == null) address[0].subThoroughfare else address[0].thoroughfare
-                    }
-                }
-            } catch (e: Exception) {
-                toastMessage("예기치 못한 문제가 발생했습니다.")
-                e.printStackTrace()
-            }
-        }
-        return userLocation
     }
 
     // 음악 검색
     fun getSong(keyword: String) {
         isLoading.postValue(true)
-        CoroutineScope(Dispatchers.IO).launch(exceptionHandler) {
+        viewModelScope.launch(exceptionHandler) {
             try {
                 val responseBody = repository.getSong(keyword)
                 val result = parseXMLFromMania(responseBody.string())
                 songList.postValue(result)
-                withContext(Dispatchers.Main) { isLoading.value = false }
+                isLoading.value = false
+            } catch (e : TimeoutException) {
+                Log.d(DEFAULT_TAG + TAG, "getSong() error! : ${e.message}")
+                toastMessage("연결이 고르지 않습니다.\n 다시 시도해주시기 바랍니다.")
+                isLoading.value = false
+                throw TimeoutException("$e")
             } catch (e: Exception) {
                 // TODO: 예외 처리 필요(인터넷 연결x)
                 Log.d(DEFAULT_TAG + TAG, "getSong() error! : ${e.message}")
                 toastMessage("예기치 못한 오류가 발생했습니다!")
+                isLoading.value = false
+                throw Exception("$e")
             }
         }
     }
@@ -149,50 +116,32 @@ class CreateSongViewModel(private val repository: CreateSongRepository) : ViewMo
         _selectedSong.value = selectedSong
     }
 
-    // TODO: 임시 작성 코드. OAuth 구현하면 userIdx Preference 에서 가져오고 해당 줄 삭제
-    private val userIdx = 10
-
     // 핀 생성하기
     fun createPin(reason: String, hashtag: String?) {
-        Log.d(DEFAULT_TAG+TAG, "1")
-        CoroutineScope(Dispatchers.IO).launch(exceptionHandler) {
-            Log.d(DEFAULT_TAG+TAG, "2")
+        viewModelScope.launch(exceptionHandler) {
             try {
                 val response = repository.createPin(
-                    userIdx,
+                    TEMP_USER_IDX,
                     location.value!!,
                     selectedSong.value!!,
                     reason,
                     hashtag
                 )
-                withContext(Dispatchers.Main) {
-                    Log.d(DEFAULT_TAG+TAG, "3")
-                    if (response.isSuccessful) {
-                        Log.d(DEFAULT_TAG+TAG, "4")
-                        Log.d(DEFAULT_TAG+TAG, "---------------------Song Create Success!---------------------")
-                        Log.d(DEFAULT_TAG+TAG, "pin Number : ${response.body()!!.result.pinIdx}")
-                    } else {
-                        Log.d(DEFAULT_TAG+TAG, "5")
-                        Log.d(DEFAULT_TAG+TAG, "---------------------Song Create Fail!---------------------")
-                        Log.d(DEFAULT_TAG+TAG, "errorCode : ${response.body()!!.response.code}")
-                        Log.d(DEFAULT_TAG+TAG, "errorMessage : ${response.body()!!.response.message}")
-                        toastMessage("예기치 못한 오류가 발생했습니다.")
-                        when(response.body().toString()[0]) {
-                            '1' -> Log.d(DEFAULT_TAG+TAG, "code 1")
-                            '2' -> Log.d(DEFAULT_TAG+TAG, "code 2")
-                            '3' -> Log.d(DEFAULT_TAG+TAG, "code 3")
-                            '4' -> Log.d(DEFAULT_TAG+TAG, "code 4")
-                            '5' -> Log.d(DEFAULT_TAG+TAG, "code 5")
-                            else ->{}
-                        }
-                        onError("onError: ${response.errorBody()!!.string()}")
-                    }
+                if (response.isSuccessful) {
+                    // TODO: 예외처리 필요(중복 곡 생성 시)
+                    Log.d(DEFAULT_TAG+TAG, "---------------------Song Create Success!---------------------")
+                    Log.d(DEFAULT_TAG+TAG, "pin Number : ${response.body()!!.result.pinIdx}")
+
+                    _createSuccess.value = true
+                } else {
+                    Log.d(DEFAULT_TAG+TAG, "---------------------Song Create Fail!---------------------")
+                    Log.d(DEFAULT_TAG+TAG, "errorMessage : ${response.body()!!.message}")
+
+                    toastMessage("예기치 못한 오류가 발생했습니다.")
+                    onError("onError: ${response.errorBody()!!.string()}")
                 }
             } catch (e: Exception) {
-                withContext(Dispatchers.Main) {
-                    toastMessage("예기치 못한 오류가 발생했습니다.")
-                }
-                Log.d(DEFAULT_TAG+TAG, "6")
+                toastMessage("예기치 못한 오류가 발생했습니다.")
                 Log.d(DEFAULT_TAG + TAG, "createPin() error! : ${e.message}")
             }
         }

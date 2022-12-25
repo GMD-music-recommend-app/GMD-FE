@@ -2,7 +2,6 @@
 * Created by gabriel
 * date : 22/12/02
 * */
-
 package com.sesac.gmd.presentation.ui.create_song.fragment
 
 import android.os.Bundle
@@ -10,53 +9,118 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import com.google.android.gms.common.api.Status
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.Marker
 import com.google.android.gms.maps.model.MarkerOptions
 import com.google.android.libraries.places.api.model.Place
 import com.google.android.libraries.places.widget.AutocompleteSupportFragment
 import com.google.android.libraries.places.widget.listener.PlaceSelectionListener
 import com.sesac.gmd.R
+import com.sesac.gmd.common.util.Utils.Companion.setAlertDialog
+import com.sesac.gmd.data.repository.Repository
 import com.sesac.gmd.databinding.FragmentFindOtherPlaceBinding
 import com.sesac.gmd.presentation.ui.create_song.bottomsheet.FindOtherPlaceBottomSheetFragment
+import com.sesac.gmd.presentation.ui.create_song.viewmodel.CreateSongViewModel
+import com.sesac.gmd.presentation.ui.factory.ViewModelFactory
 
 class FindOtherPlaceFragment : Fragment(), OnMapReadyCallback {
     companion object {
         fun newInstance() = FindOtherPlaceFragment()
+
+        val startingPoint = LatLng(37.5662952, 126.97794509999994) // 서울 시청
     }
+    private var addedMarker: Marker? = null
     private lateinit var binding: FragmentFindOtherPlaceBinding
+    private lateinit var viewModel: CreateSongViewModel
     private lateinit var mMap: GoogleMap
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentFindOtherPlaceBinding.inflate(inflater, container, false)
+
+        viewModel = ViewModelProvider(
+            requireActivity(), ViewModelFactory(Repository()))[CreateSongViewModel::class.java]
 
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         // 구글 맵 생성
         initMap()
         // Listener 초기화
         setListener()
+        // 장소 검색
+        searchPlace()
+    }
 
-        // TODO: 임시 작성 코드. 추후 수정 필요
+    // 구글 맵 초기화
+    private fun initMap() {
+        val mapFragment = childFragmentManager.findFragmentById(R.id.subMap) as SupportMapFragment?
+        mapFragment?.getMapAsync(this)
+
         val findOtherBottomSheet = FindOtherPlaceBottomSheetFragment.newInstance()
-        findOtherBottomSheet.show(childFragmentManager, "FindOtherPlaceFragment")
+        findOtherBottomSheet.show(childFragmentManager, findOtherBottomSheet.tag)
+    }
+
+    override fun onMapReady(googleMap: GoogleMap) {
+        mMap = googleMap
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(startingPoint, 16F))
+
+        mMap.setOnMapLongClickListener { point ->
+            if (addedMarker != null) {
+                mMap.clear()
+            }
+            val position = LatLng(point.latitude, point.longitude)
+            addedMarker = mMap.addMarker(
+                MarkerOptions()
+                    .position(position)
+                    .title("여기에 음악 추가하기")
+            )
+            addedMarker?.showInfoWindow()
+            binding.btnCreatePlace.isVisible = addedMarker != null
+        }
+    }
+
+    // Listener 초기화
+    private fun setListener() {
+        with(binding) {
+            btnCreatePlace.setOnClickListener {
+                setAlertDialog(requireContext(), null,
+                    "이 곳에 음악을 추가하시겠습니까?",
+                    posFunc = {
+                        viewModel.setLocation(requireContext(), addedMarker!!.position.latitude, addedMarker!!.position.longitude)
+                        parentFragmentManager
+                            .beginTransaction()
+                            .replace(R.id.container, SearchSongFragment.newInstance())
+                            .addToBackStack(null)
+                            .commit()
+                              },
+                    negFunc = {})
+            }
+        }
+    }
+
+    // 장소 검색
+    private fun searchPlace() {
         // Initialize the AutocompleteSupportFragment.
         val autocompleteFragment = childFragmentManager.findFragmentById(R.id.autocomplete_fragment) as AutocompleteSupportFragment
         // Specify the types of place data to return.
-        autocompleteFragment.setPlaceFields(listOf(Place.Field.ID, Place.Field.NAME))
+        autocompleteFragment.setPlaceFields(listOf(Place.Field.ID, Place.Field.NAME, Place.Field.LAT_LNG))
         // Set up a PlaceSelectionListener to handle the response.
         autocompleteFragment.setOnPlaceSelectedListener(object : PlaceSelectionListener {
             override fun onPlaceSelected(place: Place) {
                 // TODO: Get info about the selected place.
                 Log.i("FindOtherPlaceFragment", "Place: ${place.name}, ${place.id}")
+                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(place.latLng ?: startingPoint, 16F))
             }
 
             override fun onError(status: Status) {
@@ -65,134 +129,4 @@ class FindOtherPlaceFragment : Fragment(), OnMapReadyCallback {
             }
         })
     }
-
-    private fun initMap() {
-        val mapFragment = childFragmentManager.findFragmentById(R.id.subMap) as SupportMapFragment?
-        mapFragment?.getMapAsync(this)
-    }
-
-    private fun setListener() {
-        val supportMapFragment = parentFragmentManager
-
-        with(binding) {
-            btnCreatePlace.setOnClickListener {
-                supportMapFragment
-                    .beginTransaction()
-                    .replace(R.id.container, SearchSongFragment.newInstance())
-                    .addToBackStack(null)
-                    .commit()
-            }
-        }
-    }
-
-    override fun onMapReady(googleMap: GoogleMap) {
-        mMap = googleMap
-
-        val startingPoint = LatLng(36.573898277022, 126.9731314753)
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(startingPoint, 16F))
-
-        mMap.setOnMapLongClickListener { point ->
-            val position = LatLng(point.latitude, point.longitude)
-            mMap.addMarker(
-                MarkerOptions()
-                    .position(position)
-                    .title("여기에 생성한 음악 핀")
-            )
-                ?.showInfoWindow()
-        }
-    }
-/*
-    override fun onLongClick(v: View?): Boolean {
-        // TODO: 최초 시작 위치 임시 설정. 추후 수정 필요
-        val startingPoint = LatLng(point, 126.9731314753)
-        with(mMap) {
-            addMarker(MarkerOptions()
-                .position(startingPoint)
-                .title("여기에 생성한 음악 핀"))
-            moveCamera(CameraUpdateFactory.newLatLngZoom(startingPoint, 15F))
-        }
-    }*/
 }
-
-
-//class FindOtherPlaceFragment : BaseFragment<FragmentFindOtherPlaceBinding>(FragmentFindOtherPlaceBinding::inflate), OnMapReadyCallback {
-//    companion object {
-//        fun newInstance() = FindOtherPlaceFragment()
-//    }
-//    private lateinit var mMap: GoogleMap
-//
-//    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-//        super.onViewCreated(view, savedInstanceState)
-//        // 구글 맵 생성
-//        initMap()
-//        // Listener 초기화
-//        setListener()
-//
-//        // TODO: 임시 작성 코드. 추후 수정 필요
-//        val findOtherBottomSheet = FindOtherPlaceBottomSheetFragment.newInstance()
-//        findOtherBottomSheet.show(childFragmentManager, TAG)
-//        // Initialize the AutocompleteSupportFragment.
-//        val autocompleteFragment = childFragmentManager.findFragmentById(R.id.autocomplete_fragment) as AutocompleteSupportFragment
-//        // Specify the types of place data to return.
-//        autocompleteFragment.setPlaceFields(listOf(Place.Field.ID, Place.Field.NAME))
-//        // Set up a PlaceSelectionListener to handle the response.
-//        autocompleteFragment.setOnPlaceSelectedListener(object : PlaceSelectionListener {
-//            override fun onPlaceSelected(place: Place) {
-//                // TODO: Get info about the selected place.
-//                Log.i(TAG, "Place: ${place.name}, ${place.id}")
-//            }
-//
-//            override fun onError(status: Status) {
-//                // TODO: Handle the error.
-//                Log.i(TAG, "An error occurred: $status")
-//            }
-//        })
-//    }
-//
-//    private fun initMap() {
-//        val mapFragment = childFragmentManager.findFragmentById(R.id.subMap) as SupportMapFragment?
-//        mapFragment?.getMapAsync(this)
-//    }
-//
-//    private fun setListener() {
-//        val supportMapFragment = parentFragmentManager
-//
-//        with(binding) {
-//            btnCreatePlace.setOnClickListener {
-//                supportMapFragment
-//                    .beginTransaction()
-//                    .replace(R.id.container, SearchSongFragment.newInstance())
-//                    .addToBackStack(null)
-//                    .commit()
-//            }
-//        }
-//    }
-//
-//    override fun onMapReady(googleMap: GoogleMap) {
-//        mMap = googleMap
-//
-//        val startingPoint = LatLng(36.573898277022, 126.9731314753)
-//        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(startingPoint, 16F))
-//
-//        mMap.setOnMapLongClickListener { point ->
-//            val position = LatLng(point.latitude, point.longitude)
-//            mMap.addMarker(
-//                MarkerOptions()
-//                    .position(position)
-//                    .title("여기에 생성한 음악 핀")
-//            )
-//                ?.showInfoWindow()
-//        }
-//    }
-///*
-//    override fun onLongClick(v: View?): Boolean {
-//        // TODO: 최초 시작 위치 임시 설정. 추후 수정 필요
-//        val startingPoint = LatLng(point, 126.9731314753)
-//        with(mMap) {
-//            addMarker(MarkerOptions()
-//                .position(startingPoint)
-//                .title("여기에 생성한 음악 핀"))
-//            moveCamera(CameraUpdateFactory.newLatLngZoom(startingPoint, 15F))
-//        }
-//    }*/
-//}

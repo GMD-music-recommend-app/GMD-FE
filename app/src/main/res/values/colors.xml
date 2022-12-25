@@ -12,4 +12,5 @@
     <!--  Custom Colors  -->
     <color name="main_color">#FF5552</color>
     <color name="gray">#858585</color>
+    <color name="transparent">#00000000</color>
 </resources>

@@ -89,7 +89,7 @@
         android:textSize="14sp"
         android:paddingStart="12dp"/>
 
-    <com.google.android.material.button.MaterialButton
+    <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btn_finish_create"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -97,7 +97,7 @@
         android:layout_alignParentBottom="true"
         android:layout_marginHorizontal="32dp"
         android:layout_marginBottom="32dp"
-        android:backgroundTint="#D9D9D9"
+        android:background="@drawable/bg_btn_gray"
         android:text="음악 추가하기" />
   </RelativeLayout>
 </ScrollView>

@@ -1,12 +1,18 @@
 <resources>
+    <!-- App Name   -->
     <string name="app_name">GMD</string>
     <string name="app_name_kor">지뭐듣</string>
 
     <!--  Google Map API KEY-->
     <string name="google_maps_key">AIzaSyA1vL3vDpfHOn0zzplBR2Z5cpJ2v9Qz5Cw</string>
+    <!--  Kakao API KEY-->
+    <string name="kakao_app_key">0a2c945c82b638fdb08b2eccf8a0a87e</string>
 
-    <!--  tab name  -->
+    <!--  Tab name  -->
     <string name="tab_home">홈</string>
     <string name="tab_chart">인기차트</string>
     <string name="tab_setting">설정</string>
+
+    <!--  HomeFragment  -->
+    <string name="btn_create_pin">노래 추천하기</string>
 </resources>
