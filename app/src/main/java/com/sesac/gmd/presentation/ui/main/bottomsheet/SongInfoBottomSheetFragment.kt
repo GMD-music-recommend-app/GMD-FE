@@ -56,8 +56,8 @@ class SongInfoBottomSheetFragment : BottomSheetDialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // 가져온 곡 정보 view 와 매핑
-        setContents()
+        // Observer 등록
+        setObserver()
         // Listener 등록
         setListener()
     }
@@ -70,6 +70,14 @@ class SongInfoBottomSheetFragment : BottomSheetDialogFragment() {
             dismiss()
             toastMessage("예기치 못한 오류가 발생했습니다.")
             Log.d(DEFAULT_TAG + TAG, "getPinInfo() error! : ${e.message}")
+        }
+    }
+
+    private fun setObserver() {
+        viewModel.pinInfo.observe(viewLifecycleOwner) {
+            // 가져온 곡 정보 view 와 매핑
+            setContents()
+            binding.bottomSheetSong.visibility = View.VISIBLE
         }
     }
 

@@ -4,7 +4,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/bottom_sheet_song"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:visibility="invisible">
 
     <androidx.appcompat.widget.AppCompatImageView
         android:id="@+id/iv_song_albumCover"
@@ -12,7 +13,6 @@
         android:layout_height="64dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="24dp"
-        android:src="@drawable/hardcode_album_image1"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -21,7 +21,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="18dp"
-        android:text="COOL (Your rainbow)"
+        android:text=""
         android:textColor="@color/black"
         android:textSize="16sp"
         android:textStyle="bold"
@@ -32,7 +32,7 @@
         android:id="@+id/txt_song_artist"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="NMIXX"
+        android:text=""
         android:textColor="@color/black"
         app:layout_constraintStart_toStartOf="@+id/txt_song_title"
         app:layout_constraintTop_toBottomOf="@+id/txt_song_title" />
@@ -41,7 +41,7 @@
         android:id="@+id/txt_song_albumName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Entwurf"
+        android:text=""
         android:textColor="@color/black"
         app:layout_constraintStart_toStartOf="@+id/txt_song_title"
         app:layout_constraintTop_toBottomOf="@+id/txt_song_artist" />
@@ -60,7 +60,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:text="가브리엘님의 추천"
+        android:text=""
         android:textColor="@color/black"
         app:layout_constraintStart_toStartOf="@+id/iv_song_albumCover"
         app:layout_constraintTop_toBottomOf="@+id/txt_song_hashtag" />
@@ -70,7 +70,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
-        android:text="#가을 #몽환적인 #불타오르는"
+        android:text=""
         android:textColor="@color/main_color"
         android:textSize="10sp"
         app:layout_constraintStart_toStartOf="@+id/iv_song_albumCover"
@@ -81,7 +81,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:text="퇴근할 시간 쯤되면 횡단보도 너머로... 더보기"
+        android:text=""
         app:layout_constraintStart_toEndOf="@+id/txt_song_userName"
         app:layout_constraintTop_toTopOf="@+id/txt_song_userName" />
 

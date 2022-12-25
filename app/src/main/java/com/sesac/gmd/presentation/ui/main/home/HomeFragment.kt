@@ -193,7 +193,7 @@ class HomeFragment : Fragment(),
                 addMarker(
                     MarkerOptions()
                         .position(location)
-                        .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_pin_temp))
+                        .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_pin_temp_x2))
                         .anchor(0.5f, 0.5f)     // 마커의 하단이 아닌 중앙을 꼭짓점으로 하도록 수정
                 )!!.tag = it.pinIdx
             }
