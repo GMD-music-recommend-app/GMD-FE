@@ -1,5 +1,8 @@
 package com.sesac.gmd.data.api.server.chart
 
+/**
+ * Chart Request 에 대한 Response
+ */
 data class GetChartResponse(
     val code: Int,
     val isSuccess: Boolean,
@@ -7,6 +10,9 @@ data class GetChartResponse(
     val result: MutableList<GetChartResult>
 )
 
+/**
+ * Chart Request 에 대한 Response 중 인기차트 값
+ */
 data class GetChartResult(
     val albumImage: String, // 앨범 이미지
     val artist: String,     // 가수

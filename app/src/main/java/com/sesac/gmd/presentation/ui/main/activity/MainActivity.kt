@@ -1,7 +1,7 @@
-/*
-* Created by gabriel
+/**
+* Created by 조진수
 * date : 22/11/21
-* */
+*/
 package com.sesac.gmd.presentation.ui.main.activity
 
 import androidx.appcompat.app.AppCompatActivity

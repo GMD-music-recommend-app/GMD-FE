@@ -1,7 +1,7 @@
-/*
-* Created by gabriel
+/**
+* Created by 조진수
 * date : 22/12/02
-* */
+*/
 package com.sesac.gmd.presentation.ui.create_song.fragment
 
 import android.os.Bundle
@@ -31,11 +31,15 @@ import com.sesac.gmd.presentation.ui.create_song.bottomsheet.FindOtherPlaceBotto
 import com.sesac.gmd.presentation.ui.create_song.viewmodel.CreateSongViewModel
 import com.sesac.gmd.presentation.ui.factory.ViewModelFactory
 
+/**
+ * 다른 곳에서 추가하기 Fragment
+ */
 class FindOtherPlaceFragment : Fragment(), OnMapReadyCallback {
     companion object {
         fun newInstance() = FindOtherPlaceFragment()
 
-        val startingPoint = LatLng(37.5662952, 126.97794509999994) // 서울 시청
+        // 지도의 중심점을 서울 시청으로 설정
+        val startingPoint = LatLng(37.5662952, 126.97794509999994)
     }
     private var addedMarker: Marker? = null
     private lateinit var binding: FragmentFindOtherPlaceBinding
@@ -71,6 +75,7 @@ class FindOtherPlaceFragment : Fragment(), OnMapReadyCallback {
         findOtherBottomSheet.show(childFragmentManager, findOtherBottomSheet.tag)
     }
 
+    // 구글 맵 생성 시 지도 구성
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(startingPoint, 16F))

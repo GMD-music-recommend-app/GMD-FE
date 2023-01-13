@@ -1,8 +1,7 @@
-/*
-* Created by gabriel
+/**
+* Created by 조진수
 * date : 22/12/09
-* */
-
+*/
 package com.sesac.gmd.common.util
 
 // TEMP, Account : 10   TODO : 추후 삭제 예정
@@ -20,6 +19,9 @@ const val TAB_SETTING = 2
 // BASE_URL
 const val MANIADB_BASE_URL = "http://www.maniadb.com/api/search/"
 const val GMD_BASE_URL = "http://yourplaylistgmd.shop/"
+
+// ManiaDB Service Key
+const val MANIADB_SERVICE_KEY = "gmd6to30@gmail.com"
 
 // Utils.parseXMLFromMania.itemChildNode.nodeName
 const val XML_TAG_MANIA_DB_ALBUM = "maniadb:album"

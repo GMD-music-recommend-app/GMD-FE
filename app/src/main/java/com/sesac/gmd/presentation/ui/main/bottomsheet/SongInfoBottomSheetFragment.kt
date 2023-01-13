@@ -1,7 +1,7 @@
-/*
-* Created by gabriel
+/**
+* Created by 조진수
 * date : 22/11/24
-* */
+*/
 package com.sesac.gmd.presentation.ui.main.bottomsheet
 
 import android.annotation.SuppressLint
@@ -25,6 +25,9 @@ import com.sesac.gmd.presentation.ui.factory.ViewModelFactory
 import com.sesac.gmd.presentation.ui.main.viewmodel.MainViewModel
 
 // TODO: Expanded Bottom Sheet Dialog 로 변경 필요
+/**
+ * 핀 클릭 시 해당 핀의 정보를 표시하는 BottomSheetDialog
+ */
 class SongInfoBottomSheetFragment : BottomSheetDialogFragment() {
     companion object {
         fun newInstance() = SongInfoBottomSheetFragment()

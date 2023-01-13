@@ -8,6 +8,9 @@ import android.util.Log
 import com.sesac.gmd.data.model.Location
 import java.util.*
 
+/**
+* Location(위도, 경도) 값을 통해 행정 구역을 반환하는 Geocoder
+*/
 object GeoUtil {
     private val TAG = GeoUtil::class.simpleName
 

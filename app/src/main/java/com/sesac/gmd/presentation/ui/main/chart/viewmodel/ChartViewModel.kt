@@ -11,6 +11,7 @@ import com.sesac.gmd.common.util.DEFAULT_TAG
 import com.sesac.gmd.common.util.GeoUtil
 import com.sesac.gmd.common.util.Utils.Companion.toastMessage
 import com.sesac.gmd.data.repository.Repository
+import com.sesac.gmd.presentation.ui.create_song.viewmodel.CreateSongViewModel
 import com.sesac.gmd.presentation.ui.main.chart.adapter.ChartViewHolder
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.delay
@@ -18,7 +19,7 @@ import kotlinx.coroutines.launch
 
 class ChartViewModel(private val repository: Repository) : ViewModel() {
     companion object {
-        private const val TAG = "CreateSongViewModel"
+        private val TAG = CreateSongViewModel::class.simpleName
     }
     // ProgressBar
     val isLoading = MutableLiveData<Boolean>()

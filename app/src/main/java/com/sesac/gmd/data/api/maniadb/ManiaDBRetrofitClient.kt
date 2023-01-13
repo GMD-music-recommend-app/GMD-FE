@@ -1,8 +1,7 @@
-/*
-* Created by gabriel
+/**
+* Created by 조진수
 * date : 22/12/06
-* */
-
+*/
 package com.sesac.gmd.data.api.maniadb
 
 import com.sesac.gmd.common.util.MANIADB_BASE_URL
@@ -25,13 +24,16 @@ class ManiaDBRetrofitClient {
         val maniaDBService: ManiaDBService
             get() = maniaRetrofitBuilder.build().create(ManiaDBService::class.java)
 
+
+        // TODO: 디버그 일 때랑 아닐 때 분기해서 구현 필요 
         init {
             okHttpClient = OkHttpClient.Builder()
                 .addInterceptor(Interceptor { chain: Interceptor.Chain ->
                     val request = chain.request()
                     val newRequest: Request = request.newBuilder().build()
                     chain.proceed(newRequest)
-                }).addInterceptor(httpInterceptor())
+                })
+                .addInterceptor(httpInterceptor())
                 .connectTimeout(10, TimeUnit.SECONDS)
                 .readTimeout(10, TimeUnit.SECONDS)
                 .build()
@@ -41,7 +43,7 @@ class ManiaDBRetrofitClient {
         // OkHttp Interceptor 로그 기록 용
         private fun httpInterceptor(): HttpLoggingInterceptor {
             val interceptor = HttpLoggingInterceptor()
-            interceptor.level = HttpLoggingInterceptor.Level.BODY
+            interceptor.level = HttpLoggingInterceptor.Level.BASIC
             return interceptor
         }
     }

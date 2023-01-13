@@ -1,8 +1,7 @@
-/*
-* Created by gabriel
+/**
+* Created by 조진수
 * date : 22/11/24
-* */
-
+*/
 package com.sesac.gmd.presentation.ui.login
 
 import android.content.Intent
@@ -14,6 +13,9 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.sesac.gmd.databinding.FragmentLoginBottomSheetBinding
 import com.sesac.gmd.presentation.ui.sign_up.SignUpActivity
 
+/**
+ * 음악 추가하기 시 로그인이 되어있지 않을 경우 표시되는 BottomSheetDialog
+ */
 class LoginBottomSheetFragment : BottomSheetDialogFragment() {
     companion object {
         fun newInstance() = LoginBottomSheetFragment()

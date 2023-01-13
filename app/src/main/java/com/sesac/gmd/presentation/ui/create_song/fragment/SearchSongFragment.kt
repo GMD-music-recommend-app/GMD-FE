@@ -1,7 +1,7 @@
-/*
-* Created by gabriel
+/**
+* Created by 조진수
 * date : 22/11/26
-* */
+*/
 package com.sesac.gmd.presentation.ui.create_song.fragment
 
 import android.content.Intent
@@ -26,10 +26,13 @@ import com.sesac.gmd.presentation.ui.create_song.viewmodel.CreateSongViewModel
 import com.sesac.gmd.presentation.ui.factory.ViewModelFactory
 import com.sesac.gmd.presentation.ui.main.activity.MainActivity
 
+/**
+ * 음악 검색 Fragment
+ */
 class SearchSongFragment : Fragment() {
     companion object {
+        private val TAG = SearchSongFragment::class.simpleName
         fun newInstance() = SearchSongFragment()
-        const val TAG = "SearchSongFragment"
     }
     private lateinit var binding: FragmentSearchSongBinding
     private lateinit var viewModel: CreateSongViewModel

@@ -1,8 +1,7 @@
-/*
-* Created by gabriel
+/**
+* Created by 조진수
 * date : 22/12/06
-* */
-
+*/
 package com.sesac.gmd.presentation.ui.create_song.viewmodel
 
 import android.annotation.SuppressLint
@@ -26,12 +25,15 @@ import com.sesac.gmd.data.repository.Repository
 import kotlinx.coroutines.*
 import java.util.*
 import java.util.concurrent.TimeoutException
-/*
-* 멤버는 호출 순서대로 배치
-* */
-private const val TAG = "CreateSongViewModel"
 
+/**
+ * 음악 추가하기 Sequence 에서 사용하는 ViewModel
+ * 멤버는 호출 순서대로 배치
+ */
 class CreateSongViewModel(private val repository: Repository) : ViewModel() {
+    companion object {
+        private val TAG = CreateSongViewModel::class.simpleName
+    }
     // Location
     private val _location = MutableLiveData<Location>()
     val location: LiveData<Location> get() = _location

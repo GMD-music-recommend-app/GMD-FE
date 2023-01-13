@@ -1,8 +1,7 @@
-/*
-* Created by gabriel
+/**
+* Created by 조진수
 * date : 22/11/26
-* */
-
+*/
 package com.sesac.gmd.presentation.ui.create_song.activity
 
 import android.graphics.Rect
@@ -37,11 +36,11 @@ class CreateSongActivity : AppCompatActivity() {
 
     // 보여줄 Fragment setting
     private fun setFirstFragment(savedInstanceState: Bundle?) {
-        val getIntent = intent.getStringExtra("GO_TO_PAGE")
+        val goToPageName = intent.getStringExtra("GO_TO_PAGE")
         if (savedInstanceState == null) {
             with(supportFragmentManager.beginTransaction()) {
                 // 노래 추천하기 버튼 클릭 시 첫 화면
-                when(getIntent) {
+                when(goToPageName) {
                     "CreateSongHere" -> { // 여기에서 추천하기
                         add(R.id.container, SearchSongFragment.newInstance())
                         commit()

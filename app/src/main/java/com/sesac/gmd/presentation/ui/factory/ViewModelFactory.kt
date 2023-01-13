@@ -1,8 +1,7 @@
-/*
-* Created by gabriel
+/**
+* Created by 조진수
 * date : 22/12/13
-* */
-
+*/
 package com.sesac.gmd.presentation.ui.factory
 
 import androidx.lifecycle.ViewModel

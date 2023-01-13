@@ -4,6 +4,9 @@ import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Path
 
+/**
+ * CharService REST API
+ */
 interface ChartService {
 
     // 지역 내 인기차트 반환

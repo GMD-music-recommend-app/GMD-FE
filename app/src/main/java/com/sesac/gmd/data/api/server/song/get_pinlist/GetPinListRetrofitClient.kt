@@ -1,7 +1,7 @@
-/*
-* Created by gabriel
+/**
+* Created by 조진수
 * date : 22/12/21
-* */
+*/
 package com.sesac.gmd.data.api.server.song.get_pinlist
 
 import com.sesac.gmd.common.util.GMD_BASE_URL
@@ -15,7 +15,6 @@ import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 
 // 반경 내 핀 리스트 반환
-
 class GetPinListRetrofitClient {
     companion object {
         // TODO: null 일 때 1번만 생성하는 싱글턴 패턴으로 Retrofit 클래스 구현 필요

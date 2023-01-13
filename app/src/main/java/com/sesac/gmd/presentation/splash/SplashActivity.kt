@@ -1,7 +1,7 @@
-/*
-* Created by gabriel
+/**
+* Created by 조진수
 * date : 22/12/21
-* */
+*/
 package com.sesac.gmd.presentation.splash
 
 import android.Manifest
@@ -24,6 +24,8 @@ import kotlinx.coroutines.*
 @SuppressLint("CustomSplashScreen")
 class SplashActivity : AppCompatActivity() {
     companion object {
+
+        // 해당 앱에서 요구하는 Permissions
         val PERMISSIONS = arrayOf(
             Manifest.permission.INTERNET,
             Manifest.permission.ACCESS_FINE_LOCATION,
@@ -68,8 +70,8 @@ class SplashActivity : AppCompatActivity() {
                 .setMessage("권한 거절로 인해 앱이 종료됩니다.")
                 .setPositiveButton("권한 설정하러 가기") { _, _ ->
                     try {
-                        val intent = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
-                        startActivity(intent)
+                        val nextPage = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
+                        startActivity(nextPage)
                     } catch (e: ActivityNotFoundException) {
                         e.printStackTrace()
                     }
@@ -84,7 +86,7 @@ class SplashActivity : AppCompatActivity() {
     // 현재 위치 정보 가져와 intent 에 실어서 MainActivity 로 이동
     @SuppressLint("MissingPermission")
     fun getCurrentLocation() {
-        val intent = Intent(this@SplashActivity, MainActivity::class.java)
+        val nextPage = Intent(this@SplashActivity, MainActivity::class.java)
         // 사용자의 정확한 현재 위치 요청
         val fusedLocationClient: FusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this@SplashActivity)
         fusedLocationClient.lastLocation.addOnSuccessListener {
@@ -94,10 +96,10 @@ class SplashActivity : AppCompatActivity() {
                 throw SecurityException("Location Data 를 얻지 못함")
             }
             else {
-                intent.putExtra("latitude", it.latitude)
-                intent.putExtra("longitude", it.longitude)
+                nextPage.putExtra("latitude", it.latitude)
+                nextPage.putExtra("longitude", it.longitude)
             }
-            startActivity(intent)
+            startActivity(nextPage)
             finish()
         }
     }

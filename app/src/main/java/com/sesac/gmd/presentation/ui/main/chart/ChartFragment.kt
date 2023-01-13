@@ -1,8 +1,7 @@
-/*
-* Created by gabriel
+/**
+* Created by 조진수
 * date : 22/11/21
-* */
-
+*/
 package com.sesac.gmd.presentation.ui.main.chart
 
 import android.os.Bundle
@@ -18,10 +17,13 @@ import com.sesac.gmd.presentation.ui.main.chart.adapter.ChartAdapter
 import com.sesac.gmd.presentation.ui.main.chart.adapter.ChartViewHolder
 import com.sesac.gmd.presentation.ui.main.chart.viewmodel.ChartViewModel
 
+/**
+ * 인기차트 Fragment
+ * 사용자 현재 위치 기준으로 공감 수가 많은 10개 음악 표시
+ */
 class ChartFragment : Fragment() {
     companion object {
         fun newInstance() = ChartFragment()
-        private const val TAG = "ChartFragment"
     }
     private lateinit var binding: FragmentChartBinding
     private lateinit var viewModel: ChartViewModel

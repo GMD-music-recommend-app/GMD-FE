@@ -1,7 +1,7 @@
-/*
-* Created by gabriel
+/**
+* Created by 조진수
 * date : 22/12/09
-* */
+*/
 package com.sesac.gmd.data.repository
 
 import com.google.gson.Gson

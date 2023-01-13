@@ -1,7 +1,7 @@
-/*
-* Created by gabriel
+/**
+* Created by 조진수
 * date : 22/11/26
-* */
+*/
 package com.sesac.gmd.presentation.ui.create_song.fragment
 
 import android.content.Intent
@@ -24,10 +24,13 @@ import com.sesac.gmd.presentation.ui.create_song.viewmodel.CreateSongViewModel
 import com.sesac.gmd.presentation.ui.factory.ViewModelFactory
 import com.sesac.gmd.presentation.ui.main.activity.MainActivity
 
+/**
+ * 사연 입력, 해시태그 입력 후 음악(핀) 생성 Fragment
+ */
 class WriteStoryFragment : Fragment() {
     companion object {
+        private val TAG = WriteStoryFragment::class.simpleName
         fun newInstance() = WriteStoryFragment()
-        const val TAG = "WriteStoryFragment"
     }
     private lateinit var binding: FragmentWriteStoryBinding
     private lateinit var viewModel: CreateSongViewModel
@@ -114,7 +117,7 @@ class WriteStoryFragment : Fragment() {
             toastMessage("음악이 선택되지 않았습니다.")
             flag = false
         }
-        // TODO: 유효성 검사 수정 필요
+
         with(binding) {
             // Check Story isNull
             if (edtStory.text!!.isEmpty()) {
@@ -127,6 +130,7 @@ class WriteStoryFragment : Fragment() {
                 toastMessage("사연은 최대 140자 까지 입력 가능합니다.")
                 flag = false
             }
+            // TODO: 유효성 검사 수정 필요
 //            // Check Hashtag Count
 //            if (edtHashtag.text!!.count{it == '#'} > 3) {
 //                Log.d(DEFAULT_TAG+TAG, "hashtag count : ${edtHashtag.text!!.count{it == '#'}}")

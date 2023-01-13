@@ -1,7 +1,7 @@
-/*
-* Created by gabriel
+/**
+* Created by 조진수
 * date : 22/11/21
-* */
+*/
 package com.sesac.gmd.presentation.ui.main.home
 
 import android.Manifest
@@ -41,6 +41,7 @@ class HomeFragment : Fragment(),
     OnMarkerClickListener
 {
     companion object {
+        private val TAG = HomeFragment::class.simpleName
         fun newInstance() = HomeFragment()
 
         fun newInstance(lat: Double, lng: Double) : Fragment {
@@ -52,7 +53,6 @@ class HomeFragment : Fragment(),
                 it.arguments = bundle
             }
         }
-        const val TAG = "HomeFragment"
     }
     private lateinit var binding: FragmentHomeBinding
     private lateinit var viewModel: MainViewModel

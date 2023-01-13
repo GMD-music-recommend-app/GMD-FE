@@ -1,8 +1,7 @@
-/*
-* Created by gabriel
+/**
+* Created by 조진수
 * date : 22/11/24
-* */
-
+*/
 package com.sesac.gmd.presentation.ui.main.bottomsheet
 
 import android.content.Intent
@@ -14,6 +13,10 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.sesac.gmd.databinding.FragmentCreateSongBottomSheetBinding
 import com.sesac.gmd.presentation.ui.create_song.activity.CreateSongActivity
 
+/**
+ * 음악 추가하기 버튼 클릭 시 표시되는 BottomSheetDialog
+ * 여기에 추가하기, 다른 곳에 추가하기
+ */
 class CreateSongBottomSheetFragment : BottomSheetDialogFragment() {
     companion object {
         fun newInstance() = CreateSongBottomSheetFragment()
@@ -32,19 +35,19 @@ class CreateSongBottomSheetFragment : BottomSheetDialogFragment() {
     // Listener 초기화 함수
     private fun setListener() {
         with(binding) {
-            val intent = Intent(requireContext(), CreateSongActivity::class.java)
+            val nextPage = Intent(requireContext(), CreateSongActivity::class.java)
 
             // 여기서 추천하기 버튼 클릭
             btnCreateHere.setOnClickListener {
-                intent.putExtra("GO_TO_PAGE", "CreateSongHere")
+                nextPage.putExtra("GO_TO_PAGE", "CreateSongHere")
                 dismiss()
-                startActivity(intent)
+                startActivity(nextPage)
             }
             // 다른 곳에서 추천하기 버튼 클릭
             btnCreateOtherPlace.setOnClickListener {
-                intent.putExtra("GO_TO_PAGE", "SetOtherPlace")
+                nextPage.putExtra("GO_TO_PAGE", "SetOtherPlace")
                 dismiss()
-                startActivity(intent)
+                startActivity(nextPage)
             }
             // 바텀시트 닫기
             btnClose.setOnClickListener {

@@ -1,8 +1,7 @@
-/*
-* Created by gabriel
+/**
+* Created by 조진수
 * date : 22/12/01
-* */
-
+*/
 package com.sesac.gmd.presentation.ui.create_song.bottomsheet
 
 import android.os.Bundle
@@ -12,6 +11,10 @@ import android.view.ViewGroup
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.sesac.gmd.databinding.FragmentFindOtherPlaceBottomSheetBinding
 
+/**
+ * FindOtherPlaceFragment 에서 표시 될 BottomSheetDialog
+ * 해당 페이지의 사용 방법 안내
+ */
 class FindOtherPlaceBottomSheetFragment : BottomSheetDialogFragment() {
     companion object {
         fun newInstance() = FindOtherPlaceBottomSheetFragment()

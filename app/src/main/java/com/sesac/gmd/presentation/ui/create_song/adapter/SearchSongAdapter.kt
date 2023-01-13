@@ -1,8 +1,7 @@
-/*
-* Created by gabriel
+/**
+* Created by 조진수
 * date : 22/12/08
-* */
-
+*/
 package com.sesac.gmd.presentation.ui.create_song.adapter
 
 import android.annotation.SuppressLint
@@ -14,6 +13,9 @@ import com.sesac.gmd.data.model.Song
 import com.sesac.gmd.data.model.SongList
 import com.sesac.gmd.databinding.ViewholderSearchSongResultBinding
 
+/**
+ * 음악 검색에서 사용하는 RecyclerView 의 Adapter
+ */
 class SearchSongAdapter(private val songList : SongList,
                         val onClickItem: (song: Song) -> Unit) : RecyclerView.Adapter<SearchSongAdapter.SearchSongViewHolder>()
 {

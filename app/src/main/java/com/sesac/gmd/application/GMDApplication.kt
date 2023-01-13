@@ -1,8 +1,7 @@
-/*
-* Created by gabriel
+/**
+* Created by 조진수
 * date : 22/11/21
-* */
-
+*/
 package com.sesac.gmd.application
 
 import android.annotation.SuppressLint
@@ -15,8 +14,10 @@ import com.kakao.sdk.common.KakaoSdk
 import com.sesac.gmd.R
 import java.util.*
 
-// 앱 런처 아이콘을 터치하면 처음 실행되는 코드
-// App Scope 모든 코틀린 클래스/파일에서 호출할 수 있는 코드
+/**
+ * 앱 런처 아이콘을 터치하면 처음 실행되는 코드
+ * App Scope 모든 코틀린 클래스/파일에서 호출할 수 있는 코드
+ */
 class GMDApplication : Application(){
     companion object {
         private lateinit var appInstance : GMDApplication
@@ -32,6 +33,9 @@ class GMDApplication : Application(){
         initPlaceSDK()
     }
 
+    /**
+    * 앱의 화면을 수직으로 구성
+    */
     private fun settingScreenPortrait() {
         registerActivityLifecycleCallbacks(object : ActivityLifecycleCallbacks {
             @SuppressLint("SourceLockedOrientationActivity")
@@ -47,9 +51,12 @@ class GMDApplication : Application(){
         })
     }
 
+    /**
+    * 앱 시작 시 구글맵 플레이스 초기화
+    */
     private fun initPlaceSDK() {
         if (!Places.isInitialized()) {
-            Places.initialize(applicationContext, getString(R.string.google_maps_key), Locale.US)
+            Places.initialize(applicationContext, getString(R.string.google_maps_key), Locale.KOREA)
         }
     }
 }
