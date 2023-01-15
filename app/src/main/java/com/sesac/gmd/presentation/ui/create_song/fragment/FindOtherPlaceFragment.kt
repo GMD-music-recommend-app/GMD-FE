@@ -29,7 +29,7 @@ import com.sesac.gmd.data.repository.Repository
 import com.sesac.gmd.databinding.FragmentFindOtherPlaceBinding
 import com.sesac.gmd.presentation.ui.create_song.bottomsheet.FindOtherPlaceBottomSheetFragment
 import com.sesac.gmd.presentation.ui.create_song.viewmodel.CreateSongViewModel
-import com.sesac.gmd.presentation.ui.factory.ViewModelFactory
+import com.sesac.gmd.presentation.factory.ViewModelFactory
 
 /**
  * 다른 곳에서 추가하기 Fragment

@@ -23,7 +23,7 @@ import com.sesac.gmd.databinding.FragmentSearchSongBinding
 import com.sesac.gmd.presentation.ui.create_song.adapter.SearchSongAdapter
 import com.sesac.gmd.presentation.ui.create_song.adapter.SearchSongDecoration
 import com.sesac.gmd.presentation.ui.create_song.viewmodel.CreateSongViewModel
-import com.sesac.gmd.presentation.ui.factory.ViewModelFactory
+import com.sesac.gmd.presentation.factory.ViewModelFactory
 import com.sesac.gmd.presentation.ui.main.activity.MainActivity
 
 /**

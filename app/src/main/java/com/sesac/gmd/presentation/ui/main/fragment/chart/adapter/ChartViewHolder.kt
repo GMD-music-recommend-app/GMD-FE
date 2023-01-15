@@ -1,4 +1,4 @@
-package com.sesac.gmd.presentation.ui.main.chart.adapter
+package com.sesac.gmd.presentation.ui.main.fragment.chart.adapter
 
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.sesac.gmd.databinding.ViewholderChartItemBinding

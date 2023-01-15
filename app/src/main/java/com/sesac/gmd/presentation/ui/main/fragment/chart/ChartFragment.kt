@@ -2,7 +2,7 @@
 * Created by 조진수
 * date : 22/11/21
 */
-package com.sesac.gmd.presentation.ui.main.chart
+package com.sesac.gmd.presentation.ui.main.fragment.chart
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -12,10 +12,10 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.sesac.gmd.data.repository.Repository
 import com.sesac.gmd.databinding.FragmentChartBinding
-import com.sesac.gmd.presentation.ui.factory.ViewModelFactory
-import com.sesac.gmd.presentation.ui.main.chart.adapter.ChartAdapter
-import com.sesac.gmd.presentation.ui.main.chart.adapter.ChartViewHolder
-import com.sesac.gmd.presentation.ui.main.chart.viewmodel.ChartViewModel
+import com.sesac.gmd.presentation.factory.ViewModelFactory
+import com.sesac.gmd.presentation.ui.main.fragment.chart.adapter.ChartAdapter
+import com.sesac.gmd.presentation.ui.main.fragment.chart.adapter.ChartViewHolder
+import com.sesac.gmd.presentation.ui.main.viewmodel.ChartViewModel
 
 /**
  * 인기차트 Fragment

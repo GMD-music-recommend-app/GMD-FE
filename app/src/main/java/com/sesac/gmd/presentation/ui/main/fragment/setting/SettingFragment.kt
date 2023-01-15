@@ -3,7 +3,7 @@
 * date : 22/11/21
 * */
 
-package com.sesac.gmd.presentation.ui.main.setting
+package com.sesac.gmd.presentation.ui.main.fragment.setting
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment

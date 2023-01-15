@@ -2,7 +2,7 @@
 * Created by 조진수
 * date : 22/12/21
 */
-package com.sesac.gmd.presentation.splash
+package com.sesac.gmd.presentation.ui.splash
 
 import android.Manifest
 import android.annotation.SuppressLint

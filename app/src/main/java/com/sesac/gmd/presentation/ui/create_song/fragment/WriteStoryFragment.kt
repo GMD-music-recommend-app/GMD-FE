@@ -21,7 +21,7 @@ import com.sesac.gmd.common.util.Utils.Companion.toastMessage
 import com.sesac.gmd.data.repository.Repository
 import com.sesac.gmd.databinding.FragmentWriteStoryBinding
 import com.sesac.gmd.presentation.ui.create_song.viewmodel.CreateSongViewModel
-import com.sesac.gmd.presentation.ui.factory.ViewModelFactory
+import com.sesac.gmd.presentation.factory.ViewModelFactory
 import com.sesac.gmd.presentation.ui.main.activity.MainActivity
 
 /**
@@ -39,7 +39,8 @@ class WriteStoryFragment : Fragment() {
         binding = FragmentWriteStoryBinding.inflate(inflater, container, false)
 
         viewModel = ViewModelProvider(
-            requireActivity(), ViewModelFactory(Repository()))[CreateSongViewModel::class.java]
+            requireActivity(), ViewModelFactory(Repository())
+        )[CreateSongViewModel::class.java]
 
         return binding.root
     }

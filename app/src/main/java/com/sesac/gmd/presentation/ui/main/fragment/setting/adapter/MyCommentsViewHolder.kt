@@ -1,4 +1,4 @@
-package com.sesac.gmd.presentation.ui.main.setting.adapter
+package com.sesac.gmd.presentation.ui.main.fragment.setting.adapter
 
 import androidx.recyclerview.widget.RecyclerView
 import com.sesac.gmd.databinding.ViewholderMyCommentsItemBinding

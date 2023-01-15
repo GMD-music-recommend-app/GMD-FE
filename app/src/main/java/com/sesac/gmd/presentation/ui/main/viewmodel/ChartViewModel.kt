@@ -1,4 +1,4 @@
-package com.sesac.gmd.presentation.ui.main.chart.viewmodel
+package com.sesac.gmd.presentation.ui.main.viewmodel
 
 import android.content.Context
 import android.util.Log
@@ -12,7 +12,7 @@ import com.sesac.gmd.common.util.GeoUtil
 import com.sesac.gmd.common.util.Utils.Companion.toastMessage
 import com.sesac.gmd.data.repository.Repository
 import com.sesac.gmd.presentation.ui.create_song.viewmodel.CreateSongViewModel
-import com.sesac.gmd.presentation.ui.main.chart.adapter.ChartViewHolder
+import com.sesac.gmd.presentation.ui.main.fragment.chart.adapter.ChartViewHolder
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch

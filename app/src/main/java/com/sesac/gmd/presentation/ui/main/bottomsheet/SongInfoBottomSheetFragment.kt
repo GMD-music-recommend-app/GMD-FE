@@ -22,7 +22,7 @@ import com.sesac.gmd.common.util.Utils.Companion.toastMessage
 import com.sesac.gmd.common.util.YOUTUBE_BASE_URL
 import com.sesac.gmd.data.repository.Repository
 import com.sesac.gmd.databinding.FragmentSongInfoBottomSheetBinding
-import com.sesac.gmd.presentation.ui.factory.ViewModelFactory
+import com.sesac.gmd.presentation.factory.ViewModelFactory
 import com.sesac.gmd.presentation.ui.main.viewmodel.MainViewModel
 
 // TODO: Expanded Bottom Sheet Dialog 로 변경 필요
@@ -51,7 +51,8 @@ class SongInfoBottomSheetFragment : BottomSheetDialogFragment() {
         binding = FragmentSongInfoBottomSheetBinding.inflate(inflater, container, false)
 
         viewModel = ViewModelProvider(
-            requireActivity(), ViewModelFactory(Repository()))[MainViewModel::class.java]
+            requireActivity(), ViewModelFactory(Repository())
+        )[MainViewModel::class.java]
 
         Log.d(DEFAULT_TAG+TAG, "${arguments?.getString("pinIdx")}")
 

@@ -2,7 +2,7 @@
 * Created by 조진수
 * date : 22/11/21
 */
-package com.sesac.gmd.presentation.ui.main.home
+package com.sesac.gmd.presentation.ui.main.fragment.home
 
 import android.Manifest
 import android.annotation.SuppressLint
@@ -30,7 +30,7 @@ import com.sesac.gmd.common.util.Utils.Companion.toastMessage
 import com.sesac.gmd.data.api.server.song.get_pinlist.Pin
 import com.sesac.gmd.data.repository.Repository
 import com.sesac.gmd.databinding.FragmentHomeBinding
-import com.sesac.gmd.presentation.ui.factory.ViewModelFactory
+import com.sesac.gmd.presentation.factory.ViewModelFactory
 import com.sesac.gmd.presentation.ui.main.bottomsheet.CreateSongBottomSheetFragment
 import com.sesac.gmd.presentation.ui.main.bottomsheet.SongInfoBottomSheetFragment
 import com.sesac.gmd.presentation.ui.main.viewmodel.MainViewModel

@@ -31,12 +31,11 @@
             android:value="kakao0a2c945c82b638fdb08b2eccf8a0a87e" />
 
         <activity
-            android:name=".presentation.splash.SplashActivity"
+            android:name=".presentation.ui.splash.SplashActivity"
             android:theme="@style/SplashTheme"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -46,8 +45,6 @@
         <activity
             android:name=".presentation.ui.create_song.activity.CreateSongActivity"
             android:windowSoftInputMode="adjustPan">
-        </activity>
-        <activity android:name=".presentation.ui.sign_up.SignUpActivity">
         </activity>
     </application>
 </manifest>
