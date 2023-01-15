@@ -60,7 +60,7 @@ class WriteStoryFragment : Fragment() {
         with(viewModel) {
             createSuccess.observe(viewLifecycleOwner) { success ->
                 if (success) {
-                    toastMessage("노래 생성 성공")
+                    toastMessage(getString(R.string.success_to_create_pin))
                     requireActivity().finish()
                 }
             }
@@ -76,7 +76,7 @@ class WriteStoryFragment : Fragment() {
                 val hashtag = edtHashtag.text.toString()
 
                 if(checkValidation()) {
-                    setAlertDialog(requireContext(), null, "음악을 추가하시겠습니까?",
+                    setAlertDialog(requireContext(), null, getString(R.string.confirm_to_finish_pin_create),
                         posFunc = {
                             viewModel.createPin(reason, hashtag)
                             startActivity(Intent(context, MainActivity::class.java))
@@ -114,7 +114,7 @@ class WriteStoryFragment : Fragment() {
         // Check Song
         if (viewModel.selectedSong.value == null) {
             Log.d(DEFAULT_TAG+TAG, "selectSong : ${viewModel.selectedSong}")
-            toastMessage("음악이 선택되지 않았습니다.")
+            toastMessage(getString(R.string.error_song_unselected))
             flag = false
         }
 
@@ -122,12 +122,12 @@ class WriteStoryFragment : Fragment() {
             // Check Story isNull
             if (edtStory.text!!.isEmpty()) {
                 Log.d(DEFAULT_TAG+TAG, "story : ${edtStory.text}")
-                toastMessage("사연을 입력해주세요.")
+                toastMessage(getString(R.string.error_story_empty))
                 flag = false
             // Check Story Length
             } else if (edtStory.text!!.length > 140) {
                 Log.d(DEFAULT_TAG+TAG, "story length : ${edtStory.text!!.length}")
-                toastMessage("사연은 최대 140자 까지 입력 가능합니다.")
+                toastMessage(getString(R.string.error_exceeded_story_length))
                 flag = false
             }
             // TODO: 유효성 검사 수정 필요

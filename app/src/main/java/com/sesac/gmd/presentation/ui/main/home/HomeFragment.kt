@@ -73,7 +73,7 @@ class HomeFragment : Fragment(),
             }
         }
         if (allPermissionsGranted) getMyLocation()
-        else toastMessage("앱을 이용하기 위해서는 위치 정보 접근 권한이 필요합니다")
+        else toastMessage(getString(R.string.need_location_permission))
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {

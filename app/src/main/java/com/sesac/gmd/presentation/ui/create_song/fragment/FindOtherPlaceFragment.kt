@@ -88,7 +88,7 @@ class FindOtherPlaceFragment : Fragment(), OnMapReadyCallback {
             addedMarker = mMap.addMarker(
                 MarkerOptions()
                     .position(position)
-                    .title("여기에 음악 추가하기")
+                    .title(getString(R.string.create_pin_here))
             )
             addedMarker?.showInfoWindow()
             binding.btnCreatePlace.isVisible = addedMarker != null
@@ -100,7 +100,7 @@ class FindOtherPlaceFragment : Fragment(), OnMapReadyCallback {
         with(binding) {
             btnCreatePlace.setOnClickListener {
                 setAlertDialog(requireContext(), null,
-                    "이 곳에 음악을 추가하시겠습니까?",
+                    getString(R.string.confirm_to_create_pin_here),
                     posFunc = {
                         viewModel.setLocation(requireContext(), addedMarker!!.position.latitude, addedMarker!!.position.longitude)
                         parentFragmentManager

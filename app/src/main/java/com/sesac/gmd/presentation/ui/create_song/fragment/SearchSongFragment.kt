@@ -76,8 +76,8 @@ class SearchSongFragment : Fragment() {
                 // 위치 정보가 저장되어 있지 않다면 현재 사용자의 위치 정보를 저장
                 if (it.latitude == 0.0 && it.state == null) {
                     setAlertDialog(requireContext(),
-                        "위치 정보를 가져오는 데 실패했습니다.",
-                        "위치 지정 페이지로 이동하시겠습니까?",
+                        getString(R.string.not_found_user_location),
+                        getString(R.string.go_to_set_location_page),
                         posFunc = {
                             // 위치 지정 페이지(FindOtherPlaceFragment)로 이동
                             parentFragmentManager
@@ -164,13 +164,14 @@ class SearchSongFragment : Fragment() {
             }
             // 음악 검색
             if (edtSearchSong.text!!.isEmpty()) {
-                toastMessage("검색어를 입력해주세요!")
+                toastMessage(getString(R.string.error_keyword_empty))
             } else if (edtSearchSong.text!!.length > 200) {
-                toastMessage("검색어는 200자 까지 입력 가능합니다.")
+                toastMessage(getString(R.string.error_exceeded_keyword_length))
             } else {
                 if (!validate()) {
                     setAlertDialog(requireContext(), null,
-                        "위치가 지정되지 않았습니다. 위치 지정 페이지로 이동하시겠습니까?",
+                        getString(R.string.error_empty_location) + " " +
+                                getString(R.string.go_to_set_location_page),
                         posFunc = {
                             // 위치 지정 페이지(FindOtherPlaceFragment)로 이동
                             parentFragmentManager

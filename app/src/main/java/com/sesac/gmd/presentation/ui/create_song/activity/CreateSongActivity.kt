@@ -50,7 +50,7 @@ class CreateSongActivity : AppCompatActivity() {
                         commit()
                     }
                     else -> {
-                        toastMessage("예기치 못한 오류가 발생했습니다.")
+                        toastMessage(getString(R.string.unexpected_error))
                     }
                 }
             }

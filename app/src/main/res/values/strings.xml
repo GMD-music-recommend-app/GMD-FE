@@ -3,6 +3,8 @@
     <string name="app_name">GMD</string>
     <string name="app_name_kor">지뭐듣</string>
 
+    <!--  ManiaDB Service Key  -->
+    <string name="maniaDB_service_key">"gmd6to30@gmail.com"</string>
     <!--  Google Map API KEY-->
     <string name="google_maps_key">AIzaSyA1vL3vDpfHOn0zzplBR2Z5cpJ2v9Qz5Cw</string>
     <!--  Kakao API KEY-->
@@ -15,4 +17,42 @@
 
     <!--  HomeFragment  -->
     <string name="btn_create_pin">노래 추천하기</string>
+
+    <!--  guide message  -->
+    <string name="need_location_permission">앱을 이용하기 위해서는 위치 정보 접근 권한이 필요합니다.</string>
+    <string name="reject_location_permission">권한을 거부하셨습니다. [앱 설정] -> [권한] 항목에서 권한을 허용해주세요.</string>
+    <string name="app_finish">권한 거절로 인해 앱이 종료됩니다.</string>
+
+    <string name="go_to_permission_setting">권한 설정하러 가기</string>
+    <string name="go_to_set_location_page">위치 지정 페이지로 이동하시겠습니까?</string>
+    <string name="go_to_youtube">유튜브 페이지로 이동하시겠습니까?</string>
+    <string name="create_pin_here">여기에 음악 추가하기</string>
+    <string name="confirm_to_create_pin_here">이 곳에 음악을 추가하시겠습니까?</string>
+    <string name="confirm_to_finish_pin_create">음악을 추가하시겠습니까?</string>
+    <string name="alert_service_ready">서비스 준비 중입니다.</string>
+
+    
+    <!--  error message  -->
+    <string name="unexpected_error">예기치 못한 문제가 발생했습니다.</string>
+    <string name="not_found_user_location">사용자의 위치 정보를 가져오는 데 실패했습니다.</string>
+    <string name="not_found_viewmodel">해당 ViewModel 을 찾을 수 없습니다.</string>
+    <string name="no_location_data">Location Data 를 얻지 못함</string>
+
+    <string name="error_empty_location">위치가 지정되지 않았습니다.</string>
+    <string name="error_song_unselected">음악이 선택되지 않았습니다.</string>
+    <string name="error_get_pin_data">음악 데이터를 가져오지 못했습니다.</string>
+    <string name="error_keyword_empty">검색어를 입력해주세요!</string>"
+    <string name="error_exceeded_keyword_length">검색어는 200자 까지 입력 가능합니다.</string>
+    <string name="error_exceeded_story_length">사연은 최대 140자 까지 입력 가능합니다.</string>
+    <string name="error_story_empty">사연을 입력해주세요.</string>
+    <string name="error_unstable_network_connection">연결이 고르지 않습니다.\n다시 시도해주시기 바랍니다.</string>
+
+    <!--  success message  -->
+    <string name="success_to_create_pin">음악 생성 성공</string>
+    <string name="success_to_like_pin">공감 + 1</string>
+    <string name="success_to_cancel_liked_pin">공감 취소</string>
+
+    <string name="yes">예</string>
+    <string name="no">아니오</string>
+    <string name="finish">종료</string>
 </resources>

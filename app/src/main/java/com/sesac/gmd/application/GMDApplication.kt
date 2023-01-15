@@ -27,7 +27,7 @@ class GMDApplication : Application(){
     override fun onCreate() {
         super.onCreate()
         // 카카오 sdk 네이티브 앱 키 추가
-        KakaoSdk.init(this, R.string.kakao_app_key.toString())
+        KakaoSdk.init(this, getString(R.string.kakao_app_key))
         appInstance = this
         settingScreenPortrait()
         initPlaceSDK()

@@ -17,6 +17,7 @@ import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import com.gun0912.tedpermission.PermissionListener
 import com.gun0912.tedpermission.normal.TedPermission
+import com.sesac.gmd.R
 import com.sesac.gmd.common.util.Utils.Companion.toastMessage
 import com.sesac.gmd.presentation.ui.main.activity.MainActivity
 import kotlinx.coroutines.*
@@ -50,8 +51,8 @@ class SplashActivity : AppCompatActivity() {
         if (Build.VERSION.SDK_INT >= 23) {
             TedPermission.create()
                 .setPermissionListener(permissionListener)
-                .setRationaleMessage("앱을 이용하기 위해서는 위치 정보 접근 권한이 필요합니다")
-                .setDeniedMessage("권한을 거부하셨습니다. [앱 설정] -> [권한] 항목에서 권한을 허용해주세요.")
+                .setRationaleMessage(getString(R.string.need_location_permission))
+                .setDeniedMessage(getString(R.string.reject_location_permission))
                 .setPermissions(*PERMISSIONS)
                 .check()
         }
@@ -67,8 +68,8 @@ class SplashActivity : AppCompatActivity() {
         // 권한 거부시 실행  할 내용
         override fun onPermissionDenied(deniedPermissions: MutableList<String>?) {
             AlertDialog.Builder(this@SplashActivity)
-                .setMessage("권한 거절로 인해 앱이 종료됩니다.")
-                .setPositiveButton("권한 설정하러 가기") { _, _ ->
+                .setMessage(getString(R.string.app_finish))
+                .setPositiveButton(getString(R.string.go_to_permission_setting)) { _, _ ->
                     try {
                         val nextPage = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
                         startActivity(nextPage)
@@ -76,7 +77,7 @@ class SplashActivity : AppCompatActivity() {
                         e.printStackTrace()
                     }
                 }
-                .setNegativeButton("종료") { _, _ ->
+                .setNegativeButton(getString(R.string.finish)) { _, _ ->
                     finish()
                 }
                 .show()
@@ -92,8 +93,8 @@ class SplashActivity : AppCompatActivity() {
         fusedLocationClient.lastLocation.addOnSuccessListener {
             if (it == null) {
                 // fusedLocationClient 가 현재 위치를 파악하지 못하는 경우
-                toastMessage("사용자의 현재 위치를 알 수 없습니다.")
-                throw SecurityException("Location Data 를 얻지 못함")
+                toastMessage(getString(R.string.not_found_user_location))
+                throw SecurityException(getString(R.string.no_location_data))
             }
             else {
                 nextPage.putExtra("latitude", it.latitude)

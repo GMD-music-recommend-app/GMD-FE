@@ -10,6 +10,7 @@ import android.content.Context
 import android.util.Log
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
+import com.sesac.gmd.R
 import com.sesac.gmd.application.GMDApplication
 import com.sesac.gmd.data.model.Song
 import com.sesac.gmd.data.model.ManiaDBAlbum
@@ -40,10 +41,10 @@ class Utils {
             AlertDialog.Builder(context)
                 .setTitle(title)
                 .setMessage(message)
-                .setPositiveButton("예") { _, _ ->
+                .setPositiveButton(context.getString(R.string.yes)) { _, _ ->
                     posFunc()
                 }
-                .setNegativeButton("아니오") { _, _ ->
+                .setNegativeButton(context.getString(R.string.no)) { _, _ ->
                     negFunc()
                 }
                 .create()
