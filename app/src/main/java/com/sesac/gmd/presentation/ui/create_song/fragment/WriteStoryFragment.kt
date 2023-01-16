@@ -39,8 +39,7 @@ class WriteStoryFragment : Fragment() {
         binding = FragmentWriteStoryBinding.inflate(inflater, container, false)
 
         viewModel = ViewModelProvider(
-            requireActivity(), ViewModelFactory(Repository())
-        )[CreateSongViewModel::class.java]
+            requireActivity(), ViewModelFactory(Repository()))[CreateSongViewModel::class.java]
 
         return binding.root
     }
@@ -77,7 +76,7 @@ class WriteStoryFragment : Fragment() {
                 val hashtag = edtHashtag.text.toString()
 
                 if(checkValidation()) {
-                    setAlertDialog(requireContext(), null, getString(R.string.confirm_to_finish_pin_create),
+                    setAlertDialog(requireContext(), null, getString(R.string.alert_finish_pin_create),
                         posFunc = {
                             viewModel.createPin(reason, hashtag)
                             startActivity(Intent(context, MainActivity::class.java))
@@ -115,7 +114,7 @@ class WriteStoryFragment : Fragment() {
         // Check Song
         if (viewModel.selectedSong.value == null) {
             Log.d(DEFAULT_TAG+TAG, "selectSong : ${viewModel.selectedSong}")
-            toastMessage(getString(R.string.error_song_unselected))
+            toastMessage(getString(R.string.error_music_not_assigned))
             flag = false
         }
 
@@ -123,12 +122,12 @@ class WriteStoryFragment : Fragment() {
             // Check Story isNull
             if (edtStory.text!!.isEmpty()) {
                 Log.d(DEFAULT_TAG+TAG, "story : ${edtStory.text}")
-                toastMessage(getString(R.string.error_story_empty))
+                toastMessage(getString(R.string.error_story_not_assigned))
                 flag = false
             // Check Story Length
             } else if (edtStory.text!!.length > 140) {
                 Log.d(DEFAULT_TAG+TAG, "story length : ${edtStory.text!!.length}")
-                toastMessage(getString(R.string.error_exceeded_story_length))
+                toastMessage(getString(R.string.error_story_length_exceeded))
                 flag = false
             }
             // TODO: 유효성 검사 수정 필요

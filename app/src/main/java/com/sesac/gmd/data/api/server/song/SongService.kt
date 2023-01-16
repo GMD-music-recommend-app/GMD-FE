@@ -13,8 +13,6 @@ import okhttp3.RequestBody
 import retrofit2.Response
 import retrofit2.http.*
 
-// Swagger : http://yourplaylistgmd.shop/swagger-ui/index.html#/
-
 interface SongService {
     // 반경 내 핀 리스트 반환
     @GET("/songs/info-list")

@@ -51,8 +51,8 @@ class SplashActivity : AppCompatActivity() {
         if (Build.VERSION.SDK_INT >= 23) {
             TedPermission.create()
                 .setPermissionListener(permissionListener)
-                .setRationaleMessage(getString(R.string.need_location_permission))
-                .setDeniedMessage(getString(R.string.reject_location_permission))
+                .setRationaleMessage(getString(R.string.alert_need_location_permission))
+                .setDeniedMessage(getString(R.string.alert_reject_location_permission))
                 .setPermissions(*PERMISSIONS)
                 .check()
         }
@@ -68,8 +68,8 @@ class SplashActivity : AppCompatActivity() {
         // 권한 거부시 실행  할 내용
         override fun onPermissionDenied(deniedPermissions: MutableList<String>?) {
             AlertDialog.Builder(this@SplashActivity)
-                .setMessage(getString(R.string.app_finish))
-                .setPositiveButton(getString(R.string.go_to_permission_setting)) { _, _ ->
+                .setMessage(getString(R.string.alert_app_finish_caused_by_rejected_permissions))
+                .setPositiveButton(getString(R.string.alert_go_to_permission_setting)) { _, _ ->
                     try {
                         val nextPage = Intent(Settings.ACTION_APPLICATION_DETAILS_SETTINGS)
                         startActivity(nextPage)
@@ -77,7 +77,7 @@ class SplashActivity : AppCompatActivity() {
                         e.printStackTrace()
                     }
                 }
-                .setNegativeButton(getString(R.string.finish)) { _, _ ->
+                .setNegativeButton(getString(R.string.txt_finish)) { _, _ ->
                     finish()
                 }
                 .show()
@@ -93,8 +93,8 @@ class SplashActivity : AppCompatActivity() {
         fusedLocationClient.lastLocation.addOnSuccessListener {
             if (it == null) {
                 // fusedLocationClient 가 현재 위치를 파악하지 못하는 경우
-                toastMessage(getString(R.string.not_found_user_location))
-                throw SecurityException(getString(R.string.no_location_data))
+                toastMessage(getString(R.string.error_not_found_user_location))
+                throw SecurityException(getString(R.string.error_not_found_location_data))
             }
             else {
                 nextPage.putExtra("latitude", it.latitude)

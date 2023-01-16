@@ -32,11 +32,11 @@ class SearchSongAdapter(private val songList : SongList,
     override fun onBindViewHolder(holder: SearchSongViewHolder, position: Int) {
         val song = songList.songs[position]
         with(holder.binding) {
-            songTitle.text = song.songTitle
-            songArtist.text = """${song.artist.joinToString ( "," )} · ${song.album.albumTitle}"""
+            txtSongTitle.text = song.songTitle
+            txtSongArtist.text = """${song.artist.joinToString ( "," )} · ${song.album.albumTitle}"""
             Glide.with(holder.itemView.context)
                 .load(song.album.albumImage)
-                .into(songAlbumImage)
+                .into(imgSongAlbumImage)
 
             btnSelectSong.setOnClickListener {
                 onClickItem.invoke(song)

@@ -18,7 +18,7 @@
             android:layout_gravity="center"
             android:text="@string/app_name_kor"
             android:textColor="@color/main_color"
-            android:textSize="28sp"
+            android:textSize="@dimen/txt_size_to_28sp"
             android:textStyle="bold"/>
     </androidx.appcompat.widget.Toolbar>
 

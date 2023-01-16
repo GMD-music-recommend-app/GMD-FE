@@ -26,6 +26,8 @@ import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.*
 import com.sesac.gmd.R
+import com.sesac.gmd.common.util.SEOUL_CITY_LATITUDE
+import com.sesac.gmd.common.util.SEOUL_CITY_LONGITUDE
 import com.sesac.gmd.common.util.Utils.Companion.toastMessage
 import com.sesac.gmd.data.api.server.song.get_pinlist.Pin
 import com.sesac.gmd.data.repository.Repository
@@ -73,7 +75,7 @@ class HomeFragment : Fragment(),
             }
         }
         if (allPermissionsGranted) getMyLocation()
-        else toastMessage(getString(R.string.need_location_permission))
+        else toastMessage(getString(R.string.alert_need_location_permission))
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
@@ -157,7 +159,7 @@ class HomeFragment : Fragment(),
             if (viewModel.location.value != null) {
                 LatLng(viewModel.location.value!!.latitude, viewModel.location.value!!.longitude)
             } else {
-                LatLng(37.5662952, 126.97794509999994)  // 서울 시청
+                LatLng(SEOUL_CITY_LATITUDE, SEOUL_CITY_LONGITUDE)  // 서울 시청
             }
 
         with(mMap) {

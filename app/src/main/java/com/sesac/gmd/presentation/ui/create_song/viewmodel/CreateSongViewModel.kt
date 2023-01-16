@@ -78,7 +78,7 @@ class CreateSongViewModel(private val repository: Repository) : ViewModel() {
         fusedLocationClient.lastLocation.addOnSuccessListener { // 비동기로 실행
             if (it == null) {
                 // fusedLocationClient 가 현재 위치를 파악하지 못하는 경우
-                toastMessage("사용자의 현재 위치를 알 수 없습니다.")
+                toastMessage("사용자의 위치 정보를 가져오는 데 실패했습니다.")
             }
             else {
                 // 받아온 현재 위치를 기준으로 geocoding 실행 후 해당 위치 정보를 LiveData 에 저장

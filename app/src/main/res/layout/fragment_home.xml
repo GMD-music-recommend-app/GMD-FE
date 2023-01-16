@@ -23,9 +23,9 @@
         android:src="@drawable/ic_present_location"
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
-        android:layout_marginEnd="32dp"
-        android:layout_marginBottom="32dp"
-        android:contentDescription="현재 위치" />
+        android:layout_marginEnd="@dimen/margin_to_32dp"
+        android:layout_marginBottom="@dimen/margin_to_32dp"
+        android:contentDescription="@string/txt_current_location" />
 
     <!--  노래 추천하기 버튼  -->
     <androidx.appcompat.widget.AppCompatButton
@@ -35,9 +35,9 @@
         android:layout_height="48dp"
         android:layout_centerHorizontal="true"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="32dp"
-        android:text="@string/btn_create_pin"
+        android:layout_marginBottom="@dimen/margin_to_32dp"
+        android:text="@string/txt_create_music"
         android:textColor="@color/white"
-        android:textSize="18sp"
-        app:cornerRadius="100dp" />
+        android:textSize="@dimen/txt_size_to_18sp"
+        app:cornerRadius="@dimen/radius_to_100dp" />
 </RelativeLayout>

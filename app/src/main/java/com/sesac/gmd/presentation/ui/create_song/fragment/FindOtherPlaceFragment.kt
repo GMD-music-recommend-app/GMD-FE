@@ -24,6 +24,8 @@ import com.google.android.libraries.places.api.model.Place
 import com.google.android.libraries.places.widget.AutocompleteSupportFragment
 import com.google.android.libraries.places.widget.listener.PlaceSelectionListener
 import com.sesac.gmd.R
+import com.sesac.gmd.common.util.SEOUL_CITY_LATITUDE
+import com.sesac.gmd.common.util.SEOUL_CITY_LONGITUDE
 import com.sesac.gmd.common.util.Utils.Companion.setAlertDialog
 import com.sesac.gmd.data.repository.Repository
 import com.sesac.gmd.databinding.FragmentFindOtherPlaceBinding
@@ -39,7 +41,7 @@ class FindOtherPlaceFragment : Fragment(), OnMapReadyCallback {
         fun newInstance() = FindOtherPlaceFragment()
 
         // 지도의 중심점을 서울 시청으로 설정
-        val startingPoint = LatLng(37.5662952, 126.97794509999994)
+        val startingPoint = LatLng(SEOUL_CITY_LATITUDE, SEOUL_CITY_LONGITUDE)
     }
     private var addedMarker: Marker? = null
     private lateinit var binding: FragmentFindOtherPlaceBinding
@@ -88,7 +90,6 @@ class FindOtherPlaceFragment : Fragment(), OnMapReadyCallback {
             addedMarker = mMap.addMarker(
                 MarkerOptions()
                     .position(position)
-                    .title(getString(R.string.create_pin_here))
             )
             addedMarker?.showInfoWindow()
             binding.btnCreatePlace.isVisible = addedMarker != null
@@ -100,7 +101,7 @@ class FindOtherPlaceFragment : Fragment(), OnMapReadyCallback {
         with(binding) {
             btnCreatePlace.setOnClickListener {
                 setAlertDialog(requireContext(), null,
-                    getString(R.string.confirm_to_create_pin_here),
+                    getString(R.string.alert_create_pin_here),
                     posFunc = {
                         viewModel.setLocation(requireContext(), addedMarker!!.position.latitude, addedMarker!!.position.longitude)
                         parentFragmentManager

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--  radius  -->
+    <dimen name="radius_to_10dp">10dp</dimen>
+    <dimen name="radius_to_16dp">16dp</dimen>
+    <dimen name="radius_to_100dp">100dp</dimen>
+
+    <!--  elevation  -->
+    <dimen name="elevation_to_4dp">4dp</dimen>
+    <dimen name="elevation_to_24dp">24dp</dimen>
+
+    <!--  padding  -->
+    <dimen name="padding_to_12dp">12dp</dimen>
+    <dimen name="padding_to_16dp">16dp</dimen>
+
+    <!--  margin  -->
+    <dimen name="margin_to_4dp">4dp</dimen>
+    <dimen name="margin_to_8dp">8dp</dimen>
+    <dimen name="margin_to_12dp">12dp</dimen>
+    <dimen name="margin_to_16dp">16dp</dimen>
+    <dimen name="margin_to_18dp">18dp</dimen>
+    <dimen name="margin_to_24dp">24dp</dimen>
+    <dimen name="margin_to_32dp">32dp</dimen>
+    <dimen name="margin_to_36dp">36dp</dimen>
+    <dimen name="margin_to_48dp">48dp</dimen>
+    <dimen name="margin_to_64dp">64dp</dimen>
+
+    <!--  text size  -->
+    <dimen name="txt_size_to_10sp">10sp</dimen>
+    <dimen name="txt_size_to_12sp">12sp</dimen>
+    <dimen name="txt_size_to_14sp">14sp</dimen>
+    <dimen name="txt_size_to_16sp">16sp</dimen>
+    <dimen name="txt_size_to_18sp">18sp</dimen>
+    <dimen name="txt_size_to_24sp">24sp</dimen>
+    <dimen name="txt_size_to_28sp">28sp</dimen>
+
+    <dimen name="txt_size_app_title">28sp</dimen>
+    <dimen name="txt_size_dialog_title">24sp</dimen>
+    <dimen name="txt_size_dialog_guide">16sp</dimen>
+</resources>
