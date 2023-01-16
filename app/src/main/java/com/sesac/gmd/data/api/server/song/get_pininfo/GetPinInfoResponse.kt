@@ -1,11 +1,12 @@
-/*
-* Created by gabriel
+/**
+* Created by 조진수
 * date : 22/12/21
-* */
+*/
 package com.sesac.gmd.data.api.server.song.get_pininfo
 
-// 핀 정보 반환
-
+/**
+ * 핀 클릭 시 받아올 해당 핀 정보 Request 에 대한 Response
+ */
 data class GetPinInfoResponse(
     val code: Int,
     val isSuccess: Boolean,
@@ -13,6 +14,9 @@ data class GetPinInfoResponse(
     val result: GetPinInfoResult
 )
 
+/**
+ * Request 결과로 받아온 해당 핀 정보
+ */
 data class GetPinInfoResult(
     val pinIdx: Int,            // 핀 인덱스
     val userIdx: Int,           // 생성한 유저 인덱스

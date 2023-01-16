@@ -1,12 +1,10 @@
-/*
-* Created by gabriel
+/**
+* Created by 조진수
 * date : 22/12/25
-* */
+*/
 package com.sesac.gmd.data.api.server.chart
 
 import com.sesac.gmd.common.util.GMD_BASE_URL
-import com.sesac.gmd.common.util.TEMP_JWT
-import com.sesac.gmd.data.api.server.song.SongService
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.Request

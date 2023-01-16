@@ -1,7 +1,7 @@
-/*
-* Created by gabriel
+/**
+* Created by 조진수
 * date : 22/11/26
-* */
+*/
 package com.sesac.gmd.presentation.ui.create_song.fragment
 
 import android.content.Intent
@@ -21,13 +21,16 @@ import com.sesac.gmd.common.util.Utils.Companion.toastMessage
 import com.sesac.gmd.data.repository.Repository
 import com.sesac.gmd.databinding.FragmentWriteStoryBinding
 import com.sesac.gmd.presentation.ui.create_song.viewmodel.CreateSongViewModel
-import com.sesac.gmd.presentation.ui.factory.ViewModelFactory
+import com.sesac.gmd.presentation.factory.ViewModelFactory
 import com.sesac.gmd.presentation.ui.main.activity.MainActivity
 
+/**
+ * 사연 입력, 해시태그 입력 후 음악(핀) 생성 Fragment
+ */
 class WriteStoryFragment : Fragment() {
     companion object {
+        private val TAG = WriteStoryFragment::class.simpleName
         fun newInstance() = WriteStoryFragment()
-        const val TAG = "WriteStoryFragment"
     }
     private lateinit var binding: FragmentWriteStoryBinding
     private lateinit var viewModel: CreateSongViewModel
@@ -57,7 +60,7 @@ class WriteStoryFragment : Fragment() {
         with(viewModel) {
             createSuccess.observe(viewLifecycleOwner) { success ->
                 if (success) {
-                    toastMessage("노래 생성 성공")
+                    toastMessage(getString(R.string.success_to_create_pin))
                     requireActivity().finish()
                 }
             }
@@ -73,7 +76,7 @@ class WriteStoryFragment : Fragment() {
                 val hashtag = edtHashtag.text.toString()
 
                 if(checkValidation()) {
-                    setAlertDialog(requireContext(), null, "음악을 추가하시겠습니까?",
+                    setAlertDialog(requireContext(), null, getString(R.string.alert_finish_pin_create),
                         posFunc = {
                             viewModel.createPin(reason, hashtag)
                             startActivity(Intent(context, MainActivity::class.java))
@@ -111,22 +114,23 @@ class WriteStoryFragment : Fragment() {
         // Check Song
         if (viewModel.selectedSong.value == null) {
             Log.d(DEFAULT_TAG+TAG, "selectSong : ${viewModel.selectedSong}")
-            toastMessage("음악이 선택되지 않았습니다.")
+            toastMessage(getString(R.string.error_music_not_assigned))
             flag = false
         }
-        // TODO: 유효성 검사 수정 필요
+
         with(binding) {
             // Check Story isNull
             if (edtStory.text!!.isEmpty()) {
                 Log.d(DEFAULT_TAG+TAG, "story : ${edtStory.text}")
-                toastMessage("사연을 입력해주세요.")
+                toastMessage(getString(R.string.error_story_not_assigned))
                 flag = false
             // Check Story Length
             } else if (edtStory.text!!.length > 140) {
                 Log.d(DEFAULT_TAG+TAG, "story length : ${edtStory.text!!.length}")
-                toastMessage("사연은 최대 140자 까지 입력 가능합니다.")
+                toastMessage(getString(R.string.error_story_length_exceeded))
                 flag = false
             }
+            // TODO: 유효성 검사 수정 필요
 //            // Check Hashtag Count
 //            if (edtHashtag.text!!.count{it == '#'} > 3) {
 //                Log.d(DEFAULT_TAG+TAG, "hashtag count : ${edtHashtag.text!!.count{it == '#'}}")

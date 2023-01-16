@@ -1,7 +1,7 @@
-/*
-* Created by gabriel
+/**
+* Created by 조진수
 * date : 22/12/02
-* */
+*/
 package com.sesac.gmd.presentation.ui.create_song.fragment
 
 import android.os.Bundle
@@ -24,18 +24,24 @@ import com.google.android.libraries.places.api.model.Place
 import com.google.android.libraries.places.widget.AutocompleteSupportFragment
 import com.google.android.libraries.places.widget.listener.PlaceSelectionListener
 import com.sesac.gmd.R
+import com.sesac.gmd.common.util.SEOUL_CITY_LATITUDE
+import com.sesac.gmd.common.util.SEOUL_CITY_LONGITUDE
 import com.sesac.gmd.common.util.Utils.Companion.setAlertDialog
 import com.sesac.gmd.data.repository.Repository
 import com.sesac.gmd.databinding.FragmentFindOtherPlaceBinding
 import com.sesac.gmd.presentation.ui.create_song.bottomsheet.FindOtherPlaceBottomSheetFragment
 import com.sesac.gmd.presentation.ui.create_song.viewmodel.CreateSongViewModel
-import com.sesac.gmd.presentation.ui.factory.ViewModelFactory
+import com.sesac.gmd.presentation.factory.ViewModelFactory
 
+/**
+ * 다른 곳에서 추가하기 Fragment
+ */
 class FindOtherPlaceFragment : Fragment(), OnMapReadyCallback {
     companion object {
         fun newInstance() = FindOtherPlaceFragment()
 
-        val startingPoint = LatLng(37.5662952, 126.97794509999994) // 서울 시청
+        // 지도의 중심점을 서울 시청으로 설정
+        val startingPoint = LatLng(SEOUL_CITY_LATITUDE, SEOUL_CITY_LONGITUDE)
     }
     private var addedMarker: Marker? = null
     private lateinit var binding: FragmentFindOtherPlaceBinding
@@ -71,6 +77,7 @@ class FindOtherPlaceFragment : Fragment(), OnMapReadyCallback {
         findOtherBottomSheet.show(childFragmentManager, findOtherBottomSheet.tag)
     }
 
+    // 구글 맵 생성 시 지도 구성
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(startingPoint, 16F))
@@ -83,7 +90,6 @@ class FindOtherPlaceFragment : Fragment(), OnMapReadyCallback {
             addedMarker = mMap.addMarker(
                 MarkerOptions()
                     .position(position)
-                    .title("여기에 음악 추가하기")
             )
             addedMarker?.showInfoWindow()
             binding.btnCreatePlace.isVisible = addedMarker != null
@@ -95,7 +101,7 @@ class FindOtherPlaceFragment : Fragment(), OnMapReadyCallback {
         with(binding) {
             btnCreatePlace.setOnClickListener {
                 setAlertDialog(requireContext(), null,
-                    "이 곳에 음악을 추가하시겠습니까?",
+                    getString(R.string.alert_create_pin_here),
                     posFunc = {
                         viewModel.setLocation(requireContext(), addedMarker!!.position.latitude, addedMarker!!.position.longitude)
                         parentFragmentManager

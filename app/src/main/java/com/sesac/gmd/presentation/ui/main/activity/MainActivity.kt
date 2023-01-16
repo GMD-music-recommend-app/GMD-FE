@@ -1,7 +1,7 @@
-/*
-* Created by gabriel
+/**
+* Created by 조진수
 * date : 22/11/21
-* */
+*/
 package com.sesac.gmd.presentation.ui.main.activity
 
 import androidx.appcompat.app.AppCompatActivity
@@ -12,9 +12,9 @@ import com.google.android.material.tabs.TabLayout
 import com.sesac.gmd.R
 import com.sesac.gmd.common.util.*
 import com.sesac.gmd.databinding.ActivityMainBinding
-import com.sesac.gmd.presentation.ui.main.chart.ChartFragment
-import com.sesac.gmd.presentation.ui.main.home.HomeFragment
-import com.sesac.gmd.presentation.ui.main.setting.SettingFragment
+import com.sesac.gmd.presentation.ui.main.fragment.chart.ChartFragment
+import com.sesac.gmd.presentation.ui.main.fragment.home.HomeFragment
+import com.sesac.gmd.presentation.ui.main.fragment.setting.SettingFragment
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding

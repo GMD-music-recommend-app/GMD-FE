@@ -1,7 +1,7 @@
-/*
-* Created by gabriel
+/**
+* Created by 조진수
 * date : 22/11/24
-* */
+*/
 package com.sesac.gmd.presentation.ui.main.bottomsheet
 
 import android.annotation.SuppressLint
@@ -19,14 +19,20 @@ import com.sesac.gmd.R
 import com.sesac.gmd.common.util.DEFAULT_TAG
 import com.sesac.gmd.common.util.Utils.Companion.setAlertDialog
 import com.sesac.gmd.common.util.Utils.Companion.toastMessage
+import com.sesac.gmd.common.util.YOUTUBE_BASE_URL
 import com.sesac.gmd.data.repository.Repository
 import com.sesac.gmd.databinding.FragmentSongInfoBottomSheetBinding
-import com.sesac.gmd.presentation.ui.factory.ViewModelFactory
+import com.sesac.gmd.presentation.factory.ViewModelFactory
 import com.sesac.gmd.presentation.ui.main.viewmodel.MainViewModel
 
 // TODO: Expanded Bottom Sheet Dialog 로 변경 필요
+/**
+ * 핀 클릭 시 해당 핀의 정보를 표시하는 BottomSheetDialog
+ */
 class SongInfoBottomSheetFragment : BottomSheetDialogFragment() {
     companion object {
+        private val TAG = SongInfoBottomSheetFragment::class.simpleName
+
         fun newInstance() = SongInfoBottomSheetFragment()
 
         fun newInstance(pinIdx: String) : BottomSheetDialogFragment {
@@ -37,7 +43,6 @@ class SongInfoBottomSheetFragment : BottomSheetDialogFragment() {
                 it.arguments = bundle
             }
         }
-        const val TAG = "SongInfo"
     }
     private lateinit var binding: FragmentSongInfoBottomSheetBinding
     private lateinit var viewModel: MainViewModel
@@ -46,7 +51,8 @@ class SongInfoBottomSheetFragment : BottomSheetDialogFragment() {
         binding = FragmentSongInfoBottomSheetBinding.inflate(inflater, container, false)
 
         viewModel = ViewModelProvider(
-            requireActivity(), ViewModelFactory(Repository()))[MainViewModel::class.java]
+            requireActivity(), ViewModelFactory(Repository())
+        )[MainViewModel::class.java]
 
         Log.d(DEFAULT_TAG+TAG, "${arguments?.getString("pinIdx")}")
 
@@ -71,7 +77,7 @@ class SongInfoBottomSheetFragment : BottomSheetDialogFragment() {
             viewModel.getPinInfo(arguments?.getString("pinIdx")!!.toInt())
         } catch (e: Exception) {
             dismiss()
-            toastMessage("예기치 못한 오류가 발생했습니다.")
+            toastMessage(getString(R.string.unexpected_error))
             Log.d(DEFAULT_TAG + TAG, "getPinInfo() error! : ${e.message}")
         }
     }
@@ -104,23 +110,6 @@ class SongInfoBottomSheetFragment : BottomSheetDialogFragment() {
                     ivStar.setImageResource(R.drawable.ic_star_empty)
                 }
                 // TODO: 댓글 추가
-
-                // TODO: 임시 작성 코드 추후 삭제 필요
-                if(arguments?.getString("pinIdx") == "50") {
-                    txtSongComment1.text = "JetPack"
-                    txtSongComment1Spc.text = "노래방 가서 불러야겟다"
-                    txtSongComment2.text = ""
-                    txtSongComment2Spc.text = ""
-                    txtSongComment3.text = ""
-                    txtSongComment3Spc.text = ""
-                } else if (arguments?.getString("pinIdx") == "51") {
-                    txtSongComment1.text = "Milli"
-                    txtSongComment1Spc.text = "크러쉬 2411도 추천"
-                    txtSongComment2.text = "하늘보리"
-                    txtSongComment2Spc.text = "오 추천 감사합니다"
-                    txtSongComment3.text = "브리브리대마왕"
-                    txtSongComment3Spc.text = "명반임. 전곡 다 들어보는거 추천"
-                }
             }
         }
     }
@@ -133,12 +122,12 @@ class SongInfoBottomSheetFragment : BottomSheetDialogFragment() {
             // 유튜브로 듣기
             btnSongYoutube.setOnClickListener {
                 setAlertDialog(requireContext(), null,
-                    "유튜브 페이지로 이동하시겠습니까?",
+                    getString(R.string.alert_go_to_youtube),
                     posFunc = {
                         startActivity(
                             Intent(Intent.ACTION_VIEW,
                                 Uri.parse(
-                                    "https://www.youtube.com/results?search_query=${viewModel.pinInfo.value!!.artist}+${viewModel.pinInfo.value!!.songTitle}"))
+                                    "$YOUTUBE_BASE_URL+${viewModel.pinInfo.value!!.artist}+${viewModel.pinInfo.value!!.songTitle}"))
                         )},
                     negFunc = {}
                 )}
@@ -146,18 +135,18 @@ class SongInfoBottomSheetFragment : BottomSheetDialogFragment() {
             btnSongLike.setOnClickListener {
                 isLike =
                     if (!isLike) {
-                        toastMessage("공감 +1")
+                        toastMessage(getString(R.string.success_to_like_pin))
                         it.setBackgroundResource(R.drawable.ic_liked)
                         true
                     } else {
-                        toastMessage("공감 취소")
+                        toastMessage(getString(R.string.success_to_cancel_liked_pin))
                         it.setBackgroundResource(R.drawable.ic_like)
                         false
                     }
             }
             // 공유하기
             btnSongShare.setOnClickListener {
-                toastMessage("준비 중입니다.")
+                toastMessage(getString(R.string.alert_service_ready))
             }
         }
     }

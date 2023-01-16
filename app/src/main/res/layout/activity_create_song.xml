@@ -10,7 +10,7 @@
         android:layout_height="wrap_content"
         android:background="@drawable/borderline_toolbar"
         app:titleCentered="true"
-        app:title="음악 추가하기"/>
+        app:title="@string/txt_create_music"/>
 
     <FrameLayout
         android:id="@+id/container"

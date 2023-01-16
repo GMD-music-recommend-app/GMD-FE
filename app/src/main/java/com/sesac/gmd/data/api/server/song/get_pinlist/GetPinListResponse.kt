@@ -1,11 +1,12 @@
-/*
-* Created by gabriel
+/**
+* Created by 조진수
 * date : 22/12/21
-* */
+*/
 package com.sesac.gmd.data.api.server.song.get_pinlist
 
-// 반경 내 핀 리스트 반환
-
+/**
+ * 지도 화면에서 반경 내 핀 리스트들을 가져오는 Request 에 대한 Response
+ */
 data class GetPinListResponse(
     val code: Int,
     val isSuccess: Boolean,
@@ -13,11 +14,11 @@ data class GetPinListResponse(
     val result : MutableList<Pin>
 )
 
-/*
-지도 위에 띄워 질 핀 정보
-핀 클릭 시 상세정보를 띄우기 때문에
-상세 정보는 아님
-*/
+/**
+ * 지도 위에 띄워 질 핀 정보
+ * 핀 클릭 시 상세정보를 띄우기 때문에
+ * 여기서는 상세 정보를 갖고있지는 않음
+ */
 data class Pin(
     val albumImage: String,     // 앨범 이미지
     val city: String,           // 생성 위치(군, 구)

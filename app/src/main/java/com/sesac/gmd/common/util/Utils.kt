@@ -1,8 +1,7 @@
-/*
-* Created by gabriel
+/**
+* Created by 조진수
 * date : 22/11/21
-* */
-
+*/
 package com.sesac.gmd.common.util
 
 import android.app.Activity
@@ -11,6 +10,7 @@ import android.content.Context
 import android.util.Log
 import android.view.inputmethod.InputMethodManager
 import android.widget.Toast
+import com.sesac.gmd.R
 import com.sesac.gmd.application.GMDApplication
 import com.sesac.gmd.data.model.Song
 import com.sesac.gmd.data.model.ManiaDBAlbum
@@ -21,7 +21,7 @@ import javax.xml.parsers.DocumentBuilderFactory
 
 class Utils {
     companion object {
-        private const val TAG = "Utils"
+        private val TAG = Utils::class.simpleName
 
         // Toast 출력 함수
         fun toastMessage(message: String) {
@@ -41,10 +41,10 @@ class Utils {
             AlertDialog.Builder(context)
                 .setTitle(title)
                 .setMessage(message)
-                .setPositiveButton("예") { _, _ ->
+                .setPositiveButton(context.getString(R.string.txt_yes)) { _, _ ->
                     posFunc()
                 }
-                .setNegativeButton("아니오") { _, _ ->
+                .setNegativeButton(context.getString(R.string.txt_no)) { _, _ ->
                     negFunc()
                 }
                 .create()
@@ -86,11 +86,11 @@ class Utils {
                                 XML_TAG_ALBUM_INFO -> {
                                     val artists = itemChildNode.childNodes
                                     for (artIdx in 0 until artists.length) {
-                                        val artists = artists.item(artIdx).childNodes
-                                        for (artSubIdx in 0 until artists.length) {
-                                            val artistName = artists.item(artSubIdx).nodeName
+                                        val artistChildNode = artists.item(artIdx).childNodes
+                                        for (artSubIdx in 0 until artistChildNode.length) {
+                                            val artistName = artistChildNode.item(artSubIdx).nodeName
                                             if (artistName == "name") {
-                                                song.artist.add(artists.item(artSubIdx).textContent.trim())
+                                                song.artist.add(artistChildNode.item(artSubIdx).textContent.trim())
                                             }
                                         }
                                     }

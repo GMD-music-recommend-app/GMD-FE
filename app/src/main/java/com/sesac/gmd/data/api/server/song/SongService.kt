@@ -1,7 +1,7 @@
-/*
-* Created by gabriel
+/**
+* Created by 조진수
 * date : 22/12/08
-* */
+*/
 package com.sesac.gmd.data.api.server.song
 
 import com.sesac.gmd.data.api.server.song.create_pin.CreatePinResponse
@@ -12,8 +12,6 @@ import com.sesac.gmd.data.api.server.song.get_pinlist.GetPinListResponse
 import okhttp3.RequestBody
 import retrofit2.Response
 import retrofit2.http.*
-
-// Swagger : http://yourplaylistgmd.shop/swagger-ui/index.html#/
 
 interface SongService {
     // 반경 내 핀 리스트 반환

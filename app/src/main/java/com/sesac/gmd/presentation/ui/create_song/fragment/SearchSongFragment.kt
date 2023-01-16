@@ -1,7 +1,7 @@
-/*
-* Created by gabriel
+/**
+* Created by 조진수
 * date : 22/11/26
-* */
+*/
 package com.sesac.gmd.presentation.ui.create_song.fragment
 
 import android.content.Intent
@@ -23,13 +23,16 @@ import com.sesac.gmd.databinding.FragmentSearchSongBinding
 import com.sesac.gmd.presentation.ui.create_song.adapter.SearchSongAdapter
 import com.sesac.gmd.presentation.ui.create_song.adapter.SearchSongDecoration
 import com.sesac.gmd.presentation.ui.create_song.viewmodel.CreateSongViewModel
-import com.sesac.gmd.presentation.ui.factory.ViewModelFactory
+import com.sesac.gmd.presentation.factory.ViewModelFactory
 import com.sesac.gmd.presentation.ui.main.activity.MainActivity
 
+/**
+ * 음악 검색 Fragment
+ */
 class SearchSongFragment : Fragment() {
     companion object {
+        private val TAG = SearchSongFragment::class.simpleName
         fun newInstance() = SearchSongFragment()
-        const val TAG = "SearchSongFragment"
     }
     private lateinit var binding: FragmentSearchSongBinding
     private lateinit var viewModel: CreateSongViewModel
@@ -73,8 +76,8 @@ class SearchSongFragment : Fragment() {
                 // 위치 정보가 저장되어 있지 않다면 현재 사용자의 위치 정보를 저장
                 if (it.latitude == 0.0 && it.state == null) {
                     setAlertDialog(requireContext(),
-                        "위치 정보를 가져오는 데 실패했습니다.",
-                        "위치 지정 페이지로 이동하시겠습니까?",
+                        getString(R.string.error_not_found_user_location),
+                        getString(R.string.alert_go_to_set_location_page),
                         posFunc = {
                             // 위치 지정 페이지(FindOtherPlaceFragment)로 이동
                             parentFragmentManager
@@ -161,13 +164,14 @@ class SearchSongFragment : Fragment() {
             }
             // 음악 검색
             if (edtSearchSong.text!!.isEmpty()) {
-                toastMessage("검색어를 입력해주세요!")
+                toastMessage(getString(R.string.error_keyword_not_assigned))
             } else if (edtSearchSong.text!!.length > 200) {
-                toastMessage("검색어는 200자 까지 입력 가능합니다.")
+                toastMessage(getString(R.string.error_keyword_length_exceeded))
             } else {
                 if (!validate()) {
                     setAlertDialog(requireContext(), null,
-                        "위치가 지정되지 않았습니다. 위치 지정 페이지로 이동하시겠습니까?",
+                        getString(R.string.error_location_not_assigned) + " " +
+                                getString(R.string.alert_go_to_set_location_page),
                         posFunc = {
                             // 위치 지정 페이지(FindOtherPlaceFragment)로 이동
                             parentFragmentManager

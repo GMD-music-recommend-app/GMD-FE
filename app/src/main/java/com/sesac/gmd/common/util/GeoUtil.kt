@@ -5,9 +5,13 @@ import android.location.Address
 import android.location.Geocoder
 import android.os.Build
 import android.util.Log
+import com.sesac.gmd.R
 import com.sesac.gmd.data.model.Location
 import java.util.*
 
+/**
+* Location(위도, 경도) 값을 통해 행정 구역을 반환하는 Geocoder
+*/
 object GeoUtil {
     private val TAG = GeoUtil::class.simpleName
 
@@ -29,7 +33,7 @@ object GeoUtil {
                 // Geocoding 실패했을 경우
                 override fun onError(errorMessage: String?) {
                     super.onError(errorMessage)
-                    Utils.toastMessage("예기치 못한 문제가 발생했습니다.")
+                    Utils.toastMessage(context.getString(R.string.unexpected_error))
                     Log.d(DEFAULT_TAG + TAG, "Geocoder occurred error : $errorMessage!!")
                 }
             })
@@ -45,7 +49,7 @@ object GeoUtil {
                     }
                 }
             } catch (e: Exception) {
-                Utils.toastMessage("예기치 못한 문제가 발생했습니다.")
+                Utils.toastMessage(context.getString(R.string.unexpected_error))
                 Log.d(DEFAULT_TAG + TAG, "Geocoder occurred error : ${e.message}!!")
             }
         }

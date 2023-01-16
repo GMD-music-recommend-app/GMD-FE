@@ -1,7 +1,7 @@
-/*
-* Created by gabriel
+/**
+* Created by 조진수
 * date : 22/12/22
-* */
+*/
 package com.sesac.gmd.presentation.ui.main.viewmodel
 
 import android.content.Context
@@ -20,12 +20,16 @@ import com.sesac.gmd.data.model.Location
 import com.sesac.gmd.data.repository.Repository
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.launch
-/*
-* 멤버는 호출 순서대로 배치
-* */
-private const val TAG = "MainViewModel"
 
+/**
+ * MainActivity 에서 사용하는 ViewModel
+ * HomeFragment, ChartFragment 에서 호출
+ * 멤버는 호출 순서대로 배치
+ */
 class MainViewModel(private val repository: Repository) : ViewModel() {
+    companion object {
+        private val TAG = MainViewModel::class.simpleName
+    }
     // Location
     private val _location = MutableLiveData<Location>()
     val location: LiveData<Location> get() = _location
@@ -62,25 +66,6 @@ class MainViewModel(private val repository: Repository) : ViewModel() {
     fun setLocation(context: Context, lat: Double, lng: Double) {
         _location.value = geocoding(context, lat, lng)
     }
-
-    // ???
-//    // 현재 위치 정보 저장
-//    @SuppressLint("MissingPermission")
-//    fun getCurrentLocation(context: Context)  {
-//        // 사용자의 정확한 현재 위치 요청
-//        val fusedLocationClient: FusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(context)
-//        fusedLocationClient.lastLocation.addOnSuccessListener { // 비동기로 실행
-//            if (it == null) {
-//                // fusedLocationClient 가 현재 위치를 파악하지 못하는 경우
-//                toastMessage("사용자의 현재 위치를 알 수 없습니다.")
-//            }
-//            else {
-//                // 받아온 현재 위치를 기준으로 geocoding 실행 후 해당 위치 정보를 LiveData 에 저장
-//                val userLocation = geocoding(context, it.latitude, it.longitude)
-//                _location.value = userLocation
-//            }
-//        }
-//    }
 
     // 반경 내 핀 리스트 가져오기
     fun getPinList(lat: Double, lng: Double, radius: Int = 5_000) {

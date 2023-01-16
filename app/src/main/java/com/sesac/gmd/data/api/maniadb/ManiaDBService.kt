@@ -1,25 +1,24 @@
-/*
-* Created by gabriel
+/**
+* Created by 조진수
 * date : 22/12/06
-* */
-
+*/
 package com.sesac.gmd.data.api.maniadb
 
+import com.sesac.gmd.R
 import okhttp3.ResponseBody
 import retrofit2.http.GET
 import retrofit2.http.Path
 
-private const val MANIADB_SERVICE_KEY = "gmd6to30@gmail.com"
-/*
-* keyword : 컴색어
+/**
+* keyword : 검색어
 * sr : 검색 조건
 * display : 검색 결과 갯수
 * key : API Key(= 본인 이메일)
 * v : API 버전(default 0.5)
-* */
+*/
 interface ManiaDBService {
     // 곡 제목 검색(검색 결과 10(=display)개 표시)
-    @GET("{keyword}/?sr=song&display=10&key=${MANIADB_SERVICE_KEY}&v=0.5")
+    @GET("{keyword}/?sr=song&display=10&key=${R.string.maniaDB_service_key}&v=0.5")
     suspend fun getSong(@Path("keyword") keyword: String) : ResponseBody
 
     /*// 가수 검색
