@@ -10,8 +10,11 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.sesac.gmd.R
+import com.sesac.gmd.application.GMDApplication
 import com.sesac.gmd.common.util.DEFAULT_TAG
 import com.sesac.gmd.common.util.GeoUtil.geocoding
+import com.sesac.gmd.common.util.PIN_SEARCH_RADIUS
 import com.sesac.gmd.common.util.TEMP_USER_IDX
 import com.sesac.gmd.common.util.Utils.Companion.toastMessage
 import com.sesac.gmd.data.api.server.song.get_pininfo.GetPinInfoResult
@@ -68,18 +71,18 @@ class MainViewModel(private val repository: Repository) : ViewModel() {
     }
 
     // 반경 내 핀 리스트 가져오기
-    fun getPinList(lat: Double, lng: Double, radius: Int = 5_000) {
+    fun getPinList(lat: Double, lng: Double, radius: Int = PIN_SEARCH_RADIUS) {
         viewModelScope.launch(exceptionHandler) {
             try {
                 val response = repository.getPinList(lat, lng, radius)
                 if (response.isSuccessful) {
                     _pinLists.value = response.body()!!.result
                 } else {
-                    toastMessage("음악 핀 데이터를 가져오지 못했습니다.")
+                    toastMessage(GMDApplication.getAppInstance().resources.getString(R.string.error_not_found_pin_data))
                     onError("onError: ${response.errorBody()!!.string()}")
                 }
             } catch (e: Exception) {
-                toastMessage("예기치 못한 오류가 발생했습니다.")
+                toastMessage(GMDApplication.getAppInstance().resources.getString(R.string.unexpected_error))
                 Log.d(DEFAULT_TAG + TAG, "getPinList() error! : ${e.message}")
             }
         }

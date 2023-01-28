@@ -6,6 +6,8 @@ package com.sesac.gmd.presentation.factory
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import com.sesac.gmd.R
+import com.sesac.gmd.application.GMDApplication
 import com.sesac.gmd.data.repository.Repository
 import com.sesac.gmd.presentation.ui.create_song.viewmodel.CreateSongViewModel
 import com.sesac.gmd.presentation.ui.main.viewmodel.ChartViewModel
@@ -21,7 +23,7 @@ class ViewModelFactory(private val repository: Repository) : ViewModelProvider.F
         } else if (modelClass.isAssignableFrom(ChartViewModel::class.java)) {
             ChartViewModel(repository) as T
         } else {
-            throw IllegalArgumentException("해당 ViewModel 을 찾을 수 없습니다.")
+            throw IllegalArgumentException(GMDApplication.getAppInstance().resources.getString(R.string.error_not_found_viewModel))
         }
     }
 }

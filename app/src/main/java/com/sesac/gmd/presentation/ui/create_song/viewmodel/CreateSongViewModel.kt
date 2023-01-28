@@ -13,6 +13,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
+import com.sesac.gmd.R
+import com.sesac.gmd.application.GMDApplication
 import com.sesac.gmd.common.util.DEFAULT_TAG
 import com.sesac.gmd.common.util.GeoUtil.geocoding
 import com.sesac.gmd.common.util.TEMP_USER_IDX
@@ -78,7 +80,7 @@ class CreateSongViewModel(private val repository: Repository) : ViewModel() {
         fusedLocationClient.lastLocation.addOnSuccessListener { // 비동기로 실행
             if (it == null) {
                 // fusedLocationClient 가 현재 위치를 파악하지 못하는 경우
-                toastMessage("사용자의 위치 정보를 가져오는 데 실패했습니다.")
+                toastMessage(GMDApplication.getAppInstance().resources.getString(R.string.error_not_found_user_location))
             }
             else {
                 // 받아온 현재 위치를 기준으로 geocoding 실행 후 해당 위치 정보를 LiveData 에 저장
@@ -99,13 +101,13 @@ class CreateSongViewModel(private val repository: Repository) : ViewModel() {
                 isLoading.value = false
             } catch (e : TimeoutException) {
                 Log.d(DEFAULT_TAG + TAG, "getSong() error! : ${e.message}")
-                toastMessage("연결이 고르지 않습니다.\n 다시 시도해주시기 바랍니다.")
+                toastMessage(GMDApplication.getAppInstance().resources.getString(R.string.error_unstable_network_connection))
                 isLoading.value = false
                 throw TimeoutException("$e")
             } catch (e: Exception) {
                 // TODO: 예외 처리 필요(인터넷 연결x)
                 Log.d(DEFAULT_TAG + TAG, "getSong() error! : ${e.message}")
-                toastMessage("예기치 못한 오류가 발생했습니다!")
+                toastMessage(GMDApplication.getAppInstance().resources.getString(R.string.unexpected_error))
                 isLoading.value = false
                 throw Exception("$e")
             }
@@ -139,11 +141,11 @@ class CreateSongViewModel(private val repository: Repository) : ViewModel() {
                     Log.d(DEFAULT_TAG+TAG, "---------------------Song Create Fail!---------------------")
                     Log.d(DEFAULT_TAG+TAG, "errorMessage : ${response.body()!!.message}")
 
-                    toastMessage("예기치 못한 오류가 발생했습니다.")
+                    toastMessage(GMDApplication.getAppInstance().resources.getString(R.string.unexpected_error))
                     onError("onError: ${response.errorBody()!!.string()}")
                 }
             } catch (e: Exception) {
-                toastMessage("예기치 못한 오류가 발생했습니다.")
+                toastMessage(GMDApplication.getAppInstance().resources.getString(R.string.unexpected_error))
                 Log.d(DEFAULT_TAG + TAG, "createPin() error! : ${e.message}")
             }
         }

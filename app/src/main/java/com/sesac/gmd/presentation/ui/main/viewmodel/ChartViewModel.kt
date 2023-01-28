@@ -7,6 +7,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.android.gms.maps.model.LatLng
+import com.sesac.gmd.R
+import com.sesac.gmd.application.GMDApplication
 import com.sesac.gmd.common.util.DEFAULT_TAG
 import com.sesac.gmd.common.util.GeoUtil
 import com.sesac.gmd.common.util.Utils.Companion.toastMessage
@@ -69,7 +71,7 @@ class ChartViewModel(private val repository: Repository) : ViewModel() {
             isLoading.value = false
         } catch (e: Exception) {
             e.printStackTrace()
-            toastMessage("예기치 못한 오류가 발생했습니다!")
+            toastMessage(GMDApplication.getAppInstance().resources.getString(R.string.unexpected_error))
         }
     }
 }

@@ -13,3 +13,5 @@
 .externalNativeBuild
 .cxx
 local.properties
+strings_hide.xml
+Const_hide.kt

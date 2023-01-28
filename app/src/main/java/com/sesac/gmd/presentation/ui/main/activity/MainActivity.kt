@@ -36,8 +36,8 @@ class MainActivity : AppCompatActivity() {
         // 최초 실행 시 Fragment 초기화
         if (savedInstanceState == null) {
             // Splash 에서 넘겨 준 위치 정보 가져오기
-            val getLat = intent.getDoubleExtra("latitude", 0.0)
-            val getLng = intent.getDoubleExtra("longitude", 0.0)
+            val getLat = intent.getDoubleExtra(LATITUDE, 0.0)
+            val getLng = intent.getDoubleExtra(LONGITUDE, 0.0)
 
             with(supportFragmentManager.beginTransaction()){
                 if (getLat != 0.0 && getLng != 0.0) {

@@ -18,6 +18,9 @@ import com.google.android.gms.location.LocationServices
 import com.gun0912.tedpermission.PermissionListener
 import com.gun0912.tedpermission.normal.TedPermission
 import com.sesac.gmd.R
+import com.sesac.gmd.common.util.LATITUDE
+import com.sesac.gmd.common.util.LONGITUDE
+import com.sesac.gmd.common.util.SPLASH_LOGO_SHOWING_TIME
 import com.sesac.gmd.common.util.Utils.Companion.toastMessage
 import com.sesac.gmd.presentation.ui.main.activity.MainActivity
 import kotlinx.coroutines.*
@@ -39,7 +42,7 @@ class SplashActivity : AppCompatActivity() {
 
         CoroutineScope(Dispatchers.Main).launch {
             // Splash 화면 1.5 초 동안 표시
-            delay(1_500L)
+            delay(SPLASH_LOGO_SHOWING_TIME)
             // Permissions Check
             checkPermissions()
         }
@@ -97,8 +100,8 @@ class SplashActivity : AppCompatActivity() {
                 throw SecurityException(getString(R.string.error_not_found_location_data))
             }
             else {
-                nextPage.putExtra("latitude", it.latitude)
-                nextPage.putExtra("longitude", it.longitude)
+                nextPage.putExtra(LATITUDE, it.latitude)
+                nextPage.putExtra(LONGITUDE, it.longitude)
             }
             startActivity(nextPage)
             finish()

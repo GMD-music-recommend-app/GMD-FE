@@ -5,6 +5,7 @@
 package com.sesac.gmd.data.api.server.song.get_pinlist
 
 import com.sesac.gmd.common.util.GMD_BASE_URL
+import com.sesac.gmd.common.util.REST_TIMEOUT
 import com.sesac.gmd.data.api.server.song.SongService
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
@@ -37,8 +38,8 @@ class GetPinListRetrofitClient {
                         .build()
                     chain.proceed(newRequest)
                 }).addInterceptor(httpInterceptor())
-                .connectTimeout(5, TimeUnit.SECONDS)
-                .readTimeout(3, TimeUnit.SECONDS)
+                .connectTimeout(REST_TIMEOUT, TimeUnit.SECONDS)
+                .readTimeout(REST_TIMEOUT, TimeUnit.SECONDS)
                 .build()
             retrofitBuilder.client(okHttpClient)
         }
@@ -46,7 +47,7 @@ class GetPinListRetrofitClient {
         // OkHttp Interceptor 로그 기록 용
         private fun httpInterceptor(): HttpLoggingInterceptor {
             val interceptor = HttpLoggingInterceptor()
-            interceptor.level = HttpLoggingInterceptor.Level.BODY
+            interceptor.level = HttpLoggingInterceptor.Level.BASIC
             return interceptor
         }
     }

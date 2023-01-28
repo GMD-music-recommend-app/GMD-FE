@@ -5,6 +5,7 @@
 package com.sesac.gmd.data.api.maniadb
 
 import com.sesac.gmd.common.util.MANIADB_BASE_URL
+import com.sesac.gmd.common.util.REST_TIMEOUT
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.Request
@@ -34,8 +35,8 @@ class ManiaDBRetrofitClient {
                     chain.proceed(newRequest)
                 })
                 .addInterceptor(httpInterceptor())
-                .connectTimeout(10, TimeUnit.SECONDS)
-                .readTimeout(10, TimeUnit.SECONDS)
+                .connectTimeout(REST_TIMEOUT, TimeUnit.SECONDS)
+                .readTimeout(REST_TIMEOUT, TimeUnit.SECONDS)
                 .build()
             maniaRetrofitBuilder.client(okHttpClient)
         }

@@ -11,7 +11,8 @@ import android.content.pm.ActivityInfo
 import android.os.Bundle
 import com.google.android.libraries.places.api.Places
 import com.kakao.sdk.common.KakaoSdk
-import com.sesac.gmd.R
+import com.sesac.gmd.common.util.GOOGLE_MAPS_SERVICE_KEY
+import com.sesac.gmd.common.util.KAKAO_APP_KEY
 import java.util.*
 
 /**
@@ -27,7 +28,7 @@ class GMDApplication : Application(){
     override fun onCreate() {
         super.onCreate()
         // 카카오 sdk 네이티브 앱 키 추가
-        KakaoSdk.init(this, getString(R.string.kakao_app_key))
+        KakaoSdk.init(this, KAKAO_APP_KEY)
         appInstance = this
         settingScreenPortrait()
         initPlaceSDK()
@@ -56,7 +57,7 @@ class GMDApplication : Application(){
     */
     private fun initPlaceSDK() {
         if (!Places.isInitialized()) {
-            Places.initialize(applicationContext, getString(R.string.google_maps_key), Locale.KOREA)
+            Places.initialize(applicationContext, GOOGLE_MAPS_SERVICE_KEY, Locale.KOREA)
         }
     }
 }
