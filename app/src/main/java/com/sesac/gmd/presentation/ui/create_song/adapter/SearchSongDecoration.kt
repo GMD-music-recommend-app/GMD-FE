@@ -7,6 +7,7 @@ package com.sesac.gmd.presentation.ui.create_song.adapter
 import android.graphics.Rect
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
+import com.sesac.gmd.common.util.RECYCLER_ITEM_SEARCH_MUSIC_OFFSET
 
 /**
  * 음악 검색에서 사용하는 RecyclerView 의 ItemDecoration
@@ -20,7 +21,7 @@ class SearchSongDecoration : RecyclerView.ItemDecoration() {
         state: RecyclerView.State
     ) {
         super.getItemOffsets(outRect, view, parent, state)
-        val offset = 20
+        val offset = RECYCLER_ITEM_SEARCH_MUSIC_OFFSET
         outRect.bottom = offset
     }
 }

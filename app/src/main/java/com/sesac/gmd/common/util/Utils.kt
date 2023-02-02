@@ -59,10 +59,10 @@ class Utils {
                 val inputSource = InputSource()
                 inputSource.characterStream = StringReader(xmlFromManiaDB)
                 val rootDoc = xmlDOMBuilder.newDocumentBuilder().parse(inputSource)
-                val itemTags = rootDoc.getElementsByTagName("item")
+                val itemTags = rootDoc.getElementsByTagName(MUSIC_ITEM)
                 for (idx in 0 until itemTags.length) {
                     val song = Song()
-                    song.songIdx = itemTags.item(idx).attributes.getNamedItem("id").nodeValue.trim().toInt()
+                    song.songIdx = itemTags.item(idx).attributes.getNamedItem(MUSIC_ID).nodeValue.trim().toInt()
                     val itemSubTagLength = itemTags.item(idx).childNodes.length
                     for (subIdx in 0 until itemSubTagLength) {
                         val itemChildNode = itemTags.item(idx).childNodes.item(subIdx)
@@ -73,10 +73,10 @@ class Utils {
                                     val albumNodes = itemChildNode.childNodes
                                     for (childIdx in 0 until albumNodes.length) {
                                         val childNodeName = albumNodes.item(childIdx).nodeName
-                                        if (childNodeName == "title") {
+                                        if (childNodeName == MUSIC_TITLE) {
                                             album.albumTitle =
                                                 albumNodes.item(childIdx).textContent.trim()
-                                        } else if (childNodeName == "image") {
+                                        } else if (childNodeName == ALBUM_IMAGE) {
                                             album.albumImage =
                                                 albumNodes.item(childIdx).textContent.trim()
                                         }
@@ -89,7 +89,7 @@ class Utils {
                                         val artistChildNode = artists.item(artIdx).childNodes
                                         for (artSubIdx in 0 until artistChildNode.length) {
                                             val artistName = artistChildNode.item(artSubIdx).nodeName
-                                            if (artistName == "name") {
+                                            if (artistName == MUSIC_NAME) {
                                                 song.artist.add(artistChildNode.item(artSubIdx).textContent.trim())
                                             }
                                         }

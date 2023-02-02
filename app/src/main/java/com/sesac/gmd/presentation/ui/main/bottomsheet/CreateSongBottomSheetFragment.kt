@@ -10,6 +10,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
+import com.sesac.gmd.common.util.CREATE_MUSIC_HERE
+import com.sesac.gmd.common.util.GO_TO_PAGE
+import com.sesac.gmd.common.util.SET_OTHER_PLACE
 import com.sesac.gmd.databinding.FragmentCreateSongBottomSheetBinding
 import com.sesac.gmd.presentation.ui.create_song.activity.CreateSongActivity
 
@@ -39,13 +42,13 @@ class CreateSongBottomSheetFragment : BottomSheetDialogFragment() {
 
             // 여기서 추천하기 버튼 클릭
             btnCreateHere.setOnClickListener {
-                nextPage.putExtra("GO_TO_PAGE", "CreateSongHere")
+                nextPage.putExtra(GO_TO_PAGE, CREATE_MUSIC_HERE)
                 dismiss()
                 startActivity(nextPage)
             }
             // 다른 곳에서 추천하기 버튼 클릭
             btnCreateOtherPlace.setOnClickListener {
-                nextPage.putExtra("GO_TO_PAGE", "SetOtherPlace")
+                nextPage.putExtra(GO_TO_PAGE, SET_OTHER_PLACE)
                 dismiss()
                 startActivity(nextPage)
             }

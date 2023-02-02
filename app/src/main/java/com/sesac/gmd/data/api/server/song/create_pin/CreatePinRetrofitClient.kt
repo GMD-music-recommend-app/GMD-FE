@@ -4,8 +4,7 @@
 */
 package com.sesac.gmd.data.api.server.song.create_pin
 
-import com.sesac.gmd.common.util.GMD_BASE_URL
-import com.sesac.gmd.common.util.TEMP_JWT
+import com.sesac.gmd.common.util.*
 import com.sesac.gmd.data.api.server.song.SongService
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
@@ -35,13 +34,13 @@ class CreatePinRetrofitClient {
                     val request = chain.request()
                     val newRequest: Request = request
                         .newBuilder()
-                        .addHeader("Accept", "application/json")
-                        .addHeader("X-ACCESS-TOKEN", TEMP_JWT)
+                        .addHeader(ACCEPT, GET_TO_JSON)
+                        .addHeader(X_ACCESS_TOKEN, TEMP_JWT)
                         .build()
                     chain.proceed(newRequest)
                 }).addInterceptor(httpInterceptor())
-                .connectTimeout(5, TimeUnit.SECONDS)
-                .readTimeout(3, TimeUnit.SECONDS)
+                .connectTimeout(REST_TIMEOUT, TimeUnit.SECONDS)
+                .readTimeout(REST_TIMEOUT, TimeUnit.SECONDS)
                 .build()
             retrofitBuilder.client(okHttpClient)
         }
@@ -49,7 +48,7 @@ class CreatePinRetrofitClient {
         // OkHttp Interceptor 로그 기록 용
         private fun httpInterceptor(): HttpLoggingInterceptor {
             val interceptor = HttpLoggingInterceptor()
-            interceptor.level = HttpLoggingInterceptor.Level.BODY
+            interceptor.level = HttpLoggingInterceptor.Level.BASIC
             return interceptor
         }
     }

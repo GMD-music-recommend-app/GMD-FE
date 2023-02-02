@@ -4,7 +4,7 @@
 */
 package com.sesac.gmd.data.api.maniadb
 
-import com.sesac.gmd.R
+import com.sesac.gmd.common.util.MANIA_DB_SERVICE_KEY
 import okhttp3.ResponseBody
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -18,7 +18,7 @@ import retrofit2.http.Path
 */
 interface ManiaDBService {
     // 곡 제목 검색(검색 결과 10(=display)개 표시)
-    @GET("{keyword}/?sr=song&display=10&key=${R.string.maniaDB_service_key}&v=0.5")
+    @GET("{keyword}/?sr=song&display=10&key=${MANIA_DB_SERVICE_KEY}&v=0.5")
     suspend fun getSong(@Path("keyword") keyword: String) : ResponseBody
 
     /*// 가수 검색

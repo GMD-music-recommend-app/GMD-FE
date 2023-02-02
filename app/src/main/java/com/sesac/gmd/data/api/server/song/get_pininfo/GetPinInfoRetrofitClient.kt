@@ -5,7 +5,9 @@
 package com.sesac.gmd.data.api.server.song.get_pininfo
 
 import com.sesac.gmd.common.util.GMD_BASE_URL
+import com.sesac.gmd.common.util.REST_TIMEOUT
 import com.sesac.gmd.common.util.TEMP_JWT
+import com.sesac.gmd.common.util.X_ACCESS_TOKEN
 import com.sesac.gmd.data.api.server.song.SongService
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
@@ -35,12 +37,12 @@ class GetPinInfoRetrofitClient {
                     val request = chain.request()
                     val newRequest: Request = request
                         .newBuilder()
-                        .addHeader("X-ACCESS-TOKEN", TEMP_JWT)
+                        .addHeader(X_ACCESS_TOKEN, TEMP_JWT)
                         .build()
                     chain.proceed(newRequest)
                 }).addInterceptor(httpInterceptor())
-                .connectTimeout(5, TimeUnit.SECONDS)
-                .readTimeout(3, TimeUnit.SECONDS)
+                .connectTimeout(REST_TIMEOUT, TimeUnit.SECONDS)
+                .readTimeout(REST_TIMEOUT, TimeUnit.SECONDS)
                 .build()
             retrofitBuilder.client(okHttpClient)
         }
@@ -48,7 +50,7 @@ class GetPinInfoRetrofitClient {
         // OkHttp Interceptor 로그 기록 용
         private fun httpInterceptor(): HttpLoggingInterceptor {
             val interceptor = HttpLoggingInterceptor()
-            interceptor.level = HttpLoggingInterceptor.Level.BODY
+            interceptor.level = HttpLoggingInterceptor.Level.BASIC
             return interceptor
         }
     }

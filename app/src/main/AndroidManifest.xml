@@ -28,7 +28,7 @@
         <!-- 카카오 로그인 -->
         <meta-data
             android:name="com.kakao.sdk.AppKey"
-            android:value="kakao0a2c945c82b638fdb08b2eccf8a0a87e" />
+            android:value="@string/kakao_app_key_with_kakao" />
 
         <activity
             android:name=".presentation.ui.splash.SplashActivity"

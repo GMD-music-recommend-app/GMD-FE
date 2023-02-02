@@ -24,6 +24,7 @@ import com.google.android.libraries.places.api.model.Place
 import com.google.android.libraries.places.widget.AutocompleteSupportFragment
 import com.google.android.libraries.places.widget.listener.PlaceSelectionListener
 import com.sesac.gmd.R
+import com.sesac.gmd.common.util.DEFAULT_ZOOM_LEVEL
 import com.sesac.gmd.common.util.SEOUL_CITY_LATITUDE
 import com.sesac.gmd.common.util.SEOUL_CITY_LONGITUDE
 import com.sesac.gmd.common.util.Utils.Companion.setAlertDialog
@@ -80,7 +81,7 @@ class FindOtherPlaceFragment : Fragment(), OnMapReadyCallback {
     // 구글 맵 생성 시 지도 구성
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(startingPoint, 16F))
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(startingPoint, DEFAULT_ZOOM_LEVEL))
 
         mMap.setOnMapLongClickListener { point ->
             if (addedMarker != null) {
@@ -126,7 +127,7 @@ class FindOtherPlaceFragment : Fragment(), OnMapReadyCallback {
             override fun onPlaceSelected(place: Place) {
                 // TODO: Get info about the selected place.
                 Log.i("FindOtherPlaceFragment", "Place: ${place.name}, ${place.id}")
-                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(place.latLng ?: startingPoint, 16F))
+                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(place.latLng ?: startingPoint, DEFAULT_ZOOM_LEVEL))
             }
 
             override fun onError(status: Status) {

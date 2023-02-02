@@ -11,6 +11,9 @@ import android.view.MenuItem
 import android.view.MotionEvent
 import android.view.inputmethod.InputMethodManager
 import com.sesac.gmd.R
+import com.sesac.gmd.common.util.CREATE_MUSIC_HERE
+import com.sesac.gmd.common.util.GO_TO_PAGE
+import com.sesac.gmd.common.util.SET_OTHER_PLACE
 import com.sesac.gmd.common.util.Utils.Companion.toastMessage
 import com.sesac.gmd.databinding.ActivityCreateSongBinding
 import com.sesac.gmd.presentation.ui.create_song.fragment.FindOtherPlaceFragment
@@ -36,16 +39,16 @@ class CreateSongActivity : AppCompatActivity() {
 
     // 보여줄 Fragment setting
     private fun setFirstFragment(savedInstanceState: Bundle?) {
-        val goToPageName = intent.getStringExtra("GO_TO_PAGE")
+        val goToPageName = intent.getStringExtra(GO_TO_PAGE)
         if (savedInstanceState == null) {
             with(supportFragmentManager.beginTransaction()) {
                 // 노래 추천하기 버튼 클릭 시 첫 화면
                 when(goToPageName) {
-                    "CreateSongHere" -> { // 여기에서 추천하기
+                    CREATE_MUSIC_HERE -> { // 여기에서 추천하기
                         add(R.id.container, SearchSongFragment.newInstance())
                         commit()
                     }
-                    "SetOtherPlace" -> { // 다른 곳에서 추천하기
+                    SET_OTHER_PLACE -> { // 다른 곳에서 추천하기
                         add(R.id.container, FindOtherPlaceFragment.newInstance())
                         commit()
                     }

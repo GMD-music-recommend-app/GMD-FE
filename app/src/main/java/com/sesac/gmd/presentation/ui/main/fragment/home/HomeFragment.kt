@@ -26,8 +26,7 @@ import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.*
 import com.sesac.gmd.R
-import com.sesac.gmd.common.util.SEOUL_CITY_LATITUDE
-import com.sesac.gmd.common.util.SEOUL_CITY_LONGITUDE
+import com.sesac.gmd.common.util.*
 import com.sesac.gmd.common.util.Utils.Companion.toastMessage
 import com.sesac.gmd.data.api.server.song.get_pinlist.Pin
 import com.sesac.gmd.data.repository.Repository
@@ -48,8 +47,8 @@ class HomeFragment : Fragment(),
 
         fun newInstance(lat: Double, lng: Double) : Fragment {
             val bundle = Bundle()
-            bundle.putDouble("latitude", lat)
-            bundle.putDouble("longitude", lng)
+            bundle.putDouble(LATITUDE, lat)
+            bundle.putDouble(LONGITUDE, lng)
 
             return HomeFragment().also {
                 it.arguments = bundle
@@ -104,8 +103,8 @@ class HomeFragment : Fragment(),
     private fun initLocation() {
         if (arguments?.isEmpty != true) {
             // Splash 에서 arguments 로 전달받은 latitude, longitude
-            val lat = arguments?.getDouble("latitude")
-            val lng = arguments?.getDouble("longitude")
+            val lat = arguments?.getDouble(LATITUDE)
+            val lng = arguments?.getDouble(LONGITUDE)
             if (lat != null && lng != null) {
                 viewModel.setLocation(requireContext(), lat, lng)
             }
@@ -135,7 +134,7 @@ class HomeFragment : Fragment(),
             }
             location.observe(viewLifecycleOwner) {
                 val currentLocation = LatLng(it.latitude, it.longitude)
-                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLocation, 16F))
+                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLocation, DEFAULT_ZOOM_LEVEL))
                 getPins(currentLocation)
             }
             // ???
@@ -163,7 +162,7 @@ class HomeFragment : Fragment(),
             }
 
         with(mMap) {
-            moveCamera(CameraUpdateFactory.newLatLngZoom(startingPoint, 16F))
+            moveCamera(CameraUpdateFactory.newLatLngZoom(startingPoint, DEFAULT_ZOOM_LEVEL))
             setOnMarkerClickListener(this@HomeFragment)
             // 지도에 표시할 음악 핀 가져오기
             getPins(startingPoint)
@@ -196,7 +195,7 @@ class HomeFragment : Fragment(),
                     MarkerOptions()
                         .position(location)
                         .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_pin_temp_x2))
-                        .anchor(0.5f, 0.5f)     // 마커의 하단이 아닌 중앙을 꼭짓점으로 하도록 수정
+                        .anchor(DEFAULT_PIN_CENTER_POINTER, DEFAULT_PIN_CENTER_POINTER)     // 마커의 하단이 아닌 중앙을 꼭짓점으로 하도록 수정
                 )!!.tag = it.pinIdx
             }
         }
