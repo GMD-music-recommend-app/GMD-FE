@@ -96,7 +96,7 @@ class WriteStoryFragment : Fragment() {
                         btnFinishCreate.setBackgroundResource(R.drawable.bg_btn_gray)
                         btnFinishCreate.isEnabled = false
                     } else {
-                        btnFinishCreate.setBackgroundResource(R.drawable.bg_btn_main_color)
+                        btnFinishCreate.setBackgroundResource(R.drawable.bg_btn_main_color_oval)
                         btnFinishCreate.isEnabled = true
                     }
                 }

@@ -30,7 +30,7 @@
     <!--  노래 추천하기 버튼  -->
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btn_create_song"
-        android:background="@drawable/bg_btn_main_color"
+        android:background="@drawable/bg_btn_main_color_oval"
         android:layout_width="152dp"
         android:layout_height="48dp"
         android:layout_centerHorizontal="true"
