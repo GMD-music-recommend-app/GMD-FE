@@ -34,10 +34,10 @@
         android:layout_centerHorizontal="true"
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="@dimen/margin_to_32dp"
-        android:paddingVertical="@dimen/padding_to_12dp"
+        android:padding="@dimen/padding_to_12dp"
         android:elevation="@dimen/elevation_to_24dp"
         android:text="@string/txt_title_create_pin_here"
-        android:textSize="@dimen/txt_size_to_16sp"
         android:visibility="gone"
+        style="@style/ActiveButtonStyle"
         tools:visibility="visible"/>
 </RelativeLayout>

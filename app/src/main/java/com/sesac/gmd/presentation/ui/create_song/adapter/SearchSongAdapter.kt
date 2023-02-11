@@ -9,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.sesac.gmd.R
 import com.sesac.gmd.data.model.Song
 import com.sesac.gmd.data.model.SongList
 import com.sesac.gmd.databinding.ViewholderSearchSongResultBinding
@@ -36,6 +37,8 @@ class SearchSongAdapter(private val songList : SongList,
             txtSongArtist.text = """${song.artist.joinToString ( "," )} · ${song.album.albumTitle}"""
             Glide.with(holder.itemView.context)
                 .load(song.album.albumImage)
+                .placeholder(R.drawable.ic_load)
+                .error(R.drawable.ic_sample_image)
                 .into(imgSongAlbumImage)
 
             btnSelectSong.setOnClickListener {

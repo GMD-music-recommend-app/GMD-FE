@@ -26,18 +26,17 @@
         android:layout_marginTop="@dimen/margin_to_16dp"
         android:text="@string/txt_guide_select_other_place"
         android:textAlignment="center"
-        android:textSize="@dimen/txt_size_to_16sp" />
+        android:textSize="@dimen/txt_size_to_14sp" />
 
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btn_ok"
-        android:layout_width="match_parent"
+        android:layout_width="320dp"
         android:layout_height="wrap_content"
         android:layout_below="@+id/txt_create_guide"
         android:layout_centerHorizontal="true"
         android:layout_marginVertical="@dimen/margin_to_16dp"
         android:layout_marginHorizontal="@dimen/margin_to_64dp"
-        android:padding="@dimen/padding_to_16dp"
-        android:backgroundTint="@color/main_color"
+        android:background="@drawable/bg_btn_main_color_rectangle"
         android:elevation="@dimen/elevation_to_4dp"
         android:text="@string/txt_ok"
         android:textStyle="bold"

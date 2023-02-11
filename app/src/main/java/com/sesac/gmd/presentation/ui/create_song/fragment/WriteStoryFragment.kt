@@ -12,6 +12,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.sesac.gmd.R
@@ -93,10 +94,12 @@ class WriteStoryFragment : Fragment() {
             edtStory.addTextChangedListener(object : TextWatcher{
                 override fun afterTextChanged(s: Editable?) {
                     if (s!!.isEmpty()) {
-                        btnFinishCreate.setBackgroundResource(R.drawable.bg_btn_gray)
+                        btnFinishCreate.setBackgroundResource(R.drawable.bg_btn_gray_rectangle)
+                        btnFinishCreate.setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
                         btnFinishCreate.isEnabled = false
                     } else {
-                        btnFinishCreate.setBackgroundResource(R.drawable.bg_btn_main_color_oval)
+                        btnFinishCreate.setBackgroundResource(R.drawable.bg_btn_main_color_rectangle)
+                        btnFinishCreate.setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
                         btnFinishCreate.isEnabled = true
                     }
                 }

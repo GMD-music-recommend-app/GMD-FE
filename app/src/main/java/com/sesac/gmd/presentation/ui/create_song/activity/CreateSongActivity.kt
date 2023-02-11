@@ -5,11 +5,11 @@
 package com.sesac.gmd.presentation.ui.create_song.activity
 
 import android.graphics.Rect
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
 import android.view.MotionEvent
 import android.view.inputmethod.InputMethodManager
+import androidx.appcompat.app.AppCompatActivity
 import com.sesac.gmd.R
 import com.sesac.gmd.common.util.CREATE_MUSIC_HERE
 import com.sesac.gmd.common.util.GO_TO_PAGE
@@ -31,10 +31,8 @@ class CreateSongActivity : AppCompatActivity() {
         // 보여줄 Fragment set
         setFirstFragment(savedInstanceState)
 
-        // toolbar 뒤로가기 버튼
-        val toolbar = binding.toolbar
-        setSupportActionBar(toolbar)
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        // toolbar 설정
+        setToolbar()
     }
 
     // 보여줄 Fragment setting
@@ -57,6 +55,17 @@ class CreateSongActivity : AppCompatActivity() {
                     }
                 }
             }
+        }
+    }
+
+    private fun setToolbar() {
+        binding.toolbar.run {
+            setSupportActionBar(this)
+            supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+            supportActionBar!!.setDisplayShowTitleEnabled(false)
+            this.title = ""
+            this.subtitle = ""
+            this.setNavigationIcon(R.drawable.ic_back)
         }
     }
 
