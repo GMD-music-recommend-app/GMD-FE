@@ -16,16 +16,23 @@
         <item name="android:statusBarColor">@color/white</item>
         <item name="android:windowLightStatusBar" tools:ignore="NewApi">true</item>
 
-        <!--  Navigation bar background set      -->
+        <!-- Navigation bar background set -->
         <item name="android:navigationBarColor">@android:color/transparent</item>
         <item name="android:windowLightNavigationBar" tools:targetApi="o_mr1">true</item>
 
-        <!--  Edit Text outline color set      -->
+        <!-- Edit Text outline color set -->
         <item name="colorControlActivated">@color/main_color</item>
         <item name="colorControlHighlight">@color/main_color</item>
+
+        <!-- Bottom Sheet Theme -->
+        <item name="bottomSheetDialogTheme">@style/DefaultBottomSheetTheme</item>
+
+        <!-- Default Font Style -->
+        <item name="fontFamily">@font/noto_sans_medium</item>
+        <item name="android:includeFontPadding">false</item>
     </style>
 
-    <!--  Splash Theme  -->
+    <!-- Splash Theme -->
     <style name="SplashTheme" parent="Theme.MaterialComponents.DayNight.NoActionBar">
         <item name="android:statusBarColor">@color/transparent</item>
         <item name="android:windowLightStatusBar" tools:ignore="NewApi">true</item>

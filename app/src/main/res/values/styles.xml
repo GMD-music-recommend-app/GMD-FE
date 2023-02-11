@@ -5,4 +5,66 @@
         <item name="boxStrokeColor">@color/main_color</item>
         <item name="boxStrokeWidth">2dp</item>
     </style>
+
+    <!--  Bottom Sheet Dialog Style  -->
+    <style name="DefaultBottomSheetTheme" parent="@style/ThemeOverlay.MaterialComponents.BottomSheetDialog">
+        <item name="bottomSheetStyle">@style/CustomBottomSheet</item>
+    </style>
+    <style name="CustomBottomSheet" parent="Widget.MaterialComponents.BottomSheet">
+        <item name="shapeAppearanceOverlay">@style/CustomShapeAppearanceBottomSheetDialog</item>
+    </style>
+    <style name="CustomShapeAppearanceBottomSheetDialog" parent="">
+        <item name="cornerFamily">rounded</item>
+        <item name="cornerSizeTopRight">16dp</item>
+        <item name="cornerSizeTopLeft">16dp</item>
+        <item name="cornerSizeBottomRight">0dp</item>
+        <item name="cornerSizeBottomLeft">0dp</item>
+    </style>
+
+    <!--  앱 타이틀 폰트 스타일  -->
+    <style name="AppTitleFontStyle" parent="@style/Widget.AppCompat.TextView">
+        <item name="fontFamily">@font/black_han_sans</item>
+        <item name="android:textSize">@dimen/txt_size_to_28sp</item>
+        <item name="android:textColor">@color/main_color</item>
+    </style>
+
+    <!--  툴바 폰트 스타일  -->
+    <style name="ToolbarFontStyle" parent="Widget.AppCompat.TextView">
+        <item name="fontFamily">@font/noto_sans_bold</item>
+        <item name="android:textSize">@dimen/txt_size_to_16sp</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
+
+    <!--  TabLayout 테마  -->
+    <style name="TabLayoutTheme" parent="Widget.MaterialComponents.TabLayout">
+        <item name="tabIndicatorGravity">top</item>
+        <item name="tabTextAppearance">@style/TabFontStyle</item>
+        <item name="tabTextColor">@color/gray</item>
+        <item name="tabSelectedTextColor">@color/main_color</item>
+        <!--<item name="tabIconTint">@color/gray</item>-->
+        <item name="tabRippleColor">@color/transparent</item>
+        <item name="tabPadding">0dp</item>
+    </style>
+
+    <!--  TabLayout 폰트 스타일  -->
+    <style name="TabFontStyle">
+        <item name="android:textSize">@dimen/txt_size_to_10sp</item>
+        <item name="fontFamily">@font/noto_sans_regular</item>
+    </style>
+
+    <!--  버튼 스타일(활성 상태, 메인 컬러, oval)  -->
+    <style name="ActiveButtonStyle" parent="TextAppearance.AppCompat.Button">
+        <item name="android:background">@drawable/bg_btn_main_color_oval</item>
+        <item name="fontFamily">@font/noto_sans_medium</item>
+        <item name="android:textSize">@dimen/txt_size_to_16sp</item>
+        <item name="android:textColor">@color/white</item>
+    </style>
+
+    <!--  버튼 스타일(비활성 상태, 회색, oval)  -->
+    <style name="InActiveButtonStyle" parent="TextAppearance.AppCompat.Button">
+        <item name="android:background">@drawable/bg_btn_gray_rectangle</item>
+        <item name="fontFamily">@font/noto_sans_medium</item>
+        <item name="android:textSize">@dimen/txt_size_to_16sp</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
 </resources>

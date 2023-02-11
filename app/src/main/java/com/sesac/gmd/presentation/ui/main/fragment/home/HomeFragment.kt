@@ -42,7 +42,7 @@ class HomeFragment : Fragment(),
     OnMarkerClickListener
 {
     companion object {
-        private val TAG = HomeFragment::class.simpleName
+       // private val TAG = HomeFragment::class.simpleName
         fun newInstance() = HomeFragment()
 
         fun newInstance(lat: Double, lng: Double) : Fragment {
@@ -194,7 +194,7 @@ class HomeFragment : Fragment(),
                 addMarker(
                     MarkerOptions()
                         .position(location)
-                        .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_pin_temp_x2))
+                        .icon(BitmapDescriptorFactory.fromResource(R.drawable.ic_pin))
                         .anchor(DEFAULT_PIN_CENTER_POINTER, DEFAULT_PIN_CENTER_POINTER)     // 마커의 하단이 아닌 중앙을 꼭짓점으로 하도록 수정
                 )!!.tag = it.pinIdx
             }
