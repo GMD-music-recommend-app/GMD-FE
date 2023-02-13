@@ -73,4 +73,7 @@ dependencies {
 
     // 카카오 로그인 API
     implementation "com.kakao.sdk:v2-user:2.11.2"
+
+    // TextView 더보기 표시
+    implementation 'kr.co.prnd:readmore-textview:1.0.0'
 }

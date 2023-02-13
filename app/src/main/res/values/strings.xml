@@ -76,6 +76,10 @@
     <string name="txt_select">선택</string>
     <string name="txt_finish">종료</string>
     <string name="txt_music_title">제목</string>
+    <string name="txt_music_artist">가수</string>
+    <string name="txt_music_album">앨범</string>
     <string name="txt_artist_and_album">가수 · 앨범</string>
+    <string name="txt_liked_count">회 공감</string>
     <string name="txt_current_location">현재 위치</string>
+    <string name="txt_view_more">...더보기</string>
 </resources>

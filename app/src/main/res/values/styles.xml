@@ -67,4 +67,20 @@
         <item name="android:textSize">@dimen/txt_size_to_16sp</item>
         <item name="android:textColor">@color/black</item>
     </style>
+
+    <style name="NotoBold">
+        <item name="fontFamily">@font/noto_sans_bold</item>
+    </style>
+
+    <style name="NotoRegular">
+        <item name="fontFamily">@font/noto_sans_regular</item>
+    </style>
+
+    <style name="NotoMedium">
+        <item name="fontFamily">@font/noto_sans_medium</item>
+    </style>
+
+    <style name="NotoLight">
+        <item name="fontFamily">@font/noto_sans_light</item>
+    </style>
 </resources>

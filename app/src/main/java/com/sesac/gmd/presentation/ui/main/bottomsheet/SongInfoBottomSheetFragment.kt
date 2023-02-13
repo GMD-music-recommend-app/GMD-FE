@@ -6,8 +6,12 @@ package com.sesac.gmd.presentation.ui.main.bottomsheet
 
 import android.annotation.SuppressLint
 import android.content.Intent
+import android.graphics.Typeface
 import android.net.Uri
 import android.os.Bundle
+import android.text.SpannableStringBuilder
+import android.text.Spanned.SPAN_INCLUSIVE_EXCLUSIVE
+import android.text.style.StyleSpan
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -23,7 +27,7 @@ import com.sesac.gmd.common.util.YOUTUBE_BASE_URL
 import com.sesac.gmd.data.repository.Repository
 import com.sesac.gmd.databinding.FragmentSongInfoBottomSheetBinding
 import com.sesac.gmd.presentation.factory.ViewModelFactory
-import com.sesac.gmd.presentation.ui.main.viewmodel.MainViewModel
+import com.sesac.gmd.presentation.ui.main.viewmodel.HomeChartViewModel
 
 // TODO: Expanded Bottom Sheet Dialog 로 변경 필요
 /**
@@ -45,14 +49,14 @@ class SongInfoBottomSheetFragment : BottomSheetDialogFragment() {
         }
     }
     private lateinit var binding: FragmentSongInfoBottomSheetBinding
-    private lateinit var viewModel: MainViewModel
+    private lateinit var viewModel: HomeChartViewModel
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentSongInfoBottomSheetBinding.inflate(inflater, container, false)
 
         viewModel = ViewModelProvider(
             requireActivity(), ViewModelFactory(Repository())
-        )[MainViewModel::class.java]
+        )[HomeChartViewModel::class.java]
 
         Log.d(DEFAULT_TAG+TAG, "${arguments?.getString("pinIdx")}")
 
@@ -86,7 +90,7 @@ class SongInfoBottomSheetFragment : BottomSheetDialogFragment() {
         viewModel.pinInfo.observe(viewLifecycleOwner) {
             // 가져온 곡 정보 view 와 매핑
             setContents()
-            binding.bottomSheetSong.visibility = View.VISIBLE
+            binding.bottomSheetMusicInfo.visibility = View.VISIBLE
         }
     }
 
@@ -95,19 +99,38 @@ class SongInfoBottomSheetFragment : BottomSheetDialogFragment() {
     private fun setContents() {
         with(binding) {
             with(viewModel.pinInfo) {
-                Glide.with(ivSongAlbumCover)
+
+                // 앨범 이미지, 곡 제목, 아티스트
+                Glide.with(imgInfoMusicAlbumCover)
                     .load(this.value?.albumImage)
-                    .into(ivSongAlbumCover)
-                txtSongTitle.text = this.value?.songTitle.toString()
-                txtSongArtist.text = this.value?.artist.toString()
-                txtSongAlbumName.text = this.value?.albumTitle.toString()
-                txtSongHashtag.text = this.value?.hashtag.toString()
-                txtSongUserName.text = this.value?.nickname.toString()
-                txtSongUserStory.text = this.value?.reason.toString()
-                if (!this.value?.isMade.toBoolean()) {
-                    ivStar.setImageResource(R.drawable.ic_star)
+                    .placeholder(R.drawable.ic_sample_image)
+                    .error(R.drawable.ic_sample_image)
+                    .into(imgInfoMusicAlbumCover)
+                txtInfoMusicTitle.text = this.value!!.songTitle
+                txtInfoMusicArtist.text = this.value!!.artist
+
+                // 추천한 유저, 사연
+                val txtUser = this.value!!.nickname
+                val blank = "님의 추천  "
+                val txtStory = this.value!!.reason
+                val txtBuilder = SpannableStringBuilder(txtUser+blank+txtStory)
+
+                txtBuilder.setSpan(StyleSpan(Typeface.BOLD), 0,txtUser.length + blank.length, SPAN_INCLUSIVE_EXCLUSIVE)
+                txtTemp.text = txtBuilder
+
+
+                // 해시태그가 있으면 Hashtag TextView 를 Visible, 없으면 Gone 으로 설정
+                if (this.value?.hashtag.isNullOrBlank()) {
+                    txtInfoMusicHashtag.visibility = View.GONE
                 } else {
-                    ivStar.setImageResource(R.drawable.ic_star_empty)
+                    txtInfoMusicHashtag.visibility = View.VISIBLE
+                }
+
+                // 임시 작성 코드(해당 음악이 로그인 한 유저가 만든 핀이면 노란색 아이콘 표시)
+                if (!this.value?.isMade.toBoolean()) {
+                    imgBookMark.setImageResource(R.drawable.ic_bookmark_filled)
+                } else {
+                    imgBookMark.setImageResource(R.drawable.ic_bookmark)
                 }
                 // TODO: 댓글 추가
             }
@@ -117,10 +140,9 @@ class SongInfoBottomSheetFragment : BottomSheetDialogFragment() {
     // Listener 초기화 함수
     private fun setListener() {
         // TODO: 코드 수정 필요
-        var isLike = false
         with(binding) {
             // 유튜브로 듣기
-            btnSongYoutube.setOnClickListener {
+            containerInfoMusicAlbumImage.setOnClickListener {
                 setAlertDialog(requireContext(), null,
                     getString(R.string.alert_go_to_youtube),
                     posFunc = {
@@ -132,20 +154,11 @@ class SongInfoBottomSheetFragment : BottomSheetDialogFragment() {
                     negFunc = {}
                 )}
             // 공감하기
-            btnSongLike.setOnClickListener {
-                isLike =
-                    if (!isLike) {
-                        toastMessage(getString(R.string.success_to_like_pin))
-                        it.setBackgroundResource(R.drawable.ic_liked)
-                        true
-                    } else {
-                        toastMessage(getString(R.string.success_to_cancel_liked_pin))
-                        it.setBackgroundResource(R.drawable.ic_like)
-                        false
-                    }
+            btnLike.setOnClickListener {
+                toastMessage(getString(R.string.alert_service_ready))
             }
             // 공유하기
-            btnSongShare.setOnClickListener {
+            btnShare.setOnClickListener {
                 toastMessage(getString(R.string.alert_service_ready))
             }
         }
