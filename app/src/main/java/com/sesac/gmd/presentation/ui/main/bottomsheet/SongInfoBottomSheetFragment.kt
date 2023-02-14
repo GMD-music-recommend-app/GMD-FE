@@ -118,11 +118,11 @@ class SongInfoBottomSheetFragment : BottomSheetDialogFragment() {
                 txtBuilder.setSpan(StyleSpan(Typeface.BOLD), 0,txtUser.length + blank.length, SPAN_INCLUSIVE_EXCLUSIVE)
                 txtTemp.text = txtBuilder
 
-
                 // 해시태그가 있으면 Hashtag TextView 를 Visible, 없으면 Gone 으로 설정
                 if (this.value?.hashtag.isNullOrBlank()) {
                     txtInfoMusicHashtag.visibility = View.GONE
                 } else {
+                    txtInfoMusicHashtag.text = this.value?.hashtag
                     txtInfoMusicHashtag.visibility = View.VISIBLE
                 }
 

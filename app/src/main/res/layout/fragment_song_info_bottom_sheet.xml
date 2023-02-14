@@ -109,7 +109,7 @@
     <!--  해시태그, 추천한 유저, 사연-->
     <TextView
         android:id="@+id/txt_info_music_hashtag"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/margin_to_8dp"
         android:ellipsize="end"
@@ -117,6 +117,7 @@
         android:text=""
         android:textColor="@color/main_color"
         android:textSize="@dimen/txt_size_to_12sp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="@+id/container_info_music_album_image"
         app:layout_constraintTop_toBottomOf="@+id/container_info_music_album_image" />
 
