@@ -48,6 +48,16 @@
     <string name="txt_listen_to_youtube">유튜브로 듣기</string>
     <string name="txt_share">공유하기</string>
     <string name="txt_like">공감하기</string>
+    <string name="txt_change_my_favorite_place">관심지역 변경</string>
+    <string name="txt_view_my_music_pins">내가 추가한 음악</string>
+    <string name="txt_view_my_comments">내 댓글 관리</string>
+    <string name="txt_user_notification">사용자 알림</string>
+    <string name="txt_noti_recommend_favorite_place">관심지역 음악 추천 알림</string>
+    <string name="txt_customer_center">고객센터</string>
+    <string name="txt_notice">공지사항</string>
+    <string name="txt_app_guide">앱 사용 설명서</string>
+    <string name="txt_app_policy">약관 및 정책</string>
+    <string name="txt_app_version">현재 버전</string>
 
     <string name="txt_title_select_location">위치 선택하기</string>
     <string name="txt_title_create_pin_here">여기에 음악 추가하기</string>
@@ -82,4 +92,7 @@
     <string name="txt_liked_count">회 공감</string>
     <string name="txt_current_location">현재 위치</string>
     <string name="txt_view_more">...더보기</string>
+    <string name="txt_login">로그인</string>
+    <string name="txt_logout">로그아웃</string>
+    <string name="txt_please">해주세요</string>
 </resources>
