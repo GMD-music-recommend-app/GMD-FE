@@ -16,7 +16,7 @@ import com.sesac.gmd.common.util.KAKAO_APP_KEY
 import java.util.*
 
 /**
- * 앱 런처 아이콘을 터치하면 처음 실행되는 코드
+ * 앱 런처 아이콘을 터치하면 처음 실행되는 코드<br>
  * App Scope 모든 코틀린 클래스/파일에서 호출할 수 있는 코드
  */
 class GMDApplication : Application(){
@@ -53,7 +53,7 @@ class GMDApplication : Application(){
     }
 
     /**
-    * 앱 시작 시 구글맵 플레이스 초기화
+    * 앱 시작 시 Google Map Place 초기화
     */
     private fun initPlaceSDK() {
         if (!Places.isInitialized()) {

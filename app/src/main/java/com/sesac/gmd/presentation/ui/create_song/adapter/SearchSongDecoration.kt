@@ -10,7 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.sesac.gmd.common.util.RECYCLER_ITEM_SEARCH_MUSIC_OFFSET
 
 /**
- * 음악 검색에서 사용하는 RecyclerView 의 ItemDecoration
+ * 음악 검색에서 사용하는 RecyclerView 의 ItemDecoration<br>
  * RecyclerView Item 의 간격 설정
  */
 class SearchSongDecoration : RecyclerView.ItemDecoration() {

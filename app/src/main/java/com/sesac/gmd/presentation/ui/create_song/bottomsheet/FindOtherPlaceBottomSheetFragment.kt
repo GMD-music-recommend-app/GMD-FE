@@ -12,7 +12,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.sesac.gmd.databinding.FragmentFindOtherPlaceBottomSheetBinding
 
 /**
- * FindOtherPlaceFragment 에서 표시 될 BottomSheetDialog
+ * FindOtherPlaceFragment 에서 표시 될 BottomSheetDialog<br>
  * 해당 페이지의 사용 방법 안내
  */
 class FindOtherPlaceBottomSheetFragment : BottomSheetDialogFragment() {
@@ -24,10 +24,14 @@ class FindOtherPlaceBottomSheetFragment : BottomSheetDialogFragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentFindOtherPlaceBottomSheetBinding.inflate(inflater, container, false)
 
-        binding.btnOk.setOnClickListener {
-            dismiss()
-        }
+        // Listener 등록
+        setListener()
 
         return binding.root
+    }
+
+    // Listener 초기화
+    private fun setListener() = with(binding) {
+        btnOk.setOnClickListener { dismiss() }
     }
 }

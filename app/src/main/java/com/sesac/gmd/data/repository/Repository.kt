@@ -70,7 +70,7 @@ class Repository {
         return createPinService.createPin(requestBody)
     }
 
-    // 지역 내 인기차트 반환
+    // 현재 유저의 위치 기준 지역 내 인기 차트 반환
     suspend fun getChartList(city: String) : Response<GetChartResponse> {
         return getChartService.getChart(city)
     }

@@ -17,7 +17,7 @@ import com.sesac.gmd.databinding.FragmentCreateSongBottomSheetBinding
 import com.sesac.gmd.presentation.ui.create_song.activity.CreateSongActivity
 
 /**
- * 음악 추가하기 버튼 클릭 시 표시되는 BottomSheetDialog
+ * 음악 추가하기 버튼 클릭 시 표시되는 BottomSheetDialog<br>
  * 여기에 추가하기, 다른 곳에 추가하기
  */
 class CreateSongBottomSheetFragment : BottomSheetDialogFragment() {
@@ -36,26 +36,24 @@ class CreateSongBottomSheetFragment : BottomSheetDialogFragment() {
     }
 
     // Listener 초기화 함수
-    private fun setListener() {
-        with(binding) {
-            val nextPage = Intent(requireContext(), CreateSongActivity::class.java)
+    private fun setListener() = with(binding) {
+        val nextPage = Intent(requireContext(), CreateSongActivity::class.java)
 
-            // 여기서 추천하기 버튼 클릭
-            btnCreateHere.setOnClickListener {
-                nextPage.putExtra(GO_TO_PAGE, CREATE_MUSIC_HERE)
-                dismiss()
-                startActivity(nextPage)
-            }
-            // 다른 곳에서 추천하기 버튼 클릭
-            btnCreateOtherPlace.setOnClickListener {
-                nextPage.putExtra(GO_TO_PAGE, SET_OTHER_PLACE)
-                dismiss()
-                startActivity(nextPage)
-            }
-            // 바텀시트 닫기
-            btnClose.setOnClickListener {
-                dismiss()
-            }
+        // 여기서 추천하기 버튼 클릭
+        btnCreateHere.setOnClickListener {
+            nextPage.putExtra(GO_TO_PAGE, CREATE_MUSIC_HERE)
+            dismiss()
+            startActivity(nextPage)
+        }
+        // 다른 곳에서 추천하기 버튼 클릭
+        btnCreateOtherPlace.setOnClickListener {
+            nextPage.putExtra(GO_TO_PAGE, SET_OTHER_PLACE)
+            dismiss()
+            startActivity(nextPage)
+        }
+        // Bottom Sheet 닫기
+        btnClose.setOnClickListener {
+            dismiss()
         }
     }
 }

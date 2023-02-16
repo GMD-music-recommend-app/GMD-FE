@@ -27,7 +27,7 @@ data class GetPinInfoResult(
     val albumTitle: String,     // 앨범 제목
     val albumImage: String,     // 앨범 이미지
     val reason: String,         // 사연
-    val hashtag: String,        // 해시태그
+    val hashtag: String,        // 해시 태그
     val isLiked: String,        // 공감 여부
     val isMade: String,         // 본인이 생성한 핀인지 확인
     val comments: MutableList<Comment>, // 댓글

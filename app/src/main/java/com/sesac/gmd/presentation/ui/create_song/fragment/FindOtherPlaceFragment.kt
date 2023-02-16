@@ -41,7 +41,7 @@ class FindOtherPlaceFragment : Fragment(), OnMapReadyCallback {
     companion object {
         fun newInstance() = FindOtherPlaceFragment()
 
-        // 지도의 중심점을 서울 시청으로 설정
+        // 지도의 중심 점을 서울 시청으로 설정
         val startingPoint = LatLng(SEOUL_CITY_LATITUDE, SEOUL_CITY_LONGITUDE)
     }
     private var addedMarker: Marker? = null
@@ -79,16 +79,20 @@ class FindOtherPlaceFragment : Fragment(), OnMapReadyCallback {
     }
 
     // 구글 맵 생성 시 지도 구성
-    override fun onMapReady(googleMap: GoogleMap) {
-        mMap = googleMap
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(startingPoint, DEFAULT_ZOOM_LEVEL))
+    override fun onMapReady(googleMap: GoogleMap) = with(googleMap) {
+        // 구글 맵 최초 화면 설정(중심점, 줌 레벨)
+        moveCamera(CameraUpdateFactory.newLatLngZoom(startingPoint, DEFAULT_ZOOM_LEVEL))
 
-        mMap.setOnMapLongClickListener { point ->
+        // 구글 맵 내 Click Listener
+        setOnMapLongClickListener { point ->
+            // 마커가 이미 생성되어있으면 해당 마커 제거(마커가 2개 이상 생성되지 않도록)
             if (addedMarker != null) {
-                mMap.clear()
+                clear()
             }
+
+            // 마커(추천할 유저의 위치) 생성
             val position = LatLng(point.latitude, point.longitude)
-            addedMarker = mMap.addMarker(
+            addedMarker = addMarker(
                 MarkerOptions()
                     .position(position)
             )
@@ -98,21 +102,20 @@ class FindOtherPlaceFragment : Fragment(), OnMapReadyCallback {
     }
 
     // Listener 초기화
-    private fun setListener() {
-        with(binding) {
-            btnCreatePlace.setOnClickListener {
-                setAlertDialog(requireContext(), null,
-                    getString(R.string.alert_create_pin_here),
-                    posFunc = {
-                        viewModel.setLocation(requireContext(), addedMarker!!.position.latitude, addedMarker!!.position.longitude)
-                        parentFragmentManager
-                            .beginTransaction()
-                            .replace(R.id.container, SearchSongFragment.newInstance())
-                            .addToBackStack(null)
-                            .commit()
-                              },
-                    negFunc = {})
-            }
+    private fun setListener() = with(binding) {
+        btnCreatePlace.setOnClickListener {
+            setAlertDialog(requireContext(),
+                null,
+                getString(R.string.alert_create_pin_here),
+                posFunc = {
+                    viewModel.setLocation(requireContext(), addedMarker!!.position.latitude, addedMarker!!.position.longitude)
+                    parentFragmentManager
+                        .beginTransaction()
+                        .replace(R.id.container, SearchSongFragment.newInstance())
+                        .addToBackStack(null)
+                        .commit()
+                          },
+                negFunc = {})
         }
     }
 

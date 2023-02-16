@@ -23,13 +23,13 @@ class SearchSongAdapter(private val songList : SongList, val onClickItem: (song:
     inner class SearchSongViewHolder(val binding: ViewholderSearchSongResultBinding) : RecyclerView.ViewHolder(binding.root) {
         @SuppressLint("SetTextI18n")
         fun bind(song: Song) = with(binding) {
-            txtSongTitle.text = song.songTitle
-            txtSongArtist.text = """${song.artist.joinToString ( "," )} · ${song.album.albumTitle}"""
+            txtSearchMusicTitle.text = song.songTitle
+            txtSearchMusicArtist.text = """${song.artist.joinToString ( "," )} · ${song.album.albumTitle}"""
             Glide.with(itemView.context)
                 .load(song.album.albumImage)
                 .placeholder(R.drawable.ic_load)
                 .error(R.drawable.ic_sample_image)
-                .into(imgSongAlbumImage)
+                .into(imgSearchMusicAlbumImage)
 
             btnSelectSong.setOnClickListener {
                 onClickItem.invoke(song)

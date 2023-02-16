@@ -14,7 +14,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 
-// 지역 내 인기차트 반환
+// 지역 내 인기 차트 반환
 class GetChartRetrofitClient {
     companion object {
         // TODO: null 일 때 1번만 생성하는 싱글턴 패턴으로 Retrofit 클래스 구현 필요
@@ -46,7 +46,7 @@ class GetChartRetrofitClient {
         // OkHttp Interceptor 로그 기록 용
         private fun httpInterceptor(): HttpLoggingInterceptor {
             val interceptor = HttpLoggingInterceptor()
-            interceptor.level = HttpLoggingInterceptor.Level.BASIC
+            interceptor.level = HttpLoggingInterceptor.Level.BODY
             return interceptor
         }
     }

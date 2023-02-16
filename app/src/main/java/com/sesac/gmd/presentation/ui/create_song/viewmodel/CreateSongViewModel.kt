@@ -26,10 +26,9 @@ import com.sesac.gmd.data.model.SongList
 import com.sesac.gmd.data.repository.Repository
 import kotlinx.coroutines.*
 import java.util.*
-import java.util.concurrent.TimeoutException
 
 /**
- * 음악 추가하기 Sequence 에서 사용하는 ViewModel
+ * 음악 추가하기 Sequence 에서 사용하는 ViewModel<br>
  * 멤버는 호출 순서대로 배치
  */
 class CreateSongViewModel(private val repository: Repository) : ViewModel() {
@@ -77,7 +76,7 @@ class CreateSongViewModel(private val repository: Repository) : ViewModel() {
     fun getCurrentLocation(context: Context)  {
         // 사용자의 정확한 현재 위치 요청
         val fusedLocationClient: FusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(context)
-        fusedLocationClient.lastLocation.addOnSuccessListener { // 비동기로 실행
+        fusedLocationClient.lastLocation.addOnSuccessListener { // addOnSuccessListener 는 비동기로 실행 됨
             if (it == null) {
                 // fusedLocationClient 가 현재 위치를 파악하지 못하는 경우
                 toastMessage(GMDApplication.getAppInstance().resources.getString(R.string.error_not_found_user_location))
@@ -99,28 +98,20 @@ class CreateSongViewModel(private val repository: Repository) : ViewModel() {
                 val result = parseXMLFromMania(responseBody.string())
                 songList.postValue(result)
                 isLoading.value = false
-            } catch (e : TimeoutException) {
-                Log.d(DEFAULT_TAG + TAG, "getSong() error! : ${e.message}")
-                toastMessage(GMDApplication.getAppInstance().resources.getString(R.string.error_unstable_network_connection))
-                isLoading.value = false
-                throw TimeoutException("$e")
             } catch (e: Exception) {
-                // TODO: 예외 처리 필요(인터넷 연결x)
-                Log.d(DEFAULT_TAG + TAG, "getSong() error! : ${e.message}")
-                toastMessage(GMDApplication.getAppInstance().resources.getString(R.string.unexpected_error))
                 isLoading.value = false
                 throw Exception("$e")
             }
         }
     }
 
-    // 음악 선택
+    // 음악 검색 결과에서 추천할 음악 선택
     fun addSong(selectedSong: Song) {
-        // TODO: 동일유저 동일 장소 동일 음악 생성 유효성 검사 필요(추후 구현)
+        // TODO: 동일 유저 동일 장소 동일 음악 생성 유효성 검사 필요(추후 구현)
         _selectedSong.value = selectedSong
     }
 
-    // 핀 생성하기
+    // 핀 생성 하기
     fun createPin(reason: String, hashtag: String?) {
         viewModelScope.launch(exceptionHandler) {
             try {
@@ -131,22 +122,19 @@ class CreateSongViewModel(private val repository: Repository) : ViewModel() {
                     reason,
                     hashtag
                 )
+                // 성공적으로 음악 추가가 완료되었을 경우
                 if (response.isSuccessful) {
                     // TODO: 예외처리 필요(중복 곡 생성 시)
-                    Log.d(DEFAULT_TAG+TAG, "---------------------Song Create Success!---------------------")
-                    Log.d(DEFAULT_TAG+TAG, "pin Number : ${response.body()!!.result.pinIdx}")
-
                     _createSuccess.value = true
-                } else {
-                    Log.d(DEFAULT_TAG+TAG, "---------------------Song Create Fail!---------------------")
-                    Log.d(DEFAULT_TAG+TAG, "errorMessage : ${response.body()!!.message}")
-
-                    toastMessage(GMDApplication.getAppInstance().resources.getString(R.string.unexpected_error))
-                    onError("onError: ${response.errorBody()!!.string()}")
                 }
+                // 서버와 통신은 되었지만 음악 추가에 실패했을 경우
+                else {
+                    onError("onError: ${response.errorBody()!!.string()}")
+                    throw Exception("${response.errorBody()!!}")
+                }
+                // 서버와 통신 자체에 실패했을 경우
             } catch (e: Exception) {
-                toastMessage(GMDApplication.getAppInstance().resources.getString(R.string.unexpected_error))
-                Log.d(DEFAULT_TAG + TAG, "createPin() error! : ${e.message}")
+                throw Exception("$e")
             }
         }
     }

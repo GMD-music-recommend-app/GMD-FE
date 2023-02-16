@@ -27,6 +27,7 @@ import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.*
 import com.sesac.gmd.R
 import com.sesac.gmd.common.util.*
+import com.sesac.gmd.common.util.Utils.Companion.displayToastExceptions
 import com.sesac.gmd.common.util.Utils.Companion.toastMessage
 import com.sesac.gmd.data.api.server.song.get_pinlist.Pin
 import com.sesac.gmd.data.repository.Repository
@@ -34,7 +35,7 @@ import com.sesac.gmd.databinding.FragmentHomeBinding
 import com.sesac.gmd.presentation.factory.ViewModelFactory
 import com.sesac.gmd.presentation.ui.main.bottomsheet.CreateSongBottomSheetFragment
 import com.sesac.gmd.presentation.ui.main.bottomsheet.SongInfoBottomSheetFragment
-import com.sesac.gmd.presentation.ui.main.viewmodel.MainViewModel
+import com.sesac.gmd.presentation.ui.main.viewmodel.HomeChartViewModel
 import kotlinx.coroutines.*
 
 class HomeFragment : Fragment(),
@@ -56,7 +57,7 @@ class HomeFragment : Fragment(),
         }
     }
     private lateinit var binding: FragmentHomeBinding
-    private lateinit var viewModel: MainViewModel
+    private lateinit var viewModel: HomeChartViewModel
     private lateinit var mMap: GoogleMap
     private lateinit var startingPoint: LatLng
 
@@ -81,7 +82,7 @@ class HomeFragment : Fragment(),
         binding = FragmentHomeBinding.inflate(inflater, container, false)
 
         viewModel = ViewModelProvider(
-            requireActivity(), ViewModelFactory(Repository()))[MainViewModel::class.java]
+            requireActivity(), ViewModelFactory(Repository()))[HomeChartViewModel::class.java]
 
         // ???
         // 현재 위치 초기화
@@ -116,32 +117,28 @@ class HomeFragment : Fragment(),
     }
 
     // Listener 초기화
-    private fun setListener() {
-        with(binding) {
-            btnCreateSong.setOnClickListener {
-                val createSong = CreateSongBottomSheetFragment.newInstance()
-                createSong.show(childFragmentManager, createSong.tag)
-            }
+    private fun setListener() = with(binding) {
+        btnCreateSong.setOnClickListener {
+            val createSong = CreateSongBottomSheetFragment.newInstance()
+            createSong.show(childFragmentManager, createSong.tag)
         }
     }
 
     // Observer set
-    private fun setObserver() {
-        with(viewModel) {
-            pinLists.observe(viewLifecycleOwner) { pins ->
-                // 핀 리스트 데이터를 가져오면(= when getPins() called,) 해당 핀 리스트 지도에 표시
-                setMarkers(pins)
-            }
-            location.observe(viewLifecycleOwner) {
-                val currentLocation = LatLng(it.latitude, it.longitude)
-                mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLocation, DEFAULT_ZOOM_LEVEL))
-                getPins(currentLocation)
-            }
+    private fun setObserver() = with(viewModel) {
+        pinLists.observe(viewLifecycleOwner) { pins ->
+            // 핀 리스트 데이터를 가져오면(= when getPins() called,) 해당 핀 리스트 지도에 표시
+            setMarkers(pins)
+        }
+        location.observe(viewLifecycleOwner) {
+            val currentLocation = LatLng(it.latitude, it.longitude)
+            mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(currentLocation, DEFAULT_ZOOM_LEVEL))
+            getPins(currentLocation)
+        }
             // ???
 //            location.observe(viewLifecycleOwner) {
 //                startingPoint = LatLng(viewModel.location.value!!.latitude, viewModel.location.value!!.longitude)
 //            }
-        }
     }
 
     // 구글 맵 초기화
@@ -179,7 +176,11 @@ class HomeFragment : Fragment(),
 
     // 지도에 표시할 음악 핀 가져오기
     private fun getPins(startingPoint: LatLng) {
-        viewModel.getPinList(startingPoint.latitude, startingPoint.longitude)
+        try {
+            viewModel.getPinList(startingPoint.latitude, startingPoint.longitude)
+        } catch (e : Exception) {
+            displayToastExceptions(e) // 오류 내용에 따라 ToastMessage 출력
+        }
     }
 
     // 음악 핀 지도에 표시

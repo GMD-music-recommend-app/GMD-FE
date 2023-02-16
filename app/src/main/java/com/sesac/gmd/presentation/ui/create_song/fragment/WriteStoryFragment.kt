@@ -17,6 +17,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.sesac.gmd.R
 import com.sesac.gmd.common.util.DEFAULT_TAG
+import com.sesac.gmd.common.util.Utils.Companion.displayToastExceptions
 import com.sesac.gmd.common.util.Utils.Companion.setAlertDialog
 import com.sesac.gmd.common.util.Utils.Companion.toastMessage
 import com.sesac.gmd.data.repository.Repository
@@ -57,60 +58,57 @@ class WriteStoryFragment : Fragment() {
     }
 
     // Observer Set
-    private fun setObserver() {
-        with(viewModel) {
-            createSuccess.observe(viewLifecycleOwner) { success ->
-                if (success) {
-                    toastMessage(getString(R.string.success_to_create_pin))
-                    requireActivity().finish()
-                }
+    private fun setObserver() = with(viewModel) {
+        createSuccess.observe(viewLifecycleOwner) { success ->
+            if (success) {
+                toastMessage(getString(R.string.success_to_create_pin))
+                requireActivity().finish()
             }
         }
     }
 
     // Listener 초기화 함수
-    private fun setListener() {
-        with(binding) {
-            // 음악 핀 생성하기 버튼
-            btnFinishCreate.setOnClickListener {
-                val reason = edtStory.text.toString()
-                val hashtag = edtHashtag.text.toString()
+    private fun setListener() = with(binding) {
+        // 음악 핀 생성하기 버튼
+        btnFinishCreate.setOnClickListener {
+            val reason = edtStory.text.toString()
+            val hashtag = edtHashtag.text.toString()
 
-                if(checkValidation()) {
-                    setAlertDialog(requireContext(), null, getString(R.string.alert_finish_pin_create),
-                        posFunc = {
+            if(checkValidation()) {
+                setAlertDialog(requireContext(), null, getString(R.string.alert_finish_pin_create),
+                    posFunc = {
+                        try {
                             viewModel.createPin(reason, hashtag)
-                            startActivity(Intent(context, MainActivity::class.java))
-                        },
-                        negFunc = {})
-                }
+                        } catch (e: Exception) {
+                            displayToastExceptions(e)
+                        }
+                        startActivity(Intent(context, MainActivity::class.java))
+                              },
+                    negFunc = {})
             }
         }
     }
 
     // 버튼 상태 초기화 함수
-    private fun setButtonState() {
-        with(binding) {
-            edtStory.addTextChangedListener(object : TextWatcher{
-                override fun afterTextChanged(s: Editable?) {
-                    if (s!!.isEmpty()) {
-                        btnFinishCreate.setBackgroundResource(R.drawable.bg_btn_gray_rectangle)
-                        btnFinishCreate.setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
-                        btnFinishCreate.isEnabled = false
-                    } else {
-                        btnFinishCreate.setBackgroundResource(R.drawable.bg_btn_main_color_rectangle)
-                        btnFinishCreate.setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
-                        btnFinishCreate.isEnabled = true
-                    }
+    private fun setButtonState() = with(binding) {
+        edtStory.addTextChangedListener(object : TextWatcher{
+            override fun afterTextChanged(s: Editable?) {
+                if (s!!.isEmpty()) {
+                    btnFinishCreate.setBackgroundResource(R.drawable.bg_btn_gray_rectangle)
+                    btnFinishCreate.setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
+                    btnFinishCreate.isEnabled = false
+                } else {
+                    btnFinishCreate.setBackgroundResource(R.drawable.bg_btn_main_color_rectangle)
+                    btnFinishCreate.setTextColor(ContextCompat.getColor(requireContext(), R.color.white))
+                    btnFinishCreate.isEnabled = true
                 }
-                override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
-                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
-                })
-        }
+            }
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
+        })
     }
 
-    // TODO: 비동기로 구현 필요
-    // 유효성 검사
+    // 유효성 검사   TODO: 비동기로 구현 필요
     private fun checkValidation(): Boolean {
         var flag = true
 

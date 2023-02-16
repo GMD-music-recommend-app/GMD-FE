@@ -11,7 +11,7 @@ data class GetChartResponse(
 )
 
 /**
- * Chart Request 에 대한 Response 중 인기차트 값
+ * Chart Request 에 대한 Response 중 인기 차트 값
  */
 data class GetChartResult(
     val albumImage: String, // 앨범 이미지

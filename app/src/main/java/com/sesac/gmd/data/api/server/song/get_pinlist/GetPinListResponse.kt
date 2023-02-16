@@ -15,14 +15,13 @@ data class GetPinListResponse(
 )
 
 /**
- * 지도 위에 띄워 질 핀 정보
- * 핀 클릭 시 상세정보를 띄우기 때문에
- * 여기서는 상세 정보를 갖고있지는 않음
+ * 지도 위에 띄워 질 핀 정보<br>
+ * 핀 클릭 시 상세 정보를 띄우기 때문에 여기서는 상세 정보를 갖고 있지는 않음
  */
 data class Pin(
     val albumImage: String,     // 앨범 이미지
     val city: String,           // 생성 위치(군, 구)
-    val distance: Double,       // 검색 좌표로부터의 거리
+    val distance: Double,       // 검색 좌표로 부터의 거리
     val latitude: Double,       // 생성 위치(위도)
     val longitude: Double,      // 생성 위치(경도)
     val pinIdx: Int,            // 핀 인덱스

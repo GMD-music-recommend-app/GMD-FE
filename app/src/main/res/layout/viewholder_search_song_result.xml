@@ -7,7 +7,7 @@
 
     <!--  Album Image  -->
     <androidx.cardview.widget.CardView
-        android:id="@+id/container_song_album_image"
+        android:id="@+id/container_search_music_album_image"
         android:layout_width="48dp"
         android:layout_height="48dp"
         android:layout_alignParentStart="true"
@@ -16,7 +16,7 @@
         android:layout_marginHorizontal="@dimen/margin_to_12dp"
         app:cardCornerRadius="5dp">
         <androidx.appcompat.widget.AppCompatImageView
-            android:id="@+id/img_song_album_image"
+            android:id="@+id/img_search_music_album_image"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:src="@drawable/ic_sample_image"/>
@@ -24,11 +24,11 @@
 
     <!--  Song Title  -->
     <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/txt_song_title"
+        android:id="@+id/txt_search_music_title"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/container_song_album_image"
-        android:layout_toEndOf="@+id/container_song_album_image"
+        android:layout_alignTop="@+id/container_search_music_album_image"
+        android:layout_toEndOf="@+id/container_search_music_album_image"
         android:layout_toStartOf="@+id/btn_select_song"
         android:ellipsize="end"
         android:maxLines="1"
@@ -38,11 +38,11 @@
 
     <!--  Song Artist & Album Title  -->
     <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/txt_song_artist"
+        android:id="@+id/txt_search_music_artist"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/txt_song_title"
-        android:layout_alignStart="@+id/txt_song_title"
+        android:layout_below="@+id/txt_search_music_title"
+        android:layout_alignStart="@+id/txt_search_music_title"
         android:layout_toStartOf="@+id/btn_select_song"
         android:layout_marginTop="@dimen/margin_to_4dp"
         android:ellipsize="end"

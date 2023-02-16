@@ -17,6 +17,8 @@ import com.sesac.gmd.data.model.ManiaDBAlbum
 import com.sesac.gmd.data.model.SongList
 import org.xml.sax.InputSource
 import java.io.StringReader
+import java.net.SocketTimeoutException
+import java.util.concurrent.TimeoutException
 import javax.xml.parsers.DocumentBuilderFactory
 
 class Utils {
@@ -26,6 +28,16 @@ class Utils {
         // Toast 출력 함수
         fun toastMessage(message: String) {
             Toast.makeText(GMDApplication.getAppInstance(), message, Toast.LENGTH_SHORT).show()
+        }
+
+        // Exception 에 따라 ToastMessage 출력
+        fun displayToastExceptions(e: Exception) {
+            when (e) {
+                is TimeoutException -> toastMessage(GMDApplication.getAppInstance().resources.getString(R.string.error_unstable_network_connection))
+                is SocketTimeoutException -> toastMessage(GMDApplication.getAppInstance().resources.getString(R.string.error_unstable_network_connection))
+                else -> toastMessage(GMDApplication.getAppInstance().resources.getString(R.string.unexpected_error))
+            }
+            Log.e(DEFAULT_TAG+TAG+"toastExceptions()", "error : ${e.message}")
         }
 
         // event 발생 시 키보드 내려가는 함수

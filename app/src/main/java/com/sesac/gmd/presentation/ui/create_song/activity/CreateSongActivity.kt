@@ -30,23 +30,27 @@ class CreateSongActivity : AppCompatActivity() {
 
         // 보여줄 Fragment set
         setFirstFragment(savedInstanceState)
-
         // toolbar 설정
         setToolbar()
     }
 
-    // 보여줄 Fragment setting
+    /**
+     * HomeFragment 에서 유저가 선택한 음악 추천 위치(현재 위치, 다른 위치)에 따라<br>
+     * CreateSongActivity 에서 처음으로 보여 줄 Fragment 세팅
+     */
     private fun setFirstFragment(savedInstanceState: Bundle?) {
         val goToPageName = intent.getStringExtra(GO_TO_PAGE)
         if (savedInstanceState == null) {
             with(supportFragmentManager.beginTransaction()) {
                 // 노래 추천하기 버튼 클릭 시 첫 화면
                 when(goToPageName) {
-                    CREATE_MUSIC_HERE -> { // 여기에서 추천하기
+                    // 여기에서 추천하기
+                    CREATE_MUSIC_HERE -> {
                         add(R.id.container, SearchSongFragment.newInstance())
                         commit()
                     }
-                    SET_OTHER_PLACE -> { // 다른 곳에서 추천하기
+                    // 다른 곳에서 추천하기
+                    SET_OTHER_PLACE -> {
                         add(R.id.container, FindOtherPlaceFragment.newInstance())
                         commit()
                     }

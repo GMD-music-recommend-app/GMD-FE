@@ -21,6 +21,7 @@ import com.bumptech.glide.Glide
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.sesac.gmd.R
 import com.sesac.gmd.common.util.DEFAULT_TAG
+import com.sesac.gmd.common.util.Utils.Companion.displayToastExceptions
 import com.sesac.gmd.common.util.Utils.Companion.setAlertDialog
 import com.sesac.gmd.common.util.Utils.Companion.toastMessage
 import com.sesac.gmd.common.util.YOUTUBE_BASE_URL
@@ -55,8 +56,7 @@ class SongInfoBottomSheetFragment : BottomSheetDialogFragment() {
         binding = FragmentSongInfoBottomSheetBinding.inflate(inflater, container, false)
 
         viewModel = ViewModelProvider(
-            requireActivity(), ViewModelFactory(Repository())
-        )[HomeChartViewModel::class.java]
+            requireActivity(), ViewModelFactory(Repository()))[HomeChartViewModel::class.java]
 
         Log.d(DEFAULT_TAG+TAG, "${arguments?.getString("pinIdx")}")
 
@@ -81,8 +81,7 @@ class SongInfoBottomSheetFragment : BottomSheetDialogFragment() {
             viewModel.getPinInfo(arguments?.getString("pinIdx")!!.toInt())
         } catch (e: Exception) {
             dismiss()
-            toastMessage(getString(R.string.unexpected_error))
-            Log.d(DEFAULT_TAG + TAG, "getPinInfo() error! : ${e.message}")
+            displayToastExceptions(e) // 오류 내용에 따라 ToastMessage 출력
         }
     }
 
@@ -96,71 +95,66 @@ class SongInfoBottomSheetFragment : BottomSheetDialogFragment() {
 
     // 화면에 표시 될 핀 정보 세팅
     @SuppressLint("SetTextI18n")
-    private fun setContents() {
-        with(binding) {
-            with(viewModel.pinInfo) {
+    private fun setContents() = with(binding) {
+        with(viewModel.pinInfo) {
 
-                // 앨범 이미지, 곡 제목, 아티스트
-                Glide.with(imgInfoMusicAlbumCover)
-                    .load(this.value?.albumImage)
-                    .placeholder(R.drawable.ic_sample_image)
-                    .error(R.drawable.ic_sample_image)
-                    .into(imgInfoMusicAlbumCover)
-                txtInfoMusicTitle.text = this.value!!.songTitle
-                txtInfoMusicArtist.text = this.value!!.artist
+            // 앨범 이미지, 곡 제목, 아티스트
+            Glide.with(imgInfoMusicAlbumCover)
+                .load(this.value?.albumImage)
+                .placeholder(R.drawable.ic_sample_image)
+                .error(R.drawable.ic_sample_image)
+                .into(imgInfoMusicAlbumCover)
+            txtInfoMusicTitle.text = this.value!!.songTitle
+            txtInfoMusicArtist.text = this.value!!.artist
 
-                // 추천한 유저, 사연
-                val txtUser = this.value!!.nickname
-                val blank = "님의 추천  "
-                val txtStory = this.value!!.reason
-                val txtBuilder = SpannableStringBuilder(txtUser+blank+txtStory)
+            // 추천한 유저, 사연
+            val txtUser = this.value!!.nickname
+            val blank = "님의 추천  "
+            val txtStory = this.value!!.reason
+            val txtBuilder = SpannableStringBuilder(txtUser+blank+txtStory)
 
-                txtBuilder.setSpan(StyleSpan(Typeface.BOLD), 0,txtUser.length + blank.length, SPAN_INCLUSIVE_EXCLUSIVE)
-                txtTemp.text = txtBuilder
+            txtBuilder.setSpan(StyleSpan(Typeface.BOLD), 0,txtUser.length + blank.length, SPAN_INCLUSIVE_EXCLUSIVE)
+            txtTemp.text = txtBuilder
 
-                // 해시태그가 있으면 Hashtag TextView 를 Visible, 없으면 Gone 으로 설정
-                if (this.value?.hashtag.isNullOrBlank()) {
-                    txtInfoMusicHashtag.visibility = View.GONE
-                } else {
-                    txtInfoMusicHashtag.text = this.value?.hashtag
-                    txtInfoMusicHashtag.visibility = View.VISIBLE
-                }
-
-                // 임시 작성 코드(해당 음악이 로그인 한 유저가 만든 핀이면 노란색 아이콘 표시)
-                if (!this.value?.isMade.toBoolean()) {
-                    imgBookMark.setImageResource(R.drawable.ic_bookmark_filled)
-                } else {
-                    imgBookMark.setImageResource(R.drawable.ic_bookmark)
-                }
-                // TODO: 댓글 추가
+            // 해시태그가 있으면 Hashtag TextView 를 Visible, 없으면 Gone 으로 설정
+            if (this.value?.hashtag.isNullOrBlank()) {
+                txtInfoMusicHashtag.visibility = View.GONE
+            } else {
+                txtInfoMusicHashtag.text = this.value?.hashtag
+                txtInfoMusicHashtag.visibility = View.VISIBLE
             }
+
+            // 임시 작성 코드(해당 음악이 로그인 한 유저가 만든 핀이면 노란색 아이콘 표시)
+            if (!this.value?.isMade.toBoolean()) {
+                imgBookMark.setImageResource(R.drawable.ic_bookmark_filled)
+            } else {
+                imgBookMark.setImageResource(R.drawable.ic_bookmark)
+            }
+        // TODO: 댓글 추가
         }
     }
 
-    // Listener 초기화 함수
-    private fun setListener() {
-        // TODO: 코드 수정 필요
-        with(binding) {
-            // 유튜브로 듣기
-            containerInfoMusicAlbumImage.setOnClickListener {
-                setAlertDialog(requireContext(), null,
-                    getString(R.string.alert_go_to_youtube),
-                    posFunc = {
-                        startActivity(
-                            Intent(Intent.ACTION_VIEW,
-                                Uri.parse(
-                                    "$YOUTUBE_BASE_URL+${viewModel.pinInfo.value!!.artist}+${viewModel.pinInfo.value!!.songTitle}"))
-                        )},
-                    negFunc = {}
-                )}
-            // 공감하기
-            btnLike.setOnClickListener {
-                toastMessage(getString(R.string.alert_service_ready))
-            }
-            // 공유하기
-            btnShare.setOnClickListener {
-                toastMessage(getString(R.string.alert_service_ready))
-            }
+    // Listener 초기화 함수 TODO: 코드 수정 필요
+    private fun setListener() = with(binding) {
+        // 유튜브로 듣기
+        containerInfoMusicAlbumImage.setOnClickListener {
+            setAlertDialog(requireContext(), null,
+                getString(R.string.alert_go_to_youtube),
+                posFunc = {
+                    startActivity(
+                        Intent(Intent.ACTION_VIEW,
+                            Uri.parse(
+                                "$YOUTUBE_BASE_URL+${viewModel.pinInfo.value!!.artist}+${viewModel.pinInfo.value!!.songTitle}"))
+                    )},
+                negFunc = {}
+            )}
+        // 공감하기
+        btnLike.setOnClickListener {
+            toastMessage(getString(R.string.alert_service_ready))
+        }
+        // 공유하기
+        btnShare.setOnClickListener {
+            toastMessage(getString(R.string.alert_service_ready))
         }
     }
 }

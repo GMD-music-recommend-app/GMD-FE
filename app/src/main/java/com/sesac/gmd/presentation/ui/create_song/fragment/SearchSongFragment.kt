@@ -15,6 +15,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.sesac.gmd.R
 import com.sesac.gmd.common.util.DEFAULT_TAG
+import com.sesac.gmd.common.util.Utils.Companion.displayToastExceptions
 import com.sesac.gmd.common.util.Utils.Companion.hideKeyBoard
 import com.sesac.gmd.common.util.Utils.Companion.setAlertDialog
 import com.sesac.gmd.common.util.Utils.Companion.toastMessage
@@ -69,127 +70,124 @@ class SearchSongFragment : Fragment() {
     }
 
     // Observer Set
-    private fun setObserver(){
-        with(viewModel) {
-            // observing saved location
-            location.observe(viewLifecycleOwner) {
-                // 위치 정보가 저장되어 있지 않다면 현재 사용자의 위치 정보를 저장
-                if (it.latitude == 0.0 && it.state == null) {
-                    setAlertDialog(requireContext(),
-                        getString(R.string.error_not_found_user_location),
-                        getString(R.string.alert_go_to_set_location_page),
-                        posFunc = {
-                            // 위치 지정 페이지(FindOtherPlaceFragment)로 이동
-                            parentFragmentManager
-                                .beginTransaction()
-                                .replace(R.id.container, FindOtherPlaceFragment.newInstance())
-                                .commit()
-                        },
-                        negFunc = {
-                            requireActivity().finish()
-                            startActivity(Intent(requireContext(), MainActivity::class.java))
-                        })
+    private fun setObserver() = with(viewModel) {
+        // observing saved location
+        location.observe(viewLifecycleOwner) {
+            // 위치 정보가 저장되어 있지 않다면 현재 사용자의 위치 정보를 저장
+            if (it.latitude == 0.0 && it.state == null) {
+                setAlertDialog(requireContext(),
+                    getString(R.string.error_not_found_user_location),
+                    getString(R.string.alert_go_to_set_location_page),
+                    posFunc = {
+                        // 위치 지정 페이지(FindOtherPlaceFragment)로 이동
+                        parentFragmentManager
+                            .beginTransaction()
+                            .replace(R.id.container, FindOtherPlaceFragment.newInstance())
+                            .commit()
+                    },
+                    negFunc = {
+                        requireActivity().finish()
+                        startActivity(Intent(requireContext(), MainActivity::class.java))
+                    })
+            } else {
+                Log.d(DEFAULT_TAG + TAG, "Location is initialized!")
+            }
+        }
+
+        // observing progressBar status
+        isLoading.observe(viewLifecycleOwner) {
+            if (it) {
+                binding.progressBar.visibility = View.VISIBLE
+            } else {
+                binding.progressBar.visibility = View.GONE
+            }
+        }
+
+        // observing 음악 검색 결과 리스트
+        songList.observe(viewLifecycleOwner) {
+            with(binding) {
+                // 검색 결과 없을 때 검색 결과 없음 안내하는 view 표시
+                if (it.songs.size == 0) {
+                    txtEmptyResult.visibility = View.VISIBLE
                 } else {
-                    Log.d(DEFAULT_TAG + TAG, "Location is initialized!")
-                }
-            }
-            // observing progressBar status
-            isLoading.observe(viewLifecycleOwner) {
-                if (it) {
-                    binding.progressBar.visibility = View.VISIBLE
-                }
-                else {
-                    binding.progressBar.visibility = View.GONE
-                }
-            }
-            // observing 음악 검색 결과 리스트
-            songList.observe(viewLifecycleOwner){
-                with(binding) {
-                    // 검색 결과 없을 때 검색 결과 없음 안내하는 view 표시
-                    if (it.songs.size == 0) {
-                        txtEmptyResult.visibility = View.VISIBLE
-                    } else {
-                        recyclerAdapter = SearchSongAdapter(it,
-                            onClickItem = {
-                                setAlertDialog(requireContext(), null,
-                                    "${it.artist.joinToString ( "," )}의 " +
-                                            "${it.songTitle}(을/를) 선택하시겠습니까?",
-                                    posFunc = {
-                                        viewModel.addSong(it)
-                                        parentFragmentManager
-                                            .beginTransaction()
-                                            .replace(R.id.container, WriteStoryFragment.newInstance())
-                                            .addToBackStack(null)
-                                            .commit()
-                                    },
-                                    negFunc = {})
-                            })
-                        rvResult.adapter = recyclerAdapter
-                        rvResult.addItemDecoration(SearchSongDecoration())
-                    }
+                    recyclerAdapter = SearchSongAdapter(it,
+                        onClickItem = {
+                            setAlertDialog(requireContext(), null,
+                                "${it.artist.joinToString ( "," )}의 " +
+                                        "${it.songTitle}(을/를) 선택하시겠습니까?",
+                                posFunc = {
+                                    viewModel.addSong(it)
+                                    parentFragmentManager
+                                        .beginTransaction()
+                                        .replace(R.id.container, WriteStoryFragment.newInstance())
+                                        .addToBackStack(null)
+                                        .commit()
+                                          },
+                                negFunc = {})
+                        })
+                    rvResult.adapter = recyclerAdapter
+                    rvResult.addItemDecoration(SearchSongDecoration())
                 }
             }
         }
     }
 
     // Listener 초기화 함수
-    private fun setListener() {
-        with(binding) {
-            // TextField 내 검색 버튼 클릭 시
-            txtFieldSearchSong.setStartIconOnClickListener { searchSong() }
-            // 키보드 검색버튼 클릭 시
-            edtSearchSong.setOnKeyListener { _, keyCode, event ->
-                if ((event.action == KeyEvent.ACTION_DOWN) && (keyCode == KeyEvent.KEYCODE_ENTER)) {
-                    searchSong()
-                    true
-                } else {
-                    false
-                }
+    private fun setListener() = with(binding) {
+        // TextField 내 검색 버튼 클릭 시
+        txtFieldSearchSong.setStartIconOnClickListener { searchSong() }
+
+        // 키보드 검색버튼 클릭 시
+        edtSearchSong.setOnKeyListener { _, keyCode, event ->
+            if ((event.action == KeyEvent.ACTION_DOWN) && (keyCode == KeyEvent.KEYCODE_ENTER)) {
+                searchSong()
+                true
+            } else {
+                false
             }
         }
     }
 
     // 음악 검색
-    private fun searchSong() {
-        with(binding) {
-            // 키보드 내리기
-            hideKeyBoard(requireActivity())
-            // 검색 결과가 이미 표시 되어있다면 제거
-            if (rvResult.adapter != null) {
-                rvResult.adapter = null
-            }
-            // 검색 결과 없음 표시하는 view 가 이미 존재 한다면 view 제거
-            if (txtEmptyResult.visibility == View.VISIBLE) {
-                txtEmptyResult.visibility = View.GONE
-            }
-            // 음악 검색
-            if (edtSearchSong.text!!.isEmpty()) {
-                toastMessage(getString(R.string.error_keyword_not_assigned))
-            } else if (edtSearchSong.text!!.length > 200) {
-                toastMessage(getString(R.string.error_keyword_length_exceeded))
-            } else {
-                if (!validate()) {
-                    setAlertDialog(requireContext(), null,
-                        getString(R.string.error_location_not_assigned) + " " +
-                                getString(R.string.alert_go_to_set_location_page),
-                        posFunc = {
-                            // 위치 지정 페이지(FindOtherPlaceFragment)로 이동
-                            parentFragmentManager
-                                .beginTransaction()
-                                .replace(R.id.container, FindOtherPlaceFragment.newInstance())
-                                .commit()
-                        },
-                        negFunc = {
-                            requireActivity().finish()
-                            startActivity(Intent(requireContext(), MainActivity::class.java))
-                        })
-                } else {
-                    try {
-                        viewModel.getSong(edtSearchSong.text.toString())
-                    } catch (e : Exception) {
+    private fun searchSong() = with(binding) {
+        // 키보드 내리기
+        hideKeyBoard(requireActivity())
+        // 검색 결과가 이미 표시 되어있다면 제거
+        if (rvResult.adapter != null) {
+            rvResult.adapter = null
+        }
+        // 검색 결과 없음 표시하는 view 가 이미 존재 한다면 view 제거
+        if (txtEmptyResult.visibility == View.VISIBLE) {
+            txtEmptyResult.visibility = View.GONE
+        }
+        // 음악 검색
+        if (edtSearchSong.text!!.isEmpty()) {
+            toastMessage(getString(R.string.error_keyword_not_assigned))
+        } else if (edtSearchSong.text!!.length > 200) {
+            toastMessage(getString(R.string.error_keyword_length_exceeded))
+        } else {
+            if (!validate()) {
+                setAlertDialog(requireContext(), null,
+                    getString(R.string.error_location_not_assigned) + " " +
+                            getString(R.string.alert_go_to_set_location_page),
+                    posFunc = {
+                        // 위치 지정 페이지(FindOtherPlaceFragment)로 이동
+                        parentFragmentManager
+                            .beginTransaction()
+                            .replace(R.id.container, FindOtherPlaceFragment.newInstance())
+                            .commit()
+                              },
+                    negFunc = {
                         requireActivity().finish()
-                        Intent(requireContext(), MainActivity::class.java)
-                    }
+                        startActivity(Intent(requireContext(), MainActivity::class.java))
+                    })
+            } else {
+                try {
+                    viewModel.getSong(edtSearchSong.text.toString())
+                } catch (e : Exception) {
+                    displayToastExceptions(e) // 오류 내용에 따라 ToastMessage 출력
+                    requireActivity().finish()
+                    Intent(requireContext(), MainActivity::class.java)
                 }
             }
         }
