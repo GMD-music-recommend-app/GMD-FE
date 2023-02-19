@@ -1,7 +1,3 @@
-/**
-* Created by 조진수
-* date : 22/11/26
-*/
 package com.sesac.gmd.presentation.ui.create_song.fragment
 
 import android.content.Intent

@@ -1,7 +1,3 @@
-/**
-* Created by 조진수
-* date : 22/12/21
-*/
 package com.sesac.gmd.data.api.server.song.write_comment
 
 import com.sesac.gmd.common.util.*

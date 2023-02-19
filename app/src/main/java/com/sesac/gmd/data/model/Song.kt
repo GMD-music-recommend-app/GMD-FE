@@ -1,7 +1,3 @@
-/**
-* Created by 조진수
-* date : 22/12/01
-*/
 package com.sesac.gmd.data.model
 
 /**

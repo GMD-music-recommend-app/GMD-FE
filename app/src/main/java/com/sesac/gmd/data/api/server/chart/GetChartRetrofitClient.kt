@@ -1,7 +1,3 @@
-/**
-* Created by 조진수
-* date : 22/12/25
-*/
 package com.sesac.gmd.data.api.server.chart
 
 import com.sesac.gmd.common.util.GMD_BASE_URL

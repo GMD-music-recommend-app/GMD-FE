@@ -1,7 +1,3 @@
-/**
-* Created by 조진수
-* date : 22/12/08
-*/
 package com.sesac.gmd.data.api.server.song
 
 import com.sesac.gmd.data.api.server.song.create_pin.CreatePinResponse

@@ -1,7 +1,3 @@
-/**
-* Created by 조진수
-* date : 22/12/06
-*/
 package com.sesac.gmd.data.api.maniadb
 
 import com.sesac.gmd.common.util.MANIA_DB_SERVICE_KEY

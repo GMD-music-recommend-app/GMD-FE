@@ -1,7 +1,3 @@
-/**
-* Created by 조진수
-* date : 22/12/01
-*/
 package com.sesac.gmd.presentation.ui.create_song.bottomsheet
 
 import android.os.Bundle

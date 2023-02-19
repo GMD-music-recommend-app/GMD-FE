@@ -1,7 +1,3 @@
-/**
-* Created by 조진수
-* date : 22/12/22
-*/
 package com.sesac.gmd.presentation.ui.main.viewmodel
 
 import android.content.Context
