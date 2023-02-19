@@ -11,9 +11,9 @@ import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.sesac.gmd.R
+import com.sesac.gmd.common.base.BaseFragment
 import com.sesac.gmd.common.util.DEFAULT_TAG
 import com.sesac.gmd.common.util.Utils.Companion.displayToastExceptions
 import com.sesac.gmd.common.util.Utils.Companion.hideKeyBoard
@@ -30,17 +30,15 @@ import com.sesac.gmd.presentation.ui.main.activity.MainActivity
 /**
  * 음악 검색 Fragment
  */
-class SearchSongFragment : Fragment() {
+class SearchSongFragment : BaseFragment<FragmentSearchSongBinding>(FragmentSearchSongBinding::inflate) {
     companion object {
         private val TAG = SearchSongFragment::class.simpleName
         fun newInstance() = SearchSongFragment()
     }
-    private lateinit var binding: FragmentSearchSongBinding
     private lateinit var viewModel: CreateSongViewModel
     private lateinit var recyclerAdapter: SearchSongAdapter
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        binding = FragmentSearchSongBinding.inflate(inflater, container, false)
 
         viewModel = ViewModelProvider(
             requireActivity(), ViewModelFactory(Repository()))[CreateSongViewModel::class.java]
@@ -48,7 +46,7 @@ class SearchSongFragment : Fragment() {
         // 사용자 위치 정보 초기화
         initUserLocation()
 
-        return binding.root
+        return super.onCreateView(inflater, container, savedInstanceState)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

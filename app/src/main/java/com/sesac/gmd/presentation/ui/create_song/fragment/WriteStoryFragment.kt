@@ -13,9 +13,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.content.ContextCompat
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.sesac.gmd.R
+import com.sesac.gmd.common.base.BaseFragment
 import com.sesac.gmd.common.util.DEFAULT_TAG
 import com.sesac.gmd.common.util.Utils.Companion.displayToastExceptions
 import com.sesac.gmd.common.util.Utils.Companion.setAlertDialog
@@ -29,21 +29,20 @@ import com.sesac.gmd.presentation.ui.main.activity.MainActivity
 /**
  * 사연 입력, 해시태그 입력 후 음악(핀) 생성 Fragment
  */
-class WriteStoryFragment : Fragment() {
+class WriteStoryFragment : BaseFragment<FragmentWriteStoryBinding>(FragmentWriteStoryBinding::inflate) {
     companion object {
         private val TAG = WriteStoryFragment::class.simpleName
         fun newInstance() = WriteStoryFragment()
     }
-    private lateinit var binding: FragmentWriteStoryBinding
+
     private lateinit var viewModel: CreateSongViewModel
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        binding = FragmentWriteStoryBinding.inflate(inflater, container, false)
 
         viewModel = ViewModelProvider(
             requireActivity(), ViewModelFactory(Repository()))[CreateSongViewModel::class.java]
 
-        return binding.root
+        return super.onCreateView(inflater, container, savedInstanceState)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -74,7 +73,7 @@ class WriteStoryFragment : Fragment() {
             val reason = edtStory.text.toString()
             val hashtag = edtHashtag.text.toString()
 
-            if(checkValidation()) {
+            if (checkValidation()) {
                 setAlertDialog(requireContext(), null, getString(R.string.alert_finish_pin_create),
                     posFunc = {
                         try {
@@ -83,7 +82,7 @@ class WriteStoryFragment : Fragment() {
                             displayToastExceptions(e)
                         }
                         startActivity(Intent(context, MainActivity::class.java))
-                              },
+                    },
                     negFunc = {})
             }
         }
@@ -91,7 +90,7 @@ class WriteStoryFragment : Fragment() {
 
     // 버튼 상태 초기화 함수
     private fun setButtonState() = with(binding) {
-        edtStory.addTextChangedListener(object : TextWatcher{
+        edtStory.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
                 if (s!!.isEmpty()) {
                     btnFinishCreate.setBackgroundResource(R.drawable.bg_btn_gray_rectangle)

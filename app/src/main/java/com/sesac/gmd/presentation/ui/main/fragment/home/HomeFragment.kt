@@ -26,6 +26,7 @@ import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.*
 import com.sesac.gmd.R
+import com.sesac.gmd.common.base.BaseFragment
 import com.sesac.gmd.common.util.*
 import com.sesac.gmd.common.util.Utils.Companion.displayToastExceptions
 import com.sesac.gmd.common.util.Utils.Companion.toastMessage
@@ -38,7 +39,8 @@ import com.sesac.gmd.presentation.ui.main.bottomsheet.SongInfoBottomSheetFragmen
 import com.sesac.gmd.presentation.ui.main.viewmodel.HomeChartViewModel
 import kotlinx.coroutines.*
 
-class HomeFragment : Fragment(),
+class HomeFragment :
+    BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::inflate),
     OnMapReadyCallback,
     OnMarkerClickListener
 {
@@ -56,7 +58,6 @@ class HomeFragment : Fragment(),
             }
         }
     }
-    private lateinit var binding: FragmentHomeBinding
     private lateinit var viewModel: HomeChartViewModel
     private lateinit var mMap: GoogleMap
     private lateinit var startingPoint: LatLng
@@ -79,16 +80,14 @@ class HomeFragment : Fragment(),
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        binding = FragmentHomeBinding.inflate(inflater, container, false)
 
         viewModel = ViewModelProvider(
             requireActivity(), ViewModelFactory(Repository()))[HomeChartViewModel::class.java]
 
-        // ???
         // 현재 위치 초기화
         initLocation()
 
-        return binding.root
+        return super.onCreateView(inflater, container, savedInstanceState)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

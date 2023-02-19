@@ -10,7 +10,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.gms.common.api.Status
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -24,6 +23,7 @@ import com.google.android.libraries.places.api.model.Place
 import com.google.android.libraries.places.widget.AutocompleteSupportFragment
 import com.google.android.libraries.places.widget.listener.PlaceSelectionListener
 import com.sesac.gmd.R
+import com.sesac.gmd.common.base.BaseFragment
 import com.sesac.gmd.common.util.DEFAULT_ZOOM_LEVEL
 import com.sesac.gmd.common.util.SEOUL_CITY_LATITUDE
 import com.sesac.gmd.common.util.SEOUL_CITY_LONGITUDE
@@ -37,7 +37,10 @@ import com.sesac.gmd.presentation.factory.ViewModelFactory
 /**
  * 다른 곳에서 추가하기 Fragment
  */
-class FindOtherPlaceFragment : Fragment(), OnMapReadyCallback {
+class FindOtherPlaceFragment :
+    BaseFragment<FragmentFindOtherPlaceBinding>(FragmentFindOtherPlaceBinding::inflate),
+    OnMapReadyCallback
+{
     companion object {
         fun newInstance() = FindOtherPlaceFragment()
 
@@ -45,17 +48,15 @@ class FindOtherPlaceFragment : Fragment(), OnMapReadyCallback {
         val startingPoint = LatLng(SEOUL_CITY_LATITUDE, SEOUL_CITY_LONGITUDE)
     }
     private var addedMarker: Marker? = null
-    private lateinit var binding: FragmentFindOtherPlaceBinding
     private lateinit var viewModel: CreateSongViewModel
     private lateinit var mMap: GoogleMap
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        binding = FragmentFindOtherPlaceBinding.inflate(inflater, container, false)
 
         viewModel = ViewModelProvider(
             requireActivity(), ViewModelFactory(Repository()))[CreateSongViewModel::class.java]
 
-        return binding.root
+        return super.onCreateView(inflater, container, savedInstanceState)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
