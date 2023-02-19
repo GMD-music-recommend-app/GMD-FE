@@ -9,11 +9,9 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.core.content.ContextCompat
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.activityViewModels
 import com.sesac.gmd.R
 import com.sesac.gmd.common.base.BaseFragment
 import com.sesac.gmd.common.util.DEFAULT_TAG
@@ -34,16 +32,7 @@ class WriteStoryFragment : BaseFragment<FragmentWriteStoryBinding>(FragmentWrite
         private val TAG = WriteStoryFragment::class.simpleName
         fun newInstance() = WriteStoryFragment()
     }
-
-    private lateinit var viewModel: CreateSongViewModel
-
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-
-        viewModel = ViewModelProvider(
-            requireActivity(), ViewModelFactory(Repository()))[CreateSongViewModel::class.java]
-
-        return super.onCreateView(inflater, container, savedInstanceState)
-    }
+    private val viewModel: CreateSongViewModel by activityViewModels { ViewModelFactory(Repository()) }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -113,7 +102,6 @@ class WriteStoryFragment : BaseFragment<FragmentWriteStoryBinding>(FragmentWrite
 
         // Check Song
         if (viewModel.selectedSong.value == null) {
-            Log.d(DEFAULT_TAG+TAG, "selectSong : ${viewModel.selectedSong}")
             toastMessage(getString(R.string.error_music_not_assigned))
             flag = false
         }

@@ -11,7 +11,7 @@ import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.activityViewModels
 import com.sesac.gmd.R
 import com.sesac.gmd.common.base.BaseFragment
 import com.sesac.gmd.common.util.DEFAULT_TAG
@@ -35,13 +35,10 @@ class SearchSongFragment : BaseFragment<FragmentSearchSongBinding>(FragmentSearc
         private val TAG = SearchSongFragment::class.simpleName
         fun newInstance() = SearchSongFragment()
     }
-    private lateinit var viewModel: CreateSongViewModel
+    private val viewModel: CreateSongViewModel by activityViewModels { ViewModelFactory(Repository()) }
     private lateinit var recyclerAdapter: SearchSongAdapter
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-
-        viewModel = ViewModelProvider(
-            requireActivity(), ViewModelFactory(Repository()))[CreateSongViewModel::class.java]
 
         // 사용자 위치 정보 초기화
         initUserLocation()
@@ -114,7 +111,12 @@ class SearchSongFragment : BaseFragment<FragmentSearchSongBinding>(FragmentSearc
                                 "${it.artist.joinToString ( "," )}의 " +
                                         "${it.songTitle}(을/를) 선택하시겠습니까?",
                                 posFunc = {
-                                    viewModel.addSong(it)
+                                    try {
+                                        viewModel.addSong(it)
+                                    } catch (e : Exception) {
+                                        displayToastExceptions(e)
+                                    }
+
                                     parentFragmentManager
                                         .beginTransaction()
                                         .replace(R.id.container, WriteStoryFragment.newInstance())

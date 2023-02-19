@@ -18,7 +18,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.core.content.ContextCompat.getSystemService
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.activityViewModels
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.GoogleMap.OnMarkerClickListener
@@ -58,7 +58,7 @@ class HomeFragment :
             }
         }
     }
-    private lateinit var viewModel: HomeChartViewModel
+    private val viewModel: HomeChartViewModel by activityViewModels { ViewModelFactory(Repository()) }
     private lateinit var mMap: GoogleMap
     private lateinit var startingPoint: LatLng
 
@@ -80,9 +80,6 @@ class HomeFragment :
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-
-        viewModel = ViewModelProvider(
-            requireActivity(), ViewModelFactory(Repository()))[HomeChartViewModel::class.java]
 
         // 현재 위치 초기화
         initLocation()

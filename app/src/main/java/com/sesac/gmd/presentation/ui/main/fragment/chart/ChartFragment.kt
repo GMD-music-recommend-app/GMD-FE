@@ -4,11 +4,7 @@
 */
 package com.sesac.gmd.presentation.ui.main.fragment.chart
 
-import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.activityViewModels
 import com.sesac.gmd.common.base.BaseFragment
 import com.sesac.gmd.data.repository.Repository
 import com.sesac.gmd.databinding.FragmentChartBinding
@@ -24,14 +20,7 @@ class ChartFragment : BaseFragment<FragmentChartBinding>(FragmentChartBinding::i
         //private val TAG = ChartFragment::class.java.simpleName
         fun newInstance() = ChartFragment()
     }
-    private lateinit var viewModel: HomeChartViewModel
-
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-        viewModel = ViewModelProvider(
-            requireActivity(), ViewModelFactory(Repository()))[HomeChartViewModel::class.java]
-
-        return super.onCreateView(inflater, container, savedInstanceState)
-    }
+    private val viewModel: HomeChartViewModel by activityViewModels { ViewModelFactory(Repository())}
 }
 
 //class ChartFragment : Fragment() {

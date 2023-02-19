@@ -12,15 +12,13 @@ import android.os.Bundle
 import android.text.SpannableStringBuilder
 import android.text.Spanned.SPAN_INCLUSIVE_EXCLUSIVE
 import android.text.style.StyleSpan
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.activityViewModels
 import com.bumptech.glide.Glide
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.sesac.gmd.R
-import com.sesac.gmd.common.util.DEFAULT_TAG
 import com.sesac.gmd.common.util.Utils.Companion.displayToastExceptions
 import com.sesac.gmd.common.util.Utils.Companion.setAlertDialog
 import com.sesac.gmd.common.util.Utils.Companion.toastMessage
@@ -36,7 +34,7 @@ import com.sesac.gmd.presentation.ui.main.viewmodel.HomeChartViewModel
  */
 class SongInfoBottomSheetFragment : BottomSheetDialogFragment() {
     companion object {
-        private val TAG = SongInfoBottomSheetFragment::class.simpleName
+        //private val TAG = SongInfoBottomSheetFragment::class.simpleName
 
         fun newInstance() = SongInfoBottomSheetFragment()
 
@@ -50,15 +48,10 @@ class SongInfoBottomSheetFragment : BottomSheetDialogFragment() {
         }
     }
     private lateinit var binding: FragmentSongInfoBottomSheetBinding
-    private lateinit var viewModel: HomeChartViewModel
+    private val viewModel: HomeChartViewModel by activityViewModels { ViewModelFactory(Repository()) }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentSongInfoBottomSheetBinding.inflate(inflater, container, false)
-
-        viewModel = ViewModelProvider(
-            requireActivity(), ViewModelFactory(Repository()))[HomeChartViewModel::class.java]
-
-        Log.d(DEFAULT_TAG+TAG, "${arguments?.getString("pinIdx")}")
 
         // 해당 곡 상세 정보 가져오기
         getSongInfo()

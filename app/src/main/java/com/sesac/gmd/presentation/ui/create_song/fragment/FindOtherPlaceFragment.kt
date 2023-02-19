@@ -6,11 +6,9 @@ package com.sesac.gmd.presentation.ui.create_song.fragment
 
 import android.os.Bundle
 import android.util.Log
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
 import androidx.core.view.isVisible
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.activityViewModels
 import com.google.android.gms.common.api.Status
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -47,17 +45,9 @@ class FindOtherPlaceFragment :
         // 지도의 중심 점을 서울 시청으로 설정
         val startingPoint = LatLng(SEOUL_CITY_LATITUDE, SEOUL_CITY_LONGITUDE)
     }
-    private var addedMarker: Marker? = null
-    private lateinit var viewModel: CreateSongViewModel
+    private val viewModel: CreateSongViewModel by activityViewModels { ViewModelFactory(Repository()) }
     private lateinit var mMap: GoogleMap
-
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-
-        viewModel = ViewModelProvider(
-            requireActivity(), ViewModelFactory(Repository()))[CreateSongViewModel::class.java]
-
-        return super.onCreateView(inflater, container, savedInstanceState)
-    }
+    private var addedMarker: Marker? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

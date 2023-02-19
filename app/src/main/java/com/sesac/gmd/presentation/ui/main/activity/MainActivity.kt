@@ -6,9 +6,9 @@ package com.sesac.gmd.presentation.ui.main.activity
 
 import android.os.Bundle
 import androidx.activity.OnBackPressedCallback
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.FragmentTransaction
-import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.tabs.TabLayout
 import com.sesac.gmd.R
 import com.sesac.gmd.common.util.*
@@ -22,16 +22,13 @@ import com.sesac.gmd.presentation.ui.main.viewmodel.HomeChartViewModel
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
-    private lateinit var viewModel: HomeChartViewModel
+    private val viewModel: HomeChartViewModel by viewModels { ViewModelFactory(Repository()) }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater).also {
             setContentView(it.root)
         }
-
-        viewModel = ViewModelProvider(
-            this, ViewModelFactory(Repository()))[HomeChartViewModel::class.java]
 
         // Splash 에서 받아온 위치 정보에 따라 HomeFragment 의 위치 정보 값 초기화
         setHomeFragmentState(savedInstanceState)

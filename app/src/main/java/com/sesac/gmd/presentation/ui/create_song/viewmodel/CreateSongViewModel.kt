@@ -108,7 +108,11 @@ class CreateSongViewModel(private val repository: Repository) : ViewModel() {
     // 음악 검색 결과에서 추천할 음악 선택
     fun addSong(selectedSong: Song) {
         // TODO: 동일 유저 동일 장소 동일 음악 생성 유효성 검사 필요(추후 구현)
-        _selectedSong.value = selectedSong
+        try {
+            _selectedSong.value = selectedSong
+        } catch (e: Exception) {
+            throw Exception(e)
+        }
     }
 
     // 핀 생성 하기
