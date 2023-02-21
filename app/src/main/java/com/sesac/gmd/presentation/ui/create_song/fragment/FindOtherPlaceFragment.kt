@@ -21,6 +21,7 @@ import com.sesac.gmd.common.base.BaseFragment
 import com.sesac.gmd.common.util.DEFAULT_ZOOM_LEVEL
 import com.sesac.gmd.common.util.SEOUL_CITY_LATITUDE
 import com.sesac.gmd.common.util.SEOUL_CITY_LONGITUDE
+import com.sesac.gmd.common.util.Utils.Companion.displayToastExceptions
 import com.sesac.gmd.common.util.Utils.Companion.setAlertDialog
 import com.sesac.gmd.data.repository.Repository
 import com.sesac.gmd.databinding.FragmentFindOtherPlaceBinding
@@ -61,6 +62,7 @@ class FindOtherPlaceFragment :
         val mapFragment = childFragmentManager.findFragmentById(R.id.subMap) as SupportMapFragment?
         mapFragment?.getMapAsync(this)
 
+        // 해당 페이지에 대한 안내 Bottom Sheet Dialog 표시
         val findOtherBottomSheet = FindOtherPlaceBottomSheetFragment.newInstance()
         findOtherBottomSheet.show(childFragmentManager, findOtherBottomSheet.tag)
     }
@@ -95,13 +97,18 @@ class FindOtherPlaceFragment :
                 null,
                 getString(R.string.alert_create_pin_here),
                 posFunc = {
-                    viewModel.setLocation(requireContext(), addedMarker!!.position.latitude, addedMarker!!.position.longitude)
+                    try {
+                        val selectedLocation = LatLng(addedMarker!!.position.latitude, addedMarker!!.position.longitude)
+                        viewModel.setOtherLocation(requireContext(), selectedLocation)
+                    } catch (e : Exception) {
+                        displayToastExceptions(e)
+                    }
                     parentFragmentManager
                         .beginTransaction()
                         .replace(R.id.container, SearchSongFragment.newInstance())
                         .addToBackStack(null)
                         .commit()
-                          },
+                },
                 negFunc = {})
         }
     }

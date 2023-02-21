@@ -70,7 +70,7 @@ class MainActivity : AppCompatActivity() {
             })
         }
 
-        // 뒤로가기 시 View Stack 없으면 앱 종료
+        // 뒤로 가기 클릭 시 Stack 비어 있다면 앱 종료
         onBackPressedDispatcher.addCallback(object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
                 supportFragmentManager.popBackStack()

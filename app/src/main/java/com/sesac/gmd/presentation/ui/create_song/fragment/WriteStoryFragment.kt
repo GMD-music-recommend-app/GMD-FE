@@ -65,8 +65,9 @@ class WriteStoryFragment : BaseFragment<FragmentWriteStoryBinding>(FragmentWrite
                             viewModel.createPin(reason, hashtag)
                         } catch (e: Exception) {
                             displayToastExceptions(e)
+                        } finally {
+                            startActivity(Intent(context, MainActivity::class.java))
                         }
-                        startActivity(Intent(context, MainActivity::class.java))
                     },
                     negFunc = {})
             }

@@ -6,8 +6,12 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.google.android.gms.maps.model.LatLng
+import com.sesac.gmd.R
+import com.sesac.gmd.application.GMDApplication
 import com.sesac.gmd.common.util.DEFAULT_TAG
 import com.sesac.gmd.common.util.GeoUtil.geocoding
+import com.sesac.gmd.common.util.GetLocationUtil
 import com.sesac.gmd.common.util.PIN_SEARCH_RADIUS
 import com.sesac.gmd.common.util.TEMP_USER_IDX
 import com.sesac.gmd.data.api.server.chart.GetChartResult
@@ -60,8 +64,27 @@ class HomeChartViewModel(private val repository: Repository) : ViewModel() {
     }
 
     // Geocoding 된 위치 정보를 LiveData 에 저장
-    fun setLocation(context: Context, lat: Double, lng: Double) {
-        _location.value = geocoding(context, lat, lng)
+    fun saveGeoLocation(context: Context, userLocation: LatLng) {
+        viewModelScope.launch(exceptionHandler) {
+            _location.value = geocoding(context, userLocation)
+        }
+    }
+
+    // 유저의 현재 위치 값(위도, 경도)를 LiveData<Location> 에 저장
+    suspend fun setCurrentUserLocation(context: Context) {
+        viewModelScope.launch(exceptionHandler) {
+            // 유저의 정확한 현재 위치 요청
+            val userLocation = GetLocationUtil.getCurrentLocation(context)
+
+            // 유저의 현재 위치 값을 받아오지 못한 경우 View 로 Exception 전달
+            if (userLocation.latitude == 0.0 && userLocation.longitude == 0.0) {
+                throw Exception(GMDApplication.getAppInstance().resources.getString(R.string.error_not_found_user_location))
+            }
+            // 받아온 현재 위치를 기준으로 geocoding 실행 후 해당 위치 정보를 LiveData 에 저장
+            else {
+                _location.value = geocoding(context, userLocation)
+            }
+        }
     }
 
     /**
@@ -81,7 +104,7 @@ class HomeChartViewModel(private val repository: Repository) : ViewModel() {
                     throw Exception("${response.errorBody()!!}")
                 }
             } catch (e: Exception) {
-                throw Exception("$e")
+                throw e
             }
         }
     }
@@ -98,25 +121,59 @@ class HomeChartViewModel(private val repository: Repository) : ViewModel() {
                     throw Exception("${response.errorBody()!!}")
                 }
             } catch (e: Exception) {
-                throw Exception("$e")
+                throw e
             }
         }
     }
 
     // 핀 공감하기 TODO : 미완성
-    fun insertLikePin(pinIdx: Int) {
-        viewModelScope.launch(exceptionHandler) {
-            try {
-                val response = repository.insertLikePin(pinIdx, TEMP_USER_IDX)
-                if (response.isSuccessful) {
-//                   _isPinLiked.value = response.body().result
-                } else {
-                    onError("onError: ${response.errorBody()!!.string()}")
-                    throw Exception("${response.errorBody()!!}")
-                }
-            } catch (e: Exception) {
-                throw Exception("$e")
-            }
-        }
-    }
+//    fun insertLikePin(pinIdx: Int) {
+//        viewModelScope.launch(exceptionHandler) {
+//            try {
+//                val response = repository.insertLikePin(pinIdx, TEMP_USER_IDX)
+//                if (response.isSuccessful) {
+////                   _isPinLiked.value = response.body().result
+//                } else {
+//                    onError("onError: ${response.errorBody()!!.string()}")
+//                    throw Exception("${response.errorBody()!!}")
+//                }
+//            } catch (e: Exception) {
+//                throw e
+//            }
+//        }
+//    }
+
+
+    // 인기차트 갱신 함수
+//    fun fetchChartData(context: Context, latLng: LatLng) = viewModelScope.launch(exceptionHandler) {
+//        try {
+//            isLoading.value = true
+//            // 받아온 현재 위치를 기준으로 geocoding 실행 후 해당 위치 정보를 LiveData 에 저장
+//            val userLocation = geocoding(context, latLng.latitude, latLng.longitude)
+//            val city = userLocation.city ?: let {
+//                onError("위치를 불러올 수 없습니다.")
+//                return@launch
+//            }
+//            val chartResponse = repository.getChartList(city)
+//            if (chartResponse.body()?.isSuccess == true) {
+//                delay(2_000L)
+//                val result = chartResponse.body()?.result ?: emptyList()
+//                val chartList = result.map {
+//                    ChartAdapter.ChartViewHolder.Chart(
+//                        id = it.pinIdx.toLong(),
+//                        chartNumber = it.songRank,
+//                        imageUrl = it.albumImage,
+//                        title = it.songTitle,
+//                        singerName = it.artist,
+//                        empathyCount = it.likeCount
+//                    )
+//                }
+//                _chartListLiveData.value = chartList
+//            }
+//            isLoading.value = false
+//        } catch (e: Exception) {
+//            e.printStackTrace()
+//            toastMessage(GMDApplication.getAppInstance().resources.getString(R.string.unexpected_error))
+//        }
+//    }
 }

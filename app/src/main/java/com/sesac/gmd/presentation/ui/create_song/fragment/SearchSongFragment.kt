@@ -22,6 +22,9 @@ import com.sesac.gmd.presentation.ui.create_song.adapter.SearchSongDecoration
 import com.sesac.gmd.presentation.ui.create_song.viewmodel.CreateSongViewModel
 import com.sesac.gmd.presentation.factory.ViewModelFactory
 import com.sesac.gmd.presentation.ui.main.activity.MainActivity
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 /**
  * 음악 검색 Fragment
@@ -37,7 +40,9 @@ class SearchSongFragment : BaseFragment<FragmentSearchSongBinding>(FragmentSearc
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
 
         // 사용자 위치 정보 초기화
-        initUserLocation()
+        CoroutineScope(Dispatchers.IO).launch {
+            initUserLocation()
+        }
 
         return super.onCreateView(inflater, container, savedInstanceState)
     }
@@ -51,11 +56,20 @@ class SearchSongFragment : BaseFragment<FragmentSearchSongBinding>(FragmentSearc
         setListener()
     }
 
-    // 사용자 위치 정보 초기화
-    private fun initUserLocation() {
+    /**
+     * 사용자 위치 정보 초기화<br>
+     * 음악 추가하기를 클릭한 동안 유저의 위치가 바뀔 수 있기 때문에
+     * HomeCharViewModel 에서 가지고 있던 위치 정보 값을 사용하는 것이 아닌
+     * 유저의 위치 정보를 새로 초기화
+     */
+    private suspend fun initUserLocation() {
         with(viewModel) {
             if (location.value == null) {
-                getCurrentLocation(requireActivity())
+                try {
+                    setCurrentUserLocation(requireContext())
+                } catch (e: Exception) {
+                    toastMessage(getString(R.string.error_not_found_user_location))
+                }
             }
         }
     }

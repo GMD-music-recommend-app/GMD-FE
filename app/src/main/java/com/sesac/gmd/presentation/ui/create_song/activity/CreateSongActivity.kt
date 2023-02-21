@@ -32,15 +32,17 @@ class CreateSongActivity : AppCompatActivity() {
 
     /**
      * HomeFragment 에서 유저가 선택한 음악 추천 위치(현재 위치, 다른 위치)에 따라<br>
-     * CreateSongActivity 에서 처음으로 보여 줄 Fragment 세팅
+     * CreateSongActivity 에서 다른 위치 선택 화면과 음악 검색 화면 중<br>
+     * 처음으로 보여 줄 Fragment 세팅
      */
     private fun setFirstFragment(savedInstanceState: Bundle?) {
+        // 유저가 현재 위치에서 추가하기를 선택했는지 다른 위치에 추가하기를 선택했는지 확인
         val goToPageName = intent.getStringExtra(GO_TO_PAGE)
+
         if (savedInstanceState == null) {
             with(supportFragmentManager.beginTransaction()) {
-                // 노래 추천하기 버튼 클릭 시 첫 화면
                 when(goToPageName) {
-                    // 여기에서 추천하기
+                    // 현재 위치에서 추천하기 버튼 클릭 시
                     CREATE_MUSIC_HERE -> {
                         add(R.id.container, SearchSongFragment.newInstance())
                         commit()
@@ -58,6 +60,7 @@ class CreateSongActivity : AppCompatActivity() {
         }
     }
 
+    // 해당 Activity 의 Toolbar 설정
     private fun setToolbar() {
         binding.toolbar.run {
             setSupportActionBar(this)
@@ -69,8 +72,7 @@ class CreateSongActivity : AppCompatActivity() {
         }
     }
 
-    // TODO: 코드 수정 필요
-    // toolbar 뒤로가기 버튼 클릭 시 동작 구현
+    // toolbar 뒤로가기 버튼 클릭 시 동작 구현 TODO: 코드 수정 필요
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
             android.R.id.home -> finish()

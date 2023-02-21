@@ -24,9 +24,9 @@ import com.sesac.gmd.databinding.FragmentSongInfoBottomSheetBinding
 import com.sesac.gmd.presentation.factory.ViewModelFactory
 import com.sesac.gmd.presentation.ui.main.viewmodel.HomeChartViewModel
 
-// TODO: Expanded Bottom Sheet Dialog 로 변경 필요
 /**
  * 핀 클릭 시 해당 핀의 정보를 표시하는 BottomSheetDialog
+ * TODO: Expanded Bottom Sheet Dialog 로 변경 필요
  */
 class SongInfoBottomSheetFragment : BottomSheetDialogFragment() {
     companion object {
@@ -69,8 +69,8 @@ class SongInfoBottomSheetFragment : BottomSheetDialogFragment() {
         try {
             viewModel.getPinInfo(arguments?.getString("pinIdx")!!.toInt())
         } catch (e: Exception) {
-            dismiss()
             displayToastExceptions(e) // 오류 내용에 따라 ToastMessage 출력
+            dismiss()
         }
     }
 
@@ -126,24 +126,34 @@ class SongInfoBottomSheetFragment : BottomSheetDialogFragment() {
     // Listener 초기화 함수 TODO: 코드 수정 필요
     private fun setListener() = with(binding) {
         // 유튜브로 듣기
-        containerInfoMusicAlbumImage.setOnClickListener {
-            setAlertDialog(requireContext(), null,
-                getString(R.string.alert_go_to_youtube),
-                posFunc = {
-                    startActivity(
-                        Intent(Intent.ACTION_VIEW,
-                            Uri.parse(
-                                "$YOUTUBE_BASE_URL+${viewModel.pinInfo.value!!.artist}+${viewModel.pinInfo.value!!.songTitle}"))
-                    )},
-                negFunc = {}
-            )}
+        containerInfoMusicAlbumImage.setOnClickListener { listenToYoutube() }
         // 공감하기
-        btnLike.setOnClickListener {
-            toastMessage(getString(R.string.alert_service_ready))
-        }
+        btnLike.setOnClickListener { likedPin() }
         // 공유하기
-        btnShare.setOnClickListener {
-            toastMessage(getString(R.string.alert_service_ready))
-        }
+        btnShare.setOnClickListener { sharePinInfo() }
+    }
+
+    // 유튜브로 듣기
+    private fun listenToYoutube() {
+        setAlertDialog(requireContext(), null,
+            getString(R.string.alert_go_to_youtube),
+            posFunc = {
+                startActivity(
+                    Intent(Intent.ACTION_VIEW,
+                        Uri.parse(
+                            "$YOUTUBE_BASE_URL+${viewModel.pinInfo.value!!.artist}+${viewModel.pinInfo.value!!.songTitle}"))
+                )},
+            negFunc = {}
+        )
+    }
+
+    // 공감하기
+    private fun likedPin() {
+        toastMessage(getString(R.string.alert_service_ready))
+    }
+
+    // 공유하기
+    private fun sharePinInfo() {
+        toastMessage(getString(R.string.alert_service_ready))
     }
 }

@@ -1,27 +1,24 @@
 package com.sesac.gmd.presentation.ui.create_song.viewmodel
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.google.android.gms.location.FusedLocationProviderClient
-import com.google.android.gms.location.LocationServices
+import com.google.android.gms.maps.model.LatLng
 import com.sesac.gmd.R
 import com.sesac.gmd.application.GMDApplication
 import com.sesac.gmd.common.util.DEFAULT_TAG
 import com.sesac.gmd.common.util.GeoUtil.geocoding
+import com.sesac.gmd.common.util.GetLocationUtil
 import com.sesac.gmd.common.util.TEMP_USER_IDX
 import com.sesac.gmd.common.util.Utils.Companion.parseXMLFromMania
-import com.sesac.gmd.common.util.Utils.Companion.toastMessage
 import com.sesac.gmd.data.model.Location
 import com.sesac.gmd.data.model.Song
 import com.sesac.gmd.data.model.SongList
 import com.sesac.gmd.data.repository.Repository
 import kotlinx.coroutines.*
-import java.util.*
 
 /**
  * 음악 추가하기 Sequence 에서 사용하는 ViewModel<br>
@@ -62,25 +59,23 @@ class CreateSongViewModel(private val repository: Repository) : ViewModel() {
     }
 
     // 다른 위치 지정
-    fun setLocation(context: Context, lat: Double, lng: Double) {
-        val getLocation = geocoding(context, lat, lng)
-        _location.value = getLocation
+    fun setOtherLocation(context: Context, userLocation: LatLng) {
+        _location.value = geocoding(context, userLocation)
     }
 
-    // 현재 위치 정보 저장
-    @SuppressLint("MissingPermission")
-    fun getCurrentLocation(context: Context)  {
-        // 사용자의 정확한 현재 위치 요청
-        val fusedLocationClient: FusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(context)
-        fusedLocationClient.lastLocation.addOnSuccessListener { // addOnSuccessListener 는 비동기로 실행 됨
-            if (it == null) {
-                // fusedLocationClient 가 현재 위치를 파악하지 못하는 경우
-                toastMessage(GMDApplication.getAppInstance().resources.getString(R.string.error_not_found_user_location))
+    // 유저의 현재 위치 값(위도, 경도)를 LiveData<Location> 에 저장
+    suspend fun setCurrentUserLocation(context: Context) {
+        viewModelScope.launch(exceptionHandler) {
+            // 유저의 정확한 현재 위치 요청
+            val userLocation = GetLocationUtil.getCurrentLocation(context)
+
+            // 유저의 현재 위치 값을 받아오지 못한 경우 View 로 Exception 전달
+            if (userLocation.latitude == 0.0 && userLocation.longitude == 0.0) {
+                throw Exception(GMDApplication.getAppInstance().resources.getString(R.string.error_not_found_user_location))
             }
+            // 받아온 현재 위치를 기준으로 geocoding 실행 후 해당 위치 정보를 LiveData 에 저장
             else {
-                // 받아온 현재 위치를 기준으로 geocoding 실행 후 해당 위치 정보를 LiveData 에 저장
-                val userLocation = geocoding(context, it.latitude, it.longitude)
-                _location.value = userLocation
+                _location.value = geocoding(context, userLocation)
             }
         }
     }
@@ -96,7 +91,7 @@ class CreateSongViewModel(private val repository: Repository) : ViewModel() {
                 isLoading.value = false
             } catch (e: Exception) {
                 isLoading.value = false
-                throw Exception("$e")
+                throw e
             }
         }
     }
@@ -107,7 +102,7 @@ class CreateSongViewModel(private val repository: Repository) : ViewModel() {
         try {
             _selectedSong.value = selectedSong
         } catch (e: Exception) {
-            throw Exception(e)
+            throw e
         }
     }
 
@@ -134,7 +129,7 @@ class CreateSongViewModel(private val repository: Repository) : ViewModel() {
                 }
                 // 서버와 통신 자체에 실패했을 경우
             } catch (e: Exception) {
-                throw Exception("$e")
+                throw e
             }
         }
     }
