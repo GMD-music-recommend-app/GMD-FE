@@ -69,19 +69,21 @@ class FindOtherPlaceFragment :
 
     // 구글 맵 생성 시 지도 구성
     override fun onMapReady(googleMap: GoogleMap) = with(googleMap) {
+        // google Map 초기화
+        mMap = googleMap
         // 구글 맵 최초 화면 설정(중심점, 줌 레벨)
-        moveCamera(CameraUpdateFactory.newLatLngZoom(startingPoint, DEFAULT_ZOOM_LEVEL))
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(startingPoint, DEFAULT_ZOOM_LEVEL))
 
         // 구글 맵 내 Click Listener
-        setOnMapLongClickListener { point ->
+        mMap.setOnMapLongClickListener { point ->
             // 마커가 이미 생성되어있으면 해당 마커 제거(마커가 2개 이상 생성되지 않도록)
             if (addedMarker != null) {
-                clear()
+                mMap.clear()
             }
 
             // 마커(추천할 유저의 위치) 생성
             val position = LatLng(point.latitude, point.longitude)
-            addedMarker = addMarker(
+            addedMarker = mMap.addMarker(
                 MarkerOptions()
                     .position(position)
             )
