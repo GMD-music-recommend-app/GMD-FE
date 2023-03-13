@@ -113,8 +113,8 @@ class SongInfoBottomSheetFragment : BottomSheetDialogFragment() {
                 txtInfoMusicHashtag.visibility = View.VISIBLE
             }
 
-            // 임시 작성 코드(해당 음악이 로그인 한 유저가 만든 핀이면 노란색 아이콘 표시)
-            if (!this.value?.isMade.toBoolean()) {
+            // 해당 음악이 로그인 한 유저가 만든 핀이면 노란색 아이콘 표시
+            if (this.value?.isMade == 1.toString()) {
                 imgBookMark.setImageResource(R.drawable.ic_bookmark_filled)
             } else {
                 imgBookMark.setImageResource(R.drawable.ic_bookmark)
