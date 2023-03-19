@@ -1,34 +1,27 @@
 package com.sesac.gmd.presentation.ui.splash
 
-import android.Manifest
 import android.annotation.SuppressLint
 import android.content.ActivityNotFoundException
+import android.content.Context
 import android.content.Intent
+import android.net.ConnectivityManager
+import android.net.NetworkCapabilities
 import android.os.Build
 import android.os.Bundle
 import android.provider.Settings
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import com.google.android.gms.maps.model.LatLng
 import com.gun0912.tedpermission.PermissionListener
 import com.gun0912.tedpermission.normal.TedPermission
 import com.sesac.gmd.R
 import com.sesac.gmd.common.util.*
-import com.sesac.gmd.common.util.Utils.Companion.displayToastExceptions
+import com.sesac.gmd.common.util.PermissionsUtil.Companion.PERMISSIONS
+import com.sesac.gmd.common.util.Utils.Companion.toastMessage
 import com.sesac.gmd.presentation.ui.main.activity.MainActivity
 import kotlinx.coroutines.*
 
 @SuppressLint("CustomSplashScreen")
 class SplashActivity : AppCompatActivity() {
-    companion object {
-        // 해당 앱에서 요구하는 Permissions
-        val PERMISSIONS = arrayOf(
-            Manifest.permission.INTERNET,
-            Manifest.permission.ACCESS_FINE_LOCATION,
-            Manifest.permission.ACCESS_COARSE_LOCATION
-        )
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
@@ -46,22 +39,34 @@ class SplashActivity : AppCompatActivity() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             TedPermission.create()
                 .setPermissionListener(permissionListener)
-                .setRationaleMessage(getString(R.string.alert_need_location_permission))
-                .setDeniedMessage(getString(R.string.alert_reject_location_permission))
-                .setPermissions(*PERMISSIONS)
+                .setRationaleMessage(getString(R.string.alert_need_location_permission))                      // 권한이 필요한 이유 설명
+                .setDeniedMessage(getString(R.string.alert_reject_location_permission)) // 권한이 없을 때
+                .setPermissions(*PERMISSIONS)                                                                 // 요청할 권한
                 .check()
         } else {
-            goToMainActivity()
+            // 네트워크 연결 상태 확인 후 MainActivity로 이동
+            if (isNetworkAvailable()) {
+                goToMainActivity()
+            } else {
+                toastMessage(getString(R.string.error_network_no_connection))
+                finish()
+            }
         }
     }
 
     private val permissionListener = object : PermissionListener {
         // 권한 허가시 실행 할 내용
        override fun onPermissionGranted() {
-            goToMainActivity()
+            // 네트워크 연결 상태 확인 후 MainActivity 로 이동
+            if (isNetworkAvailable()) {
+                goToMainActivity()
+            } else {
+                toastMessage(getString(R.string.error_network_no_connection))
+                finish()
+            }
         }
 
-        // 권한 거부시 실행  할 내용
+        // 권한 거부시 실행 할 내용
         override fun onPermissionDenied(deniedPermissions: MutableList<String>?) {
             AlertDialog.Builder(this@SplashActivity)
                 .setMessage(getString(R.string.alert_app_finish_caused_by_rejected_permissions))
@@ -80,35 +85,27 @@ class SplashActivity : AppCompatActivity() {
         }
     }
 
-    /**
-     * 유저의 현재 위치를 가져와 Intent 에 실어 MainActivity 로 이동<br>
-     * 메인 화면에서 유저의 현재 위치를 중심으로 지도 화면 표시
-     */
-    private fun goToMainActivity() {
-        CoroutineScope(Dispatchers.IO).launch {
-            val currentUserLocation = withContext(Dispatchers.IO) {
-                getUserLocation()
+    // 네트워크 연결 상태 확인
+    @Suppress("DEPRECATION")
+    private fun isNetworkAvailable(): Boolean {
+        val connectivityManager = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            val network = connectivityManager.activeNetwork ?: return false
+            val networkCapabilities = connectivityManager.getNetworkCapabilities(network) ?: return false
+            return when {
+                networkCapabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) -> true
+                networkCapabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) -> true
+                else -> false
             }
-
-            // 유저의 현재 위치(위/경도) 값을 intent 에 실어 MainActivity 로 전송
-            val nextPage = Intent(this@SplashActivity, MainActivity::class.java).apply {
-                putExtra(LATITUDE, currentUserLocation.latitude)
-                putExtra(LONGITUDE, currentUserLocation.longitude)
-            }
-            startActivity(nextPage)
-            finish()
+        } else {
+            return connectivityManager.activeNetworkInfo?.isConnected ?: false
         }
     }
 
-    // 유저의 현재 위치 정보 가져오기
-    private suspend fun getUserLocation(): LatLng {
-
-        return try {
-            GetLocationUtil.getCurrentLocation(this@SplashActivity)
-        } catch (e: Exception) {
-            // 만약 현재 위치를 가져오지 못했으면(위/경도 0.0으로 반환) Toast 출력
-            displayToastExceptions(e)
-            LatLng(0.0, 0.0)
-        }
+    // MainActivity 로 이동
+    private fun goToMainActivity() {
+        val nextPage = Intent(this@SplashActivity, MainActivity::class.java)
+        startActivity(nextPage)
+        finish()
     }
 }

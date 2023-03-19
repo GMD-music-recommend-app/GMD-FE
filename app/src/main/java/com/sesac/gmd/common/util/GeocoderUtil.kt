@@ -13,8 +13,8 @@ import java.util.*
 /**
 * Location(위도, 경도) 값을 통해 행정 구역을 반환하는 Geocoder
 */
-object GeoUtil {
-    private val TAG = GeoUtil::class.simpleName
+object GeocoderUtil {
+    private val TAG = GeocoderUtil::class.simpleName
 
     // Geocoding(위/경도 -> 행정 구역 변환) 함수
     @Suppress("DEPRECATION")

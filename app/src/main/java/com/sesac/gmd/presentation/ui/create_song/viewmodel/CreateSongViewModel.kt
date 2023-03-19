@@ -10,7 +10,7 @@ import com.google.android.gms.maps.model.LatLng
 import com.sesac.gmd.R
 import com.sesac.gmd.application.GMDApplication
 import com.sesac.gmd.common.util.DEFAULT_TAG
-import com.sesac.gmd.common.util.GeoUtil.geocoding
+import com.sesac.gmd.common.util.GeocoderUtil.geocoding
 import com.sesac.gmd.common.util.GetLocationUtil
 import com.sesac.gmd.common.util.TEMP_USER_IDX
 import com.sesac.gmd.common.util.Utils.Companion.parseXMLFromMania

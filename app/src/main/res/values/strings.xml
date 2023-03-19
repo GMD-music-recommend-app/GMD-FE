@@ -1,4 +1,4 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <!--  App Name  -->
     <string name="app_name">GMD</string>
     <string name="app_name_kor">지뭐듣</string>
@@ -33,6 +33,7 @@
     <string name="error_keyword_length_exceeded">검색어는 200자 까지 입력 가능합니다.</string>
     <string name="error_story_length_exceeded">사연은 최대 140자 까지 입력 가능합니다.</string>
     <string name="error_unstable_network_connection">연결이 고르지 않습니다.\n다시 시도해주시기 바랍니다.</string>
+    <string name="error_network_no_connection">네트워크가 연결되지 않아 종료합니다.</string>
     <string name="unexpected_error">예기치 못한 문제가 발생했습니다.</string>
 
 
@@ -91,7 +92,7 @@
     <string name="txt_artist_and_album">가수 · 앨범</string>
     <string name="txt_liked_count">회 공감</string>
     <string name="txt_current_location">현재 위치</string>
-    <string name="txt_view_more">...더보기</string>
+    <string name="txt_view_more" tools:ignore="TypographyEllipsis">...더보기</string>
     <string name="txt_login">로그인</string>
     <string name="txt_logout">로그아웃</string>
     <string name="txt_please">해주세요</string>
