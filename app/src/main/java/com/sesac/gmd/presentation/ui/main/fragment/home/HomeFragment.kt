@@ -1,20 +1,7 @@
 package com.sesac.gmd.presentation.ui.main.fragment.home
 
-import android.Manifest
-import android.annotation.SuppressLint
-import android.content.pm.PackageManager
-import android.location.Location
-import android.location.LocationListener
-import android.location.LocationManager
 import android.os.Bundle
-import android.util.Log
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
-import androidx.activity.result.contract.ActivityResultContracts
-import androidx.core.content.ContextCompat
-import androidx.core.content.ContextCompat.getSystemService
-import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -26,7 +13,6 @@ import com.sesac.gmd.R
 import com.sesac.gmd.common.base.BaseFragment
 import com.sesac.gmd.common.util.*
 import com.sesac.gmd.common.util.Utils.Companion.displayToastExceptions
-import com.sesac.gmd.common.util.Utils.Companion.toastMessage
 import com.sesac.gmd.data.api.server.song.get_pinlist.Pin
 import com.sesac.gmd.data.repository.Repository
 import com.sesac.gmd.databinding.FragmentHomeBinding
@@ -34,7 +20,6 @@ import com.sesac.gmd.presentation.factory.ViewModelFactory
 import com.sesac.gmd.presentation.ui.main.bottomsheet.CreateSongBottomSheetFragment
 import com.sesac.gmd.presentation.ui.main.bottomsheet.SongInfoBottomSheetFragment
 import com.sesac.gmd.presentation.ui.main.viewmodel.HomeChartViewModel
-import kotlinx.coroutines.*
 
 class HomeFragment :
     BaseFragment<FragmentHomeBinding>(FragmentHomeBinding::inflate),
@@ -42,80 +27,21 @@ class HomeFragment :
     OnMarkerClickListener
 {
     companion object {
-       // private val TAG = HomeFragment::class.simpleName
+        // private val TAG = HomeFragment::class.simpleName
         fun newInstance() = HomeFragment()
-
-        fun newInstance(lat: Double, lng: Double) : Fragment {
-            val bundle = Bundle()
-            bundle.putDouble(LATITUDE, lat)
-            bundle.putDouble(LONGITUDE, lng)
-
-            return HomeFragment().also {
-                it.arguments = bundle
-            }
-        }
     }
     // activity 의 LifeCycle 을 이용하기 위해 activityViewModels 사용
     private val viewModel: HomeChartViewModel by activityViewModels { ViewModelFactory(Repository()) }
     private lateinit var mMap: GoogleMap
     private lateinit var startingPoint: LatLng  // Google Map 지도 중심 점
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
-
-        // 사용자 위치 정보 초기화
-        CoroutineScope(Dispatchers.IO).launch {
-            initUserLocation()
-        }
-
-        return super.onCreateView(inflater, container, savedInstanceState)
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        // 구글 맵 View 초기화
+        initMap()
 
         // Listener 등록
         setListener()
-        // 구글 맵 생성
-        initMap()
-    }
-
-    /**
-     * SplashActivity 에서 받아온 현재 위치 정보를 바탕으로<br>
-     * 유저의 현재 위치 초기화<br>
-     * Splash 에서 Intent 로 넘어온 위/경도 값이 있다면 해당 값을
-     * ViewModel 의 LiveData<Location> 에 넣는다.
-     */
-    private suspend fun initUserLocation() {
-        /**
-         * Splash -> MainActivity -> HomeFragment 로 전달 된 유저의 위치 정보(위/경도)
-         * Bundle 에 값을 넣어 HomeFragment 를 생성하는 경우는 Splash -> MainActivity -> HomeFragment 의 경우 밖에 없음
-         * 나머지 모두 HomeFragment 생성 시 arguments 가 null 인 상태
-         */
-        val latitude = arguments?.getDouble(LATITUDE, 0.0)
-        val longitude = arguments?.getDouble(LONGITUDE, 0.0)
-
-        // arguments 에 값이 있다면 해당 위치 정보를 LiveData<Location> 에 저장
-        if ((latitude != 0.0 && longitude != 0.0) && (latitude != null && longitude != null)) {
-            viewModel.saveGeoLocation(requireContext(), LatLng(latitude, longitude))
-        }
-        // 값이 없다면 유저의 FusedLocation 을 통해 위치 정보를 새로 가져옴
-        else {
-            try {
-                viewModel.setCurrentUserLocation(requireContext())
-            } catch (e: Exception) {
-                //displayToastExceptions(e)
-                Log.e(DEFAULT_TAG+"here", e.message.toString())
-            }
-        }
-    }
-
-    // Listener 초기화
-    private fun setListener() = with(binding) {
-        // 음악 추천하기 버튼
-        btnCreateSong.setOnClickListener {
-            val createSong = CreateSongBottomSheetFragment.newInstance()
-            createSong.show(childFragmentManager, createSong.tag)
-        }
     }
 
     // 구글 맵 초기화
@@ -124,6 +50,7 @@ class HomeFragment :
         mapFragment.getMapAsync(this)
     }
 
+    // 지도가 준비되었을 때 호출되는 콜백 메소드
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
 
@@ -146,7 +73,6 @@ class HomeFragment :
 
         // 지도 중심점, 줌 레벨 설정, 화면에 표시할 음악 핀 데이터 가져오기
         with(mMap) {
-
             moveCamera(CameraUpdateFactory.newLatLngZoom(startingPoint, DEFAULT_ZOOM_LEVEL))
             setOnMarkerClickListener(this@HomeFragment)
 
@@ -154,13 +80,17 @@ class HomeFragment :
             getPins(startingPoint)
         }
 
-        // 현재 위치 Refresh
-        binding.currentLocationButton.setOnClickListener {
-            getMyLocation()
-        }
-
         // Observer 등록
         setObserver()
+    }
+
+    // Listener 초기화
+    private fun setListener() = with(binding) {
+        // 음악 추천하기 버튼
+        btnCreateSong.setOnClickListener {
+            val createSong = CreateSongBottomSheetFragment.newInstance()
+            createSong.show(childFragmentManager, createSong.tag)
+        }
     }
 
     // Observer set
@@ -211,90 +141,5 @@ class HomeFragment :
         val songInfo = SongInfoBottomSheetFragment.newInstance(marker.tag.toString())
         songInfo.show(childFragmentManager, songInfo.tag)
         return true
-    }
-
-    override fun onResume() {
-        super.onResume()
-        getMyLocation()
-    }
-
-    private lateinit var locationManager: LocationManager
-    private lateinit var myLocationListener: MyLocationListener
-
-    private val requestLocationPermissionLauncher = registerForActivityResult(
-        ActivityResultContracts.RequestMultiplePermissions()
-    ) { permissions ->
-        var allPermissionsGranted = true
-        permissions.entries.forEach { (_, isGranted) ->
-            if (isGranted.not()) {
-                allPermissionsGranted = false
-                return@forEach
-            }
-        }
-        if (allPermissionsGranted) getMyLocation()
-        else toastMessage(getString(R.string.alert_need_location_permission))
-    }
-
-    private fun getMyLocation() {
-        if (::locationManager.isInitialized.not()) {
-            locationManager = getSystemService(requireContext(), LocationManager::class.java) as LocationManager
-        }
-        val isGpsEnable = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)
-        if (isGpsEnable) {
-            if (ContextCompat.checkSelfPermission(
-                    requireContext(),
-                    Manifest.permission.ACCESS_FINE_LOCATION
-                ) != PackageManager.PERMISSION_GRANTED
-                && ContextCompat.checkSelfPermission(
-                    requireContext(),
-                    Manifest.permission.ACCESS_COARSE_LOCATION
-                ) != PackageManager.PERMISSION_GRANTED
-            ) {
-                requestLocationPermissionLauncher.launch(
-                    arrayOf(
-                        Manifest.permission.ACCESS_COARSE_LOCATION,
-                        Manifest.permission.ACCESS_FINE_LOCATION
-                    )
-                )
-            } else {
-                setMyLocationListener()
-            }
-        }
-    }
-
-    @SuppressLint("MissingPermission")
-    private fun setMyLocationListener() {
-        val minTime: Long = 1500
-        val minDistance = 100f
-        if (::myLocationListener.isInitialized.not()) {
-            myLocationListener = MyLocationListener()
-        }
-        with(locationManager) {
-            requestLocationUpdates(
-                LocationManager.GPS_PROVIDER,
-                minTime, minDistance, myLocationListener
-            )
-            requestLocationUpdates(
-                LocationManager.NETWORK_PROVIDER,
-                minTime, minDistance, myLocationListener
-            )
-        }
-    }
-
-    private fun removeLocationListener() {
-        if (::locationManager.isInitialized && ::myLocationListener.isInitialized) {
-            locationManager.removeUpdates(myLocationListener)
-        }
-    }
-
-    inner class MyLocationListener : LocationListener {
-        override fun onLocationChanged(location: Location) {
-            val currentLocation = LatLng(location.latitude, location.longitude)
-
-            if (isAdded) {
-                viewModel.saveGeoLocation(requireContext(), currentLocation)
-                removeLocationListener()
-            }
-        }
     }
 }

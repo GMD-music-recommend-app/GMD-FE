@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--  카카오 맵  -->
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
@@ -13,27 +13,16 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
 
-    <!--  현재 위치 버튼  -->
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/currentLocationButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/ic_present_location"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentEnd="true"
-        android:layout_marginEnd="@dimen/margin_to_32dp"
-        android:layout_marginBottom="@dimen/margin_to_32dp"
-        android:contentDescription="@string/txt_current_location" />
-
     <!--  노래 추천하기 버튼  -->
     <androidx.appcompat.widget.AppCompatButton
         android:id="@+id/btn_create_song"
         style="@style/ActiveButtonStyle"
         android:layout_width="152dp"
         android:layout_height="48dp"
-        android:layout_centerHorizontal="true"
         android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
         android:layout_marginBottom="@dimen/margin_to_32dp"
         android:text="@string/txt_create_music"
-        app:cornerRadius="@dimen/radius_to_100dp" />
+        app:cornerRadius="@dimen/radius_to_100dp"
+        tools:ignore="TextContrastCheck" />
 </RelativeLayout>

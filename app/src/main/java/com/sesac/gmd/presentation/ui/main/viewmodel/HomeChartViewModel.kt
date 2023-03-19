@@ -7,9 +7,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.google.android.gms.maps.model.LatLng
-import com.sesac.gmd.R
-import com.sesac.gmd.application.GMDApplication
-import com.sesac.gmd.common.util.DEFAULT_TAG
+import com.sesac.gmd.common.util.*
 import com.sesac.gmd.common.util.GeocoderUtil.geocoding
 import com.sesac.gmd.common.util.GetLocationUtil
 import com.sesac.gmd.common.util.PIN_SEARCH_RADIUS
@@ -23,8 +21,7 @@ import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.launch
 
 /**
- * MainActivity 에서 사용하는 ViewModel
- * HomeFragment, ChartFragment 에서 호출
+ * MainActivity, HomeFragment, ChartFragment 에서 사용하는 ViewModel
  * 멤버는 호출 순서대로 배치
  */
 class HomeChartViewModel(private val repository: Repository) : ViewModel() {
@@ -63,27 +60,10 @@ class HomeChartViewModel(private val repository: Repository) : ViewModel() {
         isLoading.value = false
     }
 
-    // Geocoding 된 위치 정보를 LiveData 에 저장
-    fun saveGeoLocation(context: Context, userLocation: LatLng) {
+    // 유저의 현재 위치 정보를 Geocoding 하여 LiveData<Location> 에 저장
+    fun saveCurrentLocation(context: Context, userLocation: LatLng) {
         viewModelScope.launch(exceptionHandler) {
             _location.value = geocoding(context, userLocation)
-        }
-    }
-
-    // 유저의 현재 위치 값(위도, 경도)를 LiveData<Location> 에 저장
-    suspend fun setCurrentUserLocation(context: Context) {
-        viewModelScope.launch(exceptionHandler) {
-            // 유저의 정확한 현재 위치 요청
-            val userLocation = GetLocationUtil.getCurrentLocation(context)
-
-            // 유저의 현재 위치 값을 받아오지 못한 경우 View 로 Exception 전달
-            if (userLocation.latitude == 0.0 && userLocation.longitude == 0.0) {
-                throw Exception(GMDApplication.getAppInstance().resources.getString(R.string.error_not_found_user_location))
-            }
-            // 받아온 현재 위치를 기준으로 geocoding 실행 후 해당 위치 정보를 LiveData 에 저장
-            else {
-                _location.value = geocoding(context, userLocation)
-            }
         }
     }
 
