@@ -51,6 +51,7 @@ class HomeFragment :
     }
 
     // 지도가 준비되었을 때 호출되는 콜백 메소드
+    @SuppressLint("MissingPermission")
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
 
@@ -78,6 +79,9 @@ class HomeFragment :
 
             // 지도에 표시할 음악 핀 데이터 서버에서 가져오기
             getPins(startingPoint)
+
+            // 내 위치 Tracking Button
+            isMyLocationEnabled = true
         }
 
         // Observer 등록

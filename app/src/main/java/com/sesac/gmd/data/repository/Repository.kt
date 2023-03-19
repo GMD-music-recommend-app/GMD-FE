@@ -32,7 +32,15 @@ class Repository {
 
     // 핀 공감하기
     suspend fun insertLikePin(pinIdx: Int, userIdx: Int) : Response<InsertLikePinResponse> {
-        return insertLikePinService.insertLike(pinIdx, userIdx)
+        val likedPinData = mutableMapOf<String, Int>()
+        likedPinData["pinIdx"] = pinIdx
+        likedPinData["userIdx"] = userIdx
+
+        val requestBody = Gson()
+            .toJson(likedPinData)
+            .toString()
+            .toRequestBody("application/json; charset=utf-8".toMediaTypeOrNull())
+        return insertLikePinService.insertLike(requestBody)
     }
 
     // 음악 검색

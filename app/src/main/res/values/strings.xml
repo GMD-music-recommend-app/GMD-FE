@@ -19,6 +19,8 @@
     <string name="alert_go_to_set_location_page">위치 지정 페이지로 이동하시겠습니까?</string>
     <string name="alert_go_to_youtube">유튜브 페이지로 이동하시겠습니까?</string>
     <string name="alert_service_ready">서비스 준비 중입니다.</string>
+    <string name="alert_liked_pin">음악을 공감하였습니다.</string>
+    <string name="alert_cancel_to_like_pin">공감을 취소하였습니다.</string>
 
 
     <!--  error message  -->
@@ -39,8 +41,8 @@
 
     <!--  success message  -->
     <string name="success_to_create_pin">음악 생성 성공</string>
-    <string name="success_to_like_pin">공감 + 1</string>
-    <string name="success_to_cancel_liked_pin">공감 취소</string>
+    <string name="success_to_like_pin">핀 공감을 설정하였습니다.</string>
+    <string name="success_to_cancel_liked_pin">핀 공감을 취소하였습니다.</string>
 
 
     <!--  text using in resource files  -->

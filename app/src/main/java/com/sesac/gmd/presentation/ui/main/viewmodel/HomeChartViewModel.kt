@@ -9,9 +9,6 @@ import androidx.lifecycle.viewModelScope
 import com.google.android.gms.maps.model.LatLng
 import com.sesac.gmd.common.util.*
 import com.sesac.gmd.common.util.GeocoderUtil.geocoding
-import com.sesac.gmd.common.util.GetLocationUtil
-import com.sesac.gmd.common.util.PIN_SEARCH_RADIUS
-import com.sesac.gmd.common.util.TEMP_USER_IDX
 import com.sesac.gmd.data.api.server.chart.GetChartResult
 import com.sesac.gmd.data.api.server.song.get_pininfo.GetPinInfoResult
 import com.sesac.gmd.data.api.server.song.get_pinlist.Pin
@@ -41,8 +38,12 @@ class HomeChartViewModel(private val repository: Repository) : ViewModel() {
     val pinInfo: LiveData<GetPinInfoResult> get() = _pinInfo
 
     // 핀 공감 여부
-    private val _isPinLiked = MutableLiveData<Boolean>()
-    val isPinLiked: LiveData<Boolean> get() = _isPinLiked
+    private val _isPinLiked = MutableLiveData<String>()
+    val isPinLiked: LiveData<String> get() = _isPinLiked
+
+    // 인기차트 결과 음악
+    private val _chartList = MutableLiveData<MutableList<GetChartResult>>()
+    val chartList: LiveData<MutableList<GetChartResult>> get() = _chartList
 
     // ProgressBar
     var isLoading = MutableLiveData<Boolean>()
@@ -106,23 +107,28 @@ class HomeChartViewModel(private val repository: Repository) : ViewModel() {
         }
     }
 
-    // 핀 공감하기 TODO : 미완성
-//    fun insertLikePin(pinIdx: Int) {
-//        viewModelScope.launch(exceptionHandler) {
-//            try {
-//                val response = repository.insertLikePin(pinIdx, TEMP_USER_IDX)
-//                if (response.isSuccessful) {
-////                   _isPinLiked.value = response.body().result
-//                } else {
-//                    onError("onError: ${response.errorBody()!!.string()}")
-//                    throw Exception("${response.errorBody()!!}")
-//                }
-//            } catch (e: Exception) {
-//                throw e
-//            }
-//        }
-//    }
-
+    // TODO: 수정 필요 -> 받는 결과를 String(문장)에서 간단한 결과로 바꿔야 함  
+    // 핀 공감하기
+    fun insertLikePin(pinIdx: Int) {
+        viewModelScope.launch(exceptionHandler) {
+            try {
+                val response = repository.insertLikePin(pinIdx, TEMP_USER_IDX)
+                if (response.isSuccessful) {
+                    _isPinLiked.value = response.body()!!.result
+                } else {
+                    onError("onError: ${response.errorBody()!!.string()}")
+                    throw Exception("${response.errorBody()!!}")
+                }
+            } catch (e: Exception) {
+                throw e
+            }
+        }
+    }
+    
+    // TODO: 임시 작성 코드. 추후 삭제 필요
+    fun clearPinLikeValue() {
+        _isPinLiked.value = ""
+    }
 
     // 인기차트 갱신 함수
 //    fun fetchChartData(context: Context, latLng: LatLng) = viewModelScope.launch(exceptionHandler) {

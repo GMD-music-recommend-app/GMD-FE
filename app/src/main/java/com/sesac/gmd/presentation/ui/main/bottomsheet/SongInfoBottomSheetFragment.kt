@@ -43,11 +43,17 @@ class SongInfoBottomSheetFragment : BottomSheetDialogFragment() {
             }
         }
     }
+    private lateinit var pinIdx : String    // 유저가 클릭한 핀의 인덱스
     private lateinit var binding: FragmentSongInfoBottomSheetBinding
     private val viewModel: HomeChartViewModel by activityViewModels { ViewModelFactory(Repository()) }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {
         binding = FragmentSongInfoBottomSheetBinding.inflate(inflater, container, false)
+
+        // TODO: 임시 작성 코드. 추후 삭제 필요 
+        viewModel.clearPinLikeValue()
+
+        pinIdx = arguments?.getString("pinIdx").toString()
 
         // 해당 곡 상세 정보 가져오기
         getSongInfo()
@@ -74,11 +80,20 @@ class SongInfoBottomSheetFragment : BottomSheetDialogFragment() {
         }
     }
 
-    private fun setObserver() {
-        viewModel.pinInfo.observe(viewLifecycleOwner) {
+    private fun setObserver() = with(viewModel) {
+        pinInfo.observe(viewLifecycleOwner) {
             // 가져온 곡 정보 view 와 매핑
             setContents()
             binding.bottomSheetMusicInfo.visibility = View.VISIBLE
+        }
+        isPinLiked.observe(viewLifecycleOwner) {
+            if (it == getString(R.string.success_to_like_pin)) {
+                binding.btnLike.setImageResource(R.drawable.ic_liked)
+                toastMessage(getString(R.string.alert_liked_pin))
+            } else if (it == getString(R.string.success_to_cancel_liked_pin)) {
+                binding.btnLike.setImageResource(R.drawable.ic_like)
+                toastMessage(getString(R.string.alert_cancel_to_like_pin))
+            }
         }
     }
 
@@ -128,7 +143,7 @@ class SongInfoBottomSheetFragment : BottomSheetDialogFragment() {
         // 유튜브로 듣기
         containerInfoMusicAlbumImage.setOnClickListener { listenToYoutube() }
         // 공감하기
-        btnLike.setOnClickListener { likedPin() }
+        btnLike.setOnClickListener { likedPin(pinIdx) }
         // 공유하기
         btnShare.setOnClickListener { sharePinInfo() }
     }
@@ -148,8 +163,8 @@ class SongInfoBottomSheetFragment : BottomSheetDialogFragment() {
     }
 
     // 공감하기
-    private fun likedPin() {
-        toastMessage(getString(R.string.alert_service_ready))
+    private fun likedPin(pinIdx: String) {
+        viewModel.insertLikePin(pinIdx.toInt())
     }
 
     // 공유하기

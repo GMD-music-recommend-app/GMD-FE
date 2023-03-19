@@ -7,14 +7,5 @@ data class InsertLikePinResponse(
     val code: Int,
     val isSuccess: Boolean,
     val message: String,
-    val result : InsertLikePinResult
-)
-
-/**
- * 핀 공감 & 공감 취소 결과<br>
- * 행위자의 유저 인덱스와 해당 핀의 인덱스를 반환
- */
-data class InsertLikePinResult(
-    val pinIdx: Int,
-    val userIdx: Int
+    val result : String
 )

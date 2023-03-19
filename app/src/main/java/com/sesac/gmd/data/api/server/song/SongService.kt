@@ -34,9 +34,6 @@ interface SongService {
     suspend fun writeComment(@Body params: RequestBody) : Response<WriteCommentResponse>
 
     // 핀 공감, 공감 취소
-    @POST("/songs/like/{userIdx}/{pinIdx}")
-    suspend fun insertLike(
-        @Path("pinIdx") pinIdx: Int,
-        @Path("userIdx") userIdx: Int
-    ) : Response<InsertLikePinResponse>
+    @POST("/songs/like")
+    suspend fun insertLike(@Body params: RequestBody) : Response<InsertLikePinResponse>
 }
