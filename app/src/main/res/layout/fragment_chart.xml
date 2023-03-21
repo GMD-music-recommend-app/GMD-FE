@@ -1,15 +1,61 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <TextView
+        android:id="@+id/txt_chart_location"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/margin_to_12dp"
+        android:layout_marginTop="@dimen/margin_to_12dp"
+        android:text=""
+        android:textColor="@color/black"
+        android:textSize="@dimen/txt_size_to_24sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/txt_chart_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/txt_title_chart_fragment"
+        android:textColor="@color/black"
+        android:textSize="@dimen/txt_size_to_24sp"
+        android:visibility="gone"
+        app:layout_constraintStart_toEndOf="@+id/txt_chart_location"
+        app:layout_constraintTop_toTopOf="@+id/txt_chart_location" />
+
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView"
+        android:id="@+id/rv_chart_result"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginTop="@dimen/margin_to_16dp"
+        android:visibility="gone"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        tools:itemCount="100"/>
-</RelativeLayout>
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txt_chart_location"
+        tools:itemCount="100" />
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/img_chart_no_result"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:text="@string/txt_guide_no_chart_result"
+        android:textSize="@dimen/txt_size_to_18sp"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        android:visibility="gone"
+        app:drawableTopCompat="@drawable/ic_awkward"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txt_chart_location" />
+</androidx.constraintlayout.widget.ConstraintLayout>

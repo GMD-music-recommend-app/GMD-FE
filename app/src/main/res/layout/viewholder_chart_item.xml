@@ -1,74 +1,80 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="50dp"
-    android:background="@color/white">
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_rv_chart_item">
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/chartNumberTextView"
-        android:layout_width="42dp"
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/cv_chart_music_album"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        app:cardCornerRadius="@dimen/radius_to_16dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+        <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/img_chart_music_album"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:src="@drawable/ic_sample_image" />
+    </com.google.android.material.card.MaterialCardView>
+
+<!--    <TextView-->
+<!--        android:id="@+id/txt_chart_music_rank"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginStart="@dimen/margin_to_4dp"-->
+<!--        android:gravity="center_vertical"-->
+<!--        android:fontFamily="@font/noto_sans_bold"-->
+<!--        android:text=""-->
+<!--        android:textColor="@color/main_color"-->
+<!--        android:textSize="@dimen/txt_size_to_12sp"-->
+<!--        app:layout_constraintBottom_toBottomOf="@+id/cv_chart_music_album"-->
+<!--        app:layout_constraintStart_toEndOf="@+id/cv_chart_music_album"-->
+<!--        app:layout_constraintTop_toTopOf="@+id/cv_chart_music_album" />-->
+
+    <TextView
+        android:id="@+id/txt_chart_music_title"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="1"
-        android:textStyle="bold"
-        android:textSize="@dimen/txt_size_to_12sp"
-        android:gravity="center_horizontal"
-        android:textColor="@color/main_color"
-        android:layout_centerVertical="true"
-        android:layout_alignParentStart="true"
-        android:layout_marginStart="@dimen/margin_to_8dp"/>
-
-    <androidx.appcompat.widget.AppCompatImageView
-        android:id="@+id/chartImageView"
-        android:layout_width="24dp"
-        android:layout_height="24dp"
-        android:background="@color/black"
-        android:layout_toEndOf="@id/chartNumberTextView"
-        android:layout_centerVertical="true" />
-
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/chartTitleTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="23dp"
-        android:text="Attention"
-        android:textStyle="bold"
+        android:layout_marginStart="@dimen/margin_to_8dp"
+        android:ellipsize="end"
+        android:fontFamily="@font/noto_sans_bold"
+        android:maxLines="1"
+        android:text="@string/txt_music_title"
+        android:textColor="@color/black"
         android:textSize="@dimen/txt_size_to_14sp"
-        android:textColor="@color/black"
-        android:layout_toEndOf="@id/chartImageView"
-        android:layout_marginStart="8dp"
+        app:layout_constraintEnd_toStartOf="@+id/txt_chart_liked_count"
+        app:layout_constraintStart_toEndOf="@+id/cv_chart_music_album"
+        app:layout_constraintTop_toTopOf="@+id/cv_chart_music_album" />
+
+    <TextView
+        android:id="@+id/txt_chart_music_artist"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/margin_to_4dp"
-        />
+        android:fontFamily="@font/noto_sans_regular"
+        android:text="@string/txt_artist_and_album"
+        android:textSize="@dimen/txt_size_to_12sp"
+        android:ellipsize="end"
+        android:maxLines="1"
+        app:layout_constraintEnd_toEndOf="@+id/txt_chart_music_title"
+        app:layout_constraintStart_toStartOf="@+id/txt_chart_music_title"
+        app:layout_constraintTop_toBottomOf="@+id/txt_chart_music_title" />
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/chartSingerTextView"
+    <TextView
+        android:id="@+id/txt_chart_liked_count"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="NewJeans"
-        android:textStyle="normal"
-        android:textSize="@dimen/txt_size_to_12sp"
-        android:textColor="@color/black"
-        android:layout_centerVertical="true"
-        android:layout_below="@+id/chartTitleTextView"
-        android:layout_toEndOf="@id/chartImageView"
-        android:layout_marginStart="@dimen/margin_to_8dp"/>
+        android:gravity="center_vertical"
+        android:fontFamily="@font/noto_sans_regular"
+        android:text="@string/txt_liked_count"
+        android:textSize="@dimen/txt_size_to_14sp"
+        android:ellipsize="end"
+        android:maxLines="1"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
-    <androidx.appcompat.widget.AppCompatTextView
-        android:id="@+id/chartEmpathyCountTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_marginTop="@dimen/margin_to_16dp"
-        android:layout_marginEnd="@dimen/margin_to_24dp"
-        android:layout_marginBottom="@dimen/margin_to_8dp"
-        android:text="4,239회 공감"
-        android:textColor="@color/gray"
-        android:textSize="@dimen/txt_size_to_12sp"
-        android:textStyle="normal" />
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/black"
-        android:layout_alignParentBottom="true"
-        android:layout_marginHorizontal="15dp"/>
-</RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

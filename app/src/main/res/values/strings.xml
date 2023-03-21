@@ -70,12 +70,14 @@
     <string name="txt_title_search_music">음악 검색하기</string>
     <string name="txt_title_write_story">사연 입력하기</string>
     <string name="txt_title_write_hashtag">(선택) 태그 입력하기</string>
+    <string name="txt_title_chart_fragment">의 인기차트</string>
     <string name="txt_guide_select_location">공유할 위치를 선택해주세요.</string>
     <string name="txt_guide_select_other_place">검색 창에서 장소를 검색한 뒤\n화면을 움직여 정확한 장소를 길게 클릭해주세요.</string>
     <string name="txt_guide_search_music">지금 당신이 듣고 싶은 음악을\n제목, 가수, 곡 정보 검색을 통해 찾아보세요.</string>
     <string name="txt_guide_write_story">사연을 통해서\n노래와 관련된 당신의 이야기를 들려주세요.</string>
     <string name="txt_guide_write_hashtag">해시태그를 통해 곡의 분위기를 표현해보세요.</string>
     <string name="txt_guide_no_result_music">검색 결과가 없습니다.</string>
+    <string name="txt_guide_no_chart_result">현재 위치에서 생성된 인기차트가 없습니다.</string>
 
     <string name="hint_search_music">제목, 가수, 앨범을 입력하세요.</string>
     <string name="hint_story_maximum_length">140자 까지 입력 가능합니다.</string>

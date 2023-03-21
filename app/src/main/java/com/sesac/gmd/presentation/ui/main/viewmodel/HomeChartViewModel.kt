@@ -130,36 +130,20 @@ class HomeChartViewModel(private val repository: Repository) : ViewModel() {
         _isPinLiked.value = ""
     }
 
-    // 인기차트 갱신 함수
-//    fun fetchChartData(context: Context, latLng: LatLng) = viewModelScope.launch(exceptionHandler) {
-//        try {
-//            isLoading.value = true
-//            // 받아온 현재 위치를 기준으로 geocoding 실행 후 해당 위치 정보를 LiveData 에 저장
-//            val userLocation = geocoding(context, latLng.latitude, latLng.longitude)
-//            val city = userLocation.city ?: let {
-//                onError("위치를 불러올 수 없습니다.")
-//                return@launch
-//            }
-//            val chartResponse = repository.getChartList(city)
-//            if (chartResponse.body()?.isSuccess == true) {
-//                delay(2_000L)
-//                val result = chartResponse.body()?.result ?: emptyList()
-//                val chartList = result.map {
-//                    ChartAdapter.ChartViewHolder.Chart(
-//                        id = it.pinIdx.toLong(),
-//                        chartNumber = it.songRank,
-//                        imageUrl = it.albumImage,
-//                        title = it.songTitle,
-//                        singerName = it.artist,
-//                        empathyCount = it.likeCount
-//                    )
-//                }
-//                _chartListLiveData.value = chartList
-//            }
-//            isLoading.value = false
-//        } catch (e: Exception) {
-//            e.printStackTrace()
-//            toastMessage(GMDApplication.getAppInstance().resources.getString(R.string.unexpected_error))
-//        }
-//    }
+    // 인기 차트 갱신
+    fun getChartData() = viewModelScope.launch(exceptionHandler) {
+        try {
+            val city = location.value!!.city.toString()
+            val response = repository.getChartList(city)
+
+            if (response.isSuccessful) {
+                _chartList.value = response.body()!!.result
+            } else {
+                onError("onError: ${response.errorBody()!!.string()}")
+                throw Exception("${response.errorBody()!!}")
+            }
+        } catch (e: Exception) {
+            throw e
+        }
+    }
 }
