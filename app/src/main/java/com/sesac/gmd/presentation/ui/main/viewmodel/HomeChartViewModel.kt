@@ -61,7 +61,10 @@ class HomeChartViewModel(private val repository: Repository) : ViewModel() {
         isLoading.value = false
     }
 
-    // 유저의 현재 위치 정보를 Geocoding 하여 LiveData<Location> 에 저장
+    /**
+     * MainActivity 에서 위치 정보가 Update 되어 Location Callback 을 호출 했을 때
+     * 유저의 현재 위치 정보를 Geocoding 하여 LiveData<Location> 에 저장
+     */
     fun saveCurrentLocation(context: Context, userLocation: LatLng) {
         viewModelScope.launch(exceptionHandler) {
             _location.value = geocoding(context, userLocation)
@@ -91,37 +94,33 @@ class HomeChartViewModel(private val repository: Repository) : ViewModel() {
     }
 
     // 핀 정보 가져오기(핀 클릭 시 bottomSheet 화면)
-    fun getPinInfo(pinIdx: Int) {
-        viewModelScope.launch(exceptionHandler) {
-            try {
-                val response = repository.getSongInfo(pinIdx, TEMP_USER_IDX)
-                if (response.isSuccessful) {
-                    _pinInfo.value = response.body()!!.result
-                } else {
-                    onError("onError: ${response.errorBody()!!.string()}")
-                    throw Exception("${response.errorBody()!!}")
-                }
-            } catch (e: Exception) {
-                throw e
+    fun getPinInfo(pinIdx: Int) = viewModelScope.launch(exceptionHandler) {
+        try {
+            val response = repository.getSongInfo(pinIdx, TEMP_USER_IDX)
+            if (response.isSuccessful) {
+                _pinInfo.value = response.body()!!.result
+            } else {
+                onError("onError: ${response.errorBody()!!.string()}")
+                throw Exception("${response.errorBody()!!}")
             }
+        } catch (e: Exception) {
+            throw e
         }
     }
 
     // TODO: 수정 필요 -> 받는 결과를 String(문장)에서 간단한 결과로 바꿔야 함  
     // 핀 공감하기
-    fun insertLikePin(pinIdx: Int) {
-        viewModelScope.launch(exceptionHandler) {
-            try {
-                val response = repository.insertLikePin(pinIdx, TEMP_USER_IDX)
-                if (response.isSuccessful) {
-                    _isPinLiked.value = response.body()!!.result
-                } else {
-                    onError("onError: ${response.errorBody()!!.string()}")
-                    throw Exception("${response.errorBody()!!}")
-                }
-            } catch (e: Exception) {
-                throw e
+    fun insertLikePin(pinIdx: Int) = viewModelScope.launch(exceptionHandler) {
+        try {
+            val response = repository.insertLikePin(pinIdx, TEMP_USER_IDX)
+            if (response.isSuccessful) {
+                _isPinLiked.value = response.body()!!.result
+            } else {
+                onError("onError: ${response.errorBody()!!.string()}")
+                throw Exception("${response.errorBody()!!}")
             }
+        } catch (e: Exception) {
+            throw e
         }
     }
     

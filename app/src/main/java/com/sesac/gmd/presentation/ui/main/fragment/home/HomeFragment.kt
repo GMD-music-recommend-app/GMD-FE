@@ -1,5 +1,6 @@
 package com.sesac.gmd.presentation.ui.main.fragment.home
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.activityViewModels

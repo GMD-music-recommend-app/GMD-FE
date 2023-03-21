@@ -164,7 +164,11 @@ class SongInfoBottomSheetFragment : BottomSheetDialogFragment() {
 
     // 공감하기
     private fun likedPin(pinIdx: String) {
-        viewModel.insertLikePin(pinIdx.toInt())
+        try {
+            viewModel.insertLikePin(pinIdx.toInt())
+        } catch (e : Exception) {
+            displayToastExceptions(e)
+        }
     }
 
     // 공유하기
