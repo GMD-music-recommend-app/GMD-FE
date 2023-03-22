@@ -9,9 +9,10 @@ import com.sesac.gmd.R
 import com.sesac.gmd.data.api.server.chart.GetChartResult
 import com.sesac.gmd.databinding.ViewholderChartItemBinding
 
-class ChartAdapter(private val chartList : MutableList<GetChartResult>)
-    : RecyclerView.Adapter<ChartAdapter.ChartViewHolder>()
-{
+class ChartAdapter(chartList : MutableList<GetChartResult>) : RecyclerView.Adapter<ChartAdapter.ChartViewHolder>() {
+    // 무작위 순서로 받아온 인기차트 데이터를 'songRank'를 기준으로 정렬
+    private val sortedChartData = chartList.sortedBy { it.songRank }
+
     inner class ChartViewHolder(val binding: ViewholderChartItemBinding) : RecyclerView.ViewHolder(binding.root) {
         @SuppressLint("SetTextI18n")
         fun bind(chartItem: GetChartResult) = with(binding) {
@@ -49,8 +50,8 @@ class ChartAdapter(private val chartList : MutableList<GetChartResult>)
     }
 
     override fun onBindViewHolder(holder: ChartViewHolder, position: Int) {
-        holder.bind(chartList[position])
+        holder.bind(sortedChartData[position])
     }
 
-    override fun getItemCount() = chartList.size
+    override fun getItemCount() = sortedChartData.size
 }
