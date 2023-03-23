@@ -19,6 +19,8 @@ const val SPLASH_LOGO_SHOWING_TIME = 1_500L
 // Recycler View Item Decoration Offsets
 const val RECYCLER_ITEM_SEARCH_MUSIC_OFFSET = 20
 
+const val RX_THROTTLE_TIME = 1_000L
+
 
 /**
  * Retrofit - OkHttp Client 내에서 사용되는 값
@@ -73,7 +75,3 @@ const val MUSIC_NAME = "name"
 const val GO_TO_PAGE = "GO_TO_PAGE"
 const val SET_OTHER_PLACE = "SET_OTHER_PLACE"
 const val CREATE_MUSIC_HERE = "CREATE_MUSIC_HERE"
-
-// 다음 화면으로 넘겨 줄 위/경도 값
-const val LATITUDE = "latitude"
-const val LONGITUDE = "longitude"

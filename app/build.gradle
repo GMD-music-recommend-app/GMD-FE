@@ -88,6 +88,12 @@ dependencies {
     // TextView 더보기 표시
     implementation 'kr.co.prnd:readmore-textview:1.0.0'
 
+    // RxBinding
+    implementation "com.jakewharton.rxbinding4:rxbinding:4.0.0"
+    implementation 'io.reactivex.rxjava3:rxjava:3.1.5'
+//    implementation 'io.reactivex.rxjava3:rxandroid:3.0.0'
+
+
     /*// RoomDB
     implementation 'androidx.room:room-runtime:2.5.0'
     implementation 'androidx.room:room-ktx:2.5.0'
