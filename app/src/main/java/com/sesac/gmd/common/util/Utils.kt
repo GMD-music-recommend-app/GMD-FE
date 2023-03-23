@@ -83,7 +83,7 @@ class Utils {
                                         val childNodeName = albumNodes.item(childIdx).nodeName
                                         if (childNodeName == MUSIC_TITLE) {
                                             album.albumTitle =
-                                                albumNodes.item(childIdx).textContent.trim()
+                                                albumNodes.item(childIdx).textContent.trim().replace("&#39;", "'")
                                         } else if (childNodeName == ALBUM_IMAGE) {
                                             album.albumImage =
                                                 albumNodes.item(childIdx).textContent.trim()
@@ -98,13 +98,13 @@ class Utils {
                                         for (artSubIdx in 0 until artistChildNode.length) {
                                             val artistName = artistChildNode.item(artSubIdx).nodeName
                                             if (artistName == MUSIC_NAME) {
-                                                song.artist.add(artistChildNode.item(artSubIdx).textContent.trim())
+                                                song.artist.add(artistChildNode.item(artSubIdx).textContent.trim().replace("&#39;", "'"))
                                             }
                                         }
                                     }
                                 }
                                 XML_TAG_SONG_TITLE -> {
-                                    song.songTitle = itemChildNode.textContent.trim()
+                                    song.songTitle = itemChildNode.textContent.trim().replace("&#39;", "'")
                                 }
                             }
                         }
