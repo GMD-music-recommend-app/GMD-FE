@@ -68,7 +68,7 @@ class ChartFragment : BaseFragment<FragmentChartBinding>(FragmentChartBinding::i
             txtChartTitle.visibility = View.GONE
             toastMessage(getString(R.string.error_not_found_user_location))
         } else {
-            txtChartLocation.text = currentLocation.state.toString() + " " + currentLocation.city.toString()
+            txtChartLocation.text = "${currentLocation.state.toString()} ${currentLocation.city.toString()}"
             txtChartLocation.visibility = View.VISIBLE
             txtChartTitle.visibility = View.VISIBLE
         }

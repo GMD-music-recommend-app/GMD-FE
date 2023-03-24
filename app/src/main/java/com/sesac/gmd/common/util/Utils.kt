@@ -80,13 +80,19 @@ class Utils {
                                     val album = ManiaDBAlbum()
                                     val albumNodes = itemChildNode.childNodes
                                     for (childIdx in 0 until albumNodes.length) {
-                                        val childNodeName = albumNodes.item(childIdx).nodeName
-                                        if (childNodeName == MUSIC_TITLE) {
-                                            album.albumTitle =
-                                                albumNodes.item(childIdx).textContent.trim().replace("&#39;", "'")
-                                        } else if (childNodeName == ALBUM_IMAGE) {
-                                            album.albumImage =
-                                                albumNodes.item(childIdx).textContent.trim()
+                                        when (albumNodes.item(childIdx).nodeName) {
+                                            MUSIC_TITLE -> {
+                                                album.albumTitle =
+                                                    albumNodes.item(childIdx).textContent.trim()
+                                                        .replace("&#39;", "'")
+                                                        .replace("&amp;","&")
+                                                        .replace("&nbsp;"," ")
+                                                        .replace("&quot;", "\"")
+                                            }
+                                            ALBUM_IMAGE -> {
+                                                album.albumImage =
+                                                    albumNodes.item(childIdx).textContent.trim()
+                                            }
                                         }
                                     }
                                     song.album = album
@@ -98,13 +104,23 @@ class Utils {
                                         for (artSubIdx in 0 until artistChildNode.length) {
                                             val artistName = artistChildNode.item(artSubIdx).nodeName
                                             if (artistName == MUSIC_NAME) {
-                                                song.artist.add(artistChildNode.item(artSubIdx).textContent.trim().replace("&#39;", "'"))
+                                                song.artist.add(
+                                                    artistChildNode.item(artSubIdx).textContent.trim()
+                                                        .replace("&#39;", "'")
+                                                        .replace("&amp;","&")
+                                                        .replace("&nbsp;"," ")
+                                                        .replace("&quot;", "\"")
+                                                )
                                             }
                                         }
                                     }
                                 }
                                 XML_TAG_SONG_TITLE -> {
-                                    song.songTitle = itemChildNode.textContent.trim().replace("&#39;", "'")
+                                    song.songTitle = itemChildNode.textContent.trim()
+                                        .replace("&#39;", "'")
+                                        .replace("&amp;","&")
+                                        .replace("&nbsp;"," ")
+                                        .replace("&quot;", "\"")
                                 }
                             }
                         }
@@ -112,7 +128,7 @@ class Utils {
                     songList.songs.add(song)
                 }
             } catch (e: Exception) {
-                Log.e(DEFAULT_TAG+TAG+"XML Parser", e.toString())
+                Log.e(DEFAULT_TAG+TAG+"XML Parser", "Erorr parsing XML : $e")
             }
             return songList
         }
