@@ -36,6 +36,7 @@
 > <li>'ReadMoreTextView' 라이브러리를 사용하여 사연이 2줄 이상일 경우 더보기 클릭 시 전체 텍스트가 표시되도록 구현했습니다.</li>
 > <li>앨범 이미지의 유튜브 버튼을 클릭하면 해당 음악의 "가수 곡 제목"을 검색한 유튜브 화면으로 이동합니다.</li>
 > <li>우측 상단의 북마크 아이콘은 해당 음악을 본인 생성한 것인지를 표시합니다.</li>
+> <li>각 버튼에 대해 중복 클릭을 방지하고자 RxBidning을 적용하여 UI Event를 처리했습니다.</li>
 > </ul>
 > </details>
 > <details>
@@ -62,6 +63,22 @@
 
 <br>
 
+## 🤔 <I>Concerns & Troubles</I><br>
+> <details>
+> <summary>MVVM 구조를 선택한 이유</summary>
+> </details>
+> <details>
+> <summary>많은 지도 API와 GoogleMap API</summary>
+> </details>
+> <details>
+> <summary>광클에 대비하기</summary>
+> </details>
+> <details>
+> <summary>FusedLocation을 동기적으로 사용하기</summary>
+> </details>
+
+<br>
+
 ## 🛠️ <I>Stacks</I>
 <details>
   <summary>🤝  Collaboration Tools</summary>
@@ -73,7 +90,7 @@
   <img src="https://img.shields.io/badge/Swagger-85EA2D?style=for-the-badge&logo=swagger&logoColor=black">
   <img src="https://img.shields.io/badge/Postman-FF6C37?style=for-the-badge&logo=postman&logoColor=white">
 </details>
-<details>
+<details open>
   <summary>🖥️  Front End</summary>
   <img src="https://img.shields.io/badge/Android-3DDC84?style=for-the-badge&logo=Android&logoColor=white">
   <img src="https://img.shields.io/badge/Kotlin-7F52FF?style=for-the-badge&logo=Kotlin&logoColor=white">

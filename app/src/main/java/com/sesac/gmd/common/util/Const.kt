@@ -19,6 +19,7 @@ const val SPLASH_LOGO_SHOWING_TIME = 1_500L
 // Recycler View Item Decoration Offsets
 const val RECYCLER_ITEM_SEARCH_MUSIC_OFFSET = 20
 
+// RxBinding
 const val RX_THROTTLE_TIME = 1_000L
 
 
@@ -49,6 +50,12 @@ const val PIN_SEARCH_RADIUS = 5_000 // 반경 5km 내 생성된 핀 표시
 const val SEOUL_CITY_LATITUDE = 37.5662952  // 서울 시청 위도
 const val SEOUL_CITY_LONGITUDE = 126.97794509999994 // 서울 시청 경도
 
+/**
+ * maniaDB 음악 검색
+ */
+// 음악 검색 시 검색 결과 표시 갯수
+const val MUSIC_SEARCH_RESULT_COUNT = 20
+const val MANIADB_API_VERSION = 0.5
 
 /**
  * Utils.parseXMLFromMania 내에서 사용되는 Keys
