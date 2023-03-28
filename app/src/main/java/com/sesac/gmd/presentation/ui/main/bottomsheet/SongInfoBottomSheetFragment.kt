@@ -17,10 +17,10 @@ import com.bumptech.glide.Glide
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.jakewharton.rxbinding4.view.clicks
 import com.sesac.gmd.R
+import com.sesac.gmd.common.util.AlertDialogUtil.displayYesNoDialog
 import com.sesac.gmd.common.util.DEFAULT_TAG
 import com.sesac.gmd.common.util.RX_THROTTLE_TIME
 import com.sesac.gmd.common.util.Utils.Companion.displayToastExceptions
-import com.sesac.gmd.common.util.Utils.Companion.setAlertDialog
 import com.sesac.gmd.common.util.Utils.Companion.toastMessage
 import com.sesac.gmd.common.util.YOUTUBE_BASE_URL
 import com.sesac.gmd.data.api.server.song.get_pininfo.GetPinInfoResult
@@ -190,8 +190,7 @@ class SongInfoBottomSheetFragment : BottomSheetDialogFragment() {
 
     // 유튜브로 듣기
     private fun listenToYoutube() {
-        setAlertDialog(requireContext(), null,
-            getString(R.string.alert_go_to_youtube),
+        displayYesNoDialog(requireContext(), null, getString(R.string.alert_go_to_youtube),
             posFunc = {
                 startActivity(
                     Intent(Intent.ACTION_VIEW,

@@ -10,9 +10,9 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.activityViewModels
 import com.sesac.gmd.R
 import com.sesac.gmd.common.base.BaseFragment
+import com.sesac.gmd.common.util.AlertDialogUtil.displayYesNoDialog
 import com.sesac.gmd.common.util.DEFAULT_TAG
 import com.sesac.gmd.common.util.Utils.Companion.displayToastExceptions
-import com.sesac.gmd.common.util.Utils.Companion.setAlertDialog
 import com.sesac.gmd.common.util.Utils.Companion.toastMessage
 import com.sesac.gmd.data.repository.Repository
 import com.sesac.gmd.databinding.FragmentWriteStoryBinding
@@ -59,7 +59,7 @@ class WriteStoryFragment : BaseFragment<FragmentWriteStoryBinding>(FragmentWrite
             val hashtag = edtHashtag.text.toString()
 
             if (checkValidation()) {
-                setAlertDialog(requireContext(), null, getString(R.string.alert_finish_pin_create),
+                displayYesNoDialog(requireContext(), null, getString(R.string.alert_finish_pin_create),
                     posFunc = {
                         try {
                             viewModel.createPin(reason, hashtag)

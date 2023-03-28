@@ -1,7 +1,6 @@
 package com.sesac.gmd.common.util
 
 import android.app.Activity
-import android.app.AlertDialog
 import android.content.Context
 import android.util.Log
 import android.view.inputmethod.InputMethodManager
@@ -41,22 +40,6 @@ class Utils {
             val inputManager: InputMethodManager = activity.getSystemService(
                 Context.INPUT_METHOD_SERVICE) as InputMethodManager
             inputManager.hideSoftInputFromWindow(activity.currentFocus?.windowToken, InputMethodManager.HIDE_NOT_ALWAYS)
-        }
-
-        // AlertDialog
-        fun setAlertDialog(context: Context, title: String? = null, message: String,
-                           posFunc: () -> Unit, negFunc: () -> Unit) {
-            AlertDialog.Builder(context)
-                .setTitle(title)
-                .setMessage(message)
-                .setPositiveButton(context.getString(R.string.txt_yes)) { _, _ ->
-                    posFunc()
-                }
-                .setNegativeButton(context.getString(R.string.txt_no)) { _, _ ->
-                    negFunc()
-                }
-                .create()
-                .show()
         }
 
         // XML -> DTO parsing 함수

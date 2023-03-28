@@ -10,6 +10,7 @@
     <dimen name="elevation_to_24dp">24dp</dimen>
 
     <!--  padding  -->
+    <dimen name="padding_to_10dp">10dp</dimen>
     <dimen name="padding_to_12dp">12dp</dimen>
     <dimen name="padding_to_16dp">16dp</dimen>
 

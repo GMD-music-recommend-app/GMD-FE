@@ -38,7 +38,7 @@
         android:layout_marginHorizontal="@dimen/margin_to_64dp"
         android:background="@drawable/bg_btn_main_color_rectangle"
         android:elevation="@dimen/elevation_to_4dp"
-        android:text="@string/txt_ok"
+        android:text="@string/txt_confirm"
         android:textStyle="bold"
         android:textColor="@color/white"
         android:textSize="@dimen/txt_size_to_16sp"

@@ -85,7 +85,7 @@
 
 
     <!--  etc.  -->
-    <string name="txt_ok">확인</string>
+    <string name="txt_confirm">확인</string>
     <string name="txt_yes">예</string>
     <string name="txt_no">아니오</string>
     <string name="txt_select">선택</string>

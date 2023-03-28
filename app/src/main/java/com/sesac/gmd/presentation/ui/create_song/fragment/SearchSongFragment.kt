@@ -8,12 +8,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.sesac.gmd.R
 import com.sesac.gmd.common.base.BaseFragment
+import com.sesac.gmd.common.util.AlertDialogUtil.displayYesNoDialog
 import com.sesac.gmd.common.util.DEFAULT_TAG
 import com.sesac.gmd.common.util.Utils.Companion.displayToastExceptions
 import com.sesac.gmd.common.util.Utils.Companion.hideKeyBoard
-import com.sesac.gmd.common.util.Utils.Companion.setAlertDialog
 import com.sesac.gmd.common.util.Utils.Companion.toastMessage
 import com.sesac.gmd.data.repository.Repository
 import com.sesac.gmd.databinding.FragmentSearchSongBinding
@@ -80,9 +82,7 @@ class SearchSongFragment : BaseFragment<FragmentSearchSongBinding>(FragmentSearc
         location.observe(viewLifecycleOwner) {
             // 위치 정보가 저장되어 있지 않다면 현재 사용자의 위치 정보를 저장
             if (it.latitude == 0.0 && it.state == null) {
-                setAlertDialog(requireContext(),
-                    getString(R.string.error_not_found_user_location),
-                    getString(R.string.alert_go_to_set_location_page),
+                displayYesNoDialog(requireContext(), null, "${getString(R.string.error_not_found_user_location)} ${getString(R.string.alert_go_to_set_location_page)}",
                     posFunc = {
                         // 위치 지정 페이지(FindOtherPlaceFragment)로 이동
                         parentFragmentManager
@@ -117,9 +117,7 @@ class SearchSongFragment : BaseFragment<FragmentSearchSongBinding>(FragmentSearc
                 } else {
                     recyclerAdapter = SearchSongAdapter(it,
                         onClickItem = {
-                            setAlertDialog(requireContext(), null,
-                                "${it.artist.joinToString ( "," )}의 " +
-                                        "${it.songTitle}(을/를) 선택하시겠습니까?",
+                            displayYesNoDialog(requireContext(), null, "${it.artist.joinToString ( "," )}의 " + "${it.songTitle}(을/를) 선택하시겠습니까?",
                                 posFunc = {
                                     try {
                                         viewModel.addSong(it)
@@ -137,6 +135,19 @@ class SearchSongFragment : BaseFragment<FragmentSearchSongBinding>(FragmentSearc
                         })
                     rvResult.adapter = recyclerAdapter
                     rvResult.addItemDecoration(SearchSongDecoration())
+                    rvResult.addOnScrollListener(object : RecyclerView.OnScrollListener() {
+                        override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
+                            super.onScrolled(recyclerView, dx, dy)
+                            val layoutManager = rvResult.layoutManager as LinearLayoutManager
+                            val lastVisibleItemPosition = layoutManager.findLastCompletelyVisibleItemPosition()
+                            val totalItemCount = layoutManager.itemCount
+
+                            if (lastVisibleItemPosition == totalItemCount - 1) {
+                                // 검색 결과 추가로 받아오기
+                                viewModel.getSong(binding.edtSearchSong.toString())
+                            }
+                        }
+                    })
                 }
             }
         }
@@ -177,9 +188,7 @@ class SearchSongFragment : BaseFragment<FragmentSearchSongBinding>(FragmentSearc
             toastMessage(getString(R.string.error_keyword_length_exceeded))
         } else {
             if (!validate()) {
-                setAlertDialog(requireContext(), null,
-                    getString(R.string.error_location_not_assigned) + " " +
-                            getString(R.string.alert_go_to_set_location_page),
+                displayYesNoDialog(requireContext(), null, "${getString(R.string.error_location_not_assigned)}  ${getString(R.string.alert_go_to_set_location_page)}",
                     posFunc = {
                         // 위치 지정 페이지(FindOtherPlaceFragment)로 이동
                         parentFragmentManager

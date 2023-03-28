@@ -18,11 +18,11 @@ import com.google.android.libraries.places.widget.AutocompleteSupportFragment
 import com.google.android.libraries.places.widget.listener.PlaceSelectionListener
 import com.sesac.gmd.R
 import com.sesac.gmd.common.base.BaseFragment
+import com.sesac.gmd.common.util.AlertDialogUtil.displayYesNoDialog
 import com.sesac.gmd.common.util.DEFAULT_ZOOM_LEVEL
 import com.sesac.gmd.common.util.SEOUL_CITY_LATITUDE
 import com.sesac.gmd.common.util.SEOUL_CITY_LONGITUDE
 import com.sesac.gmd.common.util.Utils.Companion.displayToastExceptions
-import com.sesac.gmd.common.util.Utils.Companion.setAlertDialog
 import com.sesac.gmd.data.repository.Repository
 import com.sesac.gmd.databinding.FragmentFindOtherPlaceBinding
 import com.sesac.gmd.presentation.ui.create_song.bottomsheet.FindOtherPlaceBottomSheetFragment
@@ -95,9 +95,7 @@ class FindOtherPlaceFragment :
     // Listener 초기화
     private fun setListener() = with(binding) {
         btnCreatePlace.setOnClickListener {
-            setAlertDialog(requireContext(),
-                null,
-                getString(R.string.alert_create_pin_here),
+            displayYesNoDialog(requireContext(), null, getString(R.string.alert_create_pin_here),
                 posFunc = {
                     try {
                         val selectedLocation = LatLng(addedMarker!!.position.latitude, addedMarker!!.position.longitude)

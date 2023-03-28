@@ -24,7 +24,8 @@
         android:id="@+id/tabContent"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/toolbar"/>
+        android:layout_below="@id/toolbar"
+        android:layout_above="@id/tabLayout"/>
 
     <!--  Bottom Tab  -->
     <com.google.android.material.tabs.TabLayout
