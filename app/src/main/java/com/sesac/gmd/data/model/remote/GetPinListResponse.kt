@@ -1,4 +1,4 @@
-package com.sesac.gmd.data.api.server.song.get_pinlist
+package com.sesac.gmd.data.model.remote
 
 /**
  * 지도 화면에서 반경 내 핀 리스트들을 가져오는 Request 에 대한 Response

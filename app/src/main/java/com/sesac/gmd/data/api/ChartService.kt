@@ -1,5 +1,6 @@
-package com.sesac.gmd.data.api.server.chart
+package com.sesac.gmd.data.api
 
+import com.sesac.gmd.data.model.remote.GetChartResponse
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Path

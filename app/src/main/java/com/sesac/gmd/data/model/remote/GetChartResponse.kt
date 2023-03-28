@@ -1,4 +1,4 @@
-package com.sesac.gmd.data.api.server.chart
+package com.sesac.gmd.data.model.remote
 
 /**
  * Chart Request 에 대한 Response

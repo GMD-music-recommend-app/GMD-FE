@@ -10,7 +10,7 @@ import com.sesac.gmd.R
 import com.sesac.gmd.common.base.BaseFragment
 import com.sesac.gmd.common.util.Utils.Companion.displayToastExceptions
 import com.sesac.gmd.common.util.Utils.Companion.toastMessage
-import com.sesac.gmd.data.api.server.chart.GetChartResult
+import com.sesac.gmd.data.model.remote.GetChartResult
 import com.sesac.gmd.data.model.Location
 import com.sesac.gmd.data.repository.Repository
 import com.sesac.gmd.databinding.FragmentChartBinding

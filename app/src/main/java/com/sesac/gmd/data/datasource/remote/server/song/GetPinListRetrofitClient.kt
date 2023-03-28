@@ -1,7 +1,8 @@
-package com.sesac.gmd.data.api.server.chart
+package com.sesac.gmd.data.datasource.remote.server.song
 
 import com.sesac.gmd.common.util.GMD_BASE_URL
 import com.sesac.gmd.common.util.REST_TIMEOUT
+import com.sesac.gmd.data.api.SongService
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.Request
@@ -10,8 +11,8 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 
-// 지역 내 인기 차트 반환
-class GetChartRetrofitClient {
+// 반경 내 핀 리스트 반환
+class GetPinListRetrofitClient {
     companion object {
         // TODO: null 일 때 1번만 생성하는 싱글턴 패턴으로 Retrofit 클래스 구현 필요
 
@@ -21,8 +22,8 @@ class GetChartRetrofitClient {
             .addConverterFactory(GsonConverterFactory.create())
             .baseUrl(GMD_BASE_URL)
 
-        val getChartService: ChartService
-            get() = retrofitBuilder.build().create(ChartService::class.java)
+        val getPinListService: SongService
+            get() = retrofitBuilder.build().create(SongService::class.java)
 
         init {
             okHttpClient = OkHttpClient.Builder()

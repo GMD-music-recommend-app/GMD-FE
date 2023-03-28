@@ -1,4 +1,4 @@
-package com.sesac.gmd.data.api.maniadb
+package com.sesac.gmd.data.api
 
 import com.sesac.gmd.common.util.MANIADB_API_VERSION
 import com.sesac.gmd.common.util.MANIA_DB_SERVICE_KEY

@@ -1,10 +1,10 @@
-package com.sesac.gmd.data.api.server.song.get_pininfo
+package com.sesac.gmd.data.datasource.remote.server.song
 
 import com.sesac.gmd.common.util.GMD_BASE_URL
 import com.sesac.gmd.common.util.REST_TIMEOUT
 import com.sesac.gmd.common.util.TEMP_JWT
 import com.sesac.gmd.common.util.X_ACCESS_TOKEN
-import com.sesac.gmd.data.api.server.song.SongService
+import com.sesac.gmd.data.api.SongService
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.Request
@@ -13,8 +13,8 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 
-// 핀 정보 반환
-class GetPinInfoRetrofitClient {
+// 핀 공감 & 공감 취소
+class InsertLikePinRetrofitClient {
     companion object {
         // TODO: null 일 때 1번만 생성하는 싱글턴 패턴으로 Retrofit 클래스 구현 필요
 
@@ -24,7 +24,7 @@ class GetPinInfoRetrofitClient {
             .addConverterFactory(GsonConverterFactory.create())
             .baseUrl(GMD_BASE_URL)
 
-        val getPinInfoService: SongService
+        val insertLikePinService: SongService
             get() = retrofitBuilder.build().create(SongService::class.java)
 
         init {

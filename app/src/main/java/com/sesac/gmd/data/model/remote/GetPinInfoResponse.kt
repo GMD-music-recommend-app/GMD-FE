@@ -1,4 +1,4 @@
-package com.sesac.gmd.data.api.server.song.get_pininfo
+package com.sesac.gmd.data.model.remote
 
 /**
  * 핀 클릭 시 받아올 해당 핀 정보 Request 에 대한 Response

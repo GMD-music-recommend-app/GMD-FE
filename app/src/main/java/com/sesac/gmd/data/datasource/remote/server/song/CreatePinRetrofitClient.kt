@@ -1,7 +1,7 @@
-package com.sesac.gmd.data.api.server.song.write_comment
+package com.sesac.gmd.data.datasource.remote.server.song
 
 import com.sesac.gmd.common.util.*
-import com.sesac.gmd.data.api.server.song.SongService
+import com.sesac.gmd.data.api.SongService
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.Request
@@ -10,8 +10,8 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 
-// 핀 댓글 작성
-class WriteCommentRetrofitClient {
+// 핀 생성
+class CreatePinRetrofitClient {
     companion object {
         // TODO: null 일 때 1번만 생성하는 싱글턴 패턴으로 Retrofit 클래스 구현 필요
 
@@ -21,7 +21,7 @@ class WriteCommentRetrofitClient {
             .addConverterFactory(GsonConverterFactory.create())
             .baseUrl(GMD_BASE_URL)
 
-        val writeCommentService: SongService
+        val createPinService: SongService
             get() = retrofitBuilder.build().create(SongService::class.java)
 
         init {

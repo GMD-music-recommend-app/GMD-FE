@@ -9,9 +9,9 @@ import androidx.lifecycle.viewModelScope
 import com.google.android.gms.maps.model.LatLng
 import com.sesac.gmd.common.util.*
 import com.sesac.gmd.common.util.GeocoderUtil.geocoding
-import com.sesac.gmd.data.api.server.chart.GetChartResult
-import com.sesac.gmd.data.api.server.song.get_pininfo.GetPinInfoResult
-import com.sesac.gmd.data.api.server.song.get_pinlist.Pin
+import com.sesac.gmd.data.model.remote.GetChartResult
+import com.sesac.gmd.data.model.remote.GetPinInfoResult
+import com.sesac.gmd.data.model.remote.Pin
 import com.sesac.gmd.data.model.Location
 import com.sesac.gmd.data.repository.Repository
 import kotlinx.coroutines.CoroutineExceptionHandler

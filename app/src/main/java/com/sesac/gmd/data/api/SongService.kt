@@ -1,10 +1,10 @@
-package com.sesac.gmd.data.api.server.song
+package com.sesac.gmd.data.api
 
-import com.sesac.gmd.data.api.server.song.create_pin.CreatePinResponse
-import com.sesac.gmd.data.api.server.song.get_pininfo.GetPinInfoResponse
-import com.sesac.gmd.data.api.server.song.like_pin.InsertLikePinResponse
-import com.sesac.gmd.data.api.server.song.write_comment.WriteCommentResponse
-import com.sesac.gmd.data.api.server.song.get_pinlist.GetPinListResponse
+import com.sesac.gmd.data.model.remote.CreatePinResponse
+import com.sesac.gmd.data.model.remote.GetPinInfoResponse
+import com.sesac.gmd.data.model.remote.InsertLikePinResponse
+import com.sesac.gmd.data.model.remote.WriteCommentResponse
+import com.sesac.gmd.data.model.remote.GetPinListResponse
 import okhttp3.RequestBody
 import retrofit2.Response
 import retrofit2.http.*

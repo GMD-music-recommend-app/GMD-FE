@@ -23,7 +23,7 @@ import com.sesac.gmd.common.util.RX_THROTTLE_TIME
 import com.sesac.gmd.common.util.Utils.Companion.displayToastExceptions
 import com.sesac.gmd.common.util.Utils.Companion.toastMessage
 import com.sesac.gmd.common.util.YOUTUBE_BASE_URL
-import com.sesac.gmd.data.api.server.song.get_pininfo.GetPinInfoResult
+import com.sesac.gmd.data.model.remote.GetPinInfoResult
 import com.sesac.gmd.data.repository.Repository
 import com.sesac.gmd.databinding.FragmentSongInfoBottomSheetBinding
 import com.sesac.gmd.presentation.factory.ViewModelFactory

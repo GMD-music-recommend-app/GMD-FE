@@ -14,7 +14,7 @@ import com.sesac.gmd.R
 import com.sesac.gmd.common.base.BaseFragment
 import com.sesac.gmd.common.util.*
 import com.sesac.gmd.common.util.Utils.Companion.displayToastExceptions
-import com.sesac.gmd.data.api.server.song.get_pinlist.Pin
+import com.sesac.gmd.data.model.remote.Pin
 import com.sesac.gmd.data.repository.Repository
 import com.sesac.gmd.databinding.FragmentHomeBinding
 import com.sesac.gmd.presentation.factory.ViewModelFactory

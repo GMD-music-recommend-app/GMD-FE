@@ -1,4 +1,4 @@
-package com.sesac.gmd.data.api.server.song.like_pin
+package com.sesac.gmd.data.model.remote
 
 /**
  * 핀 공감 & 공감 취소 Request 에 대한 Response

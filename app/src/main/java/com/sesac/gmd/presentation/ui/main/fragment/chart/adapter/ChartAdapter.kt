@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.sesac.gmd.R
-import com.sesac.gmd.data.api.server.chart.GetChartResult
+import com.sesac.gmd.data.model.remote.GetChartResult
 import com.sesac.gmd.databinding.ViewholderChartItemBinding
 
 class ChartAdapter(chartList : MutableList<GetChartResult>) : RecyclerView.Adapter<ChartAdapter.ChartViewHolder>() {

@@ -1,4 +1,4 @@
-package com.sesac.gmd.data.api.server.song.write_comment
+package com.sesac.gmd.data.model.remote
 
 /**
  * 댓글 작성 Request 에 대한 Response

@@ -1,4 +1,4 @@
-package com.sesac.gmd.data.api.server.song.create_pin
+package com.sesac.gmd.data.model.remote
 
 /**
  * 핀 생성 Request 에 대한 Response
