@@ -63,22 +63,6 @@
 
 <br>
 
-## 🤔 <I>Concerns & Troubles</I><br>
-> <details>
-> <summary>MVVM 구조를 선택한 이유</summary>
-> </details>
-> <details>
-> <summary>많은 지도 API와 GoogleMap API</summary>
-> </details>
-> <details>
-> <summary>광클에 대비하기</summary>
-> </details>
-> <details>
-> <summary>FusedLocation을 동기적으로 사용하기</summary>
-> </details>
-
-<br>
-
 ## 🛠️ <I>Stacks</I>
 <details>
   <summary>🤝  Collaboration Tools</summary>
