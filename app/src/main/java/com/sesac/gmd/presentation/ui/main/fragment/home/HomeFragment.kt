@@ -15,7 +15,7 @@ import com.sesac.gmd.common.base.BaseFragment
 import com.sesac.gmd.common.util.*
 import com.sesac.gmd.common.util.Utils.Companion.displayToastExceptions
 import com.sesac.gmd.data.model.remote.Pin
-import com.sesac.gmd.data.repository.Repository
+import com.sesac.gmd.data.repository.remote.RemoteRepository
 import com.sesac.gmd.databinding.FragmentHomeBinding
 import com.sesac.gmd.presentation.factory.ViewModelFactory
 import com.sesac.gmd.presentation.ui.main.bottomsheet.CreateSongBottomSheetFragment
@@ -34,7 +34,7 @@ class HomeFragment :
         fun newInstance() = HomeFragment()
     }
     // activity 의 LifeCycle 을 이용하기 위해 activityViewModels 사용
-    private val viewModel: HomeChartViewModel by activityViewModels { ViewModelFactory(Repository()) }
+    private val viewModel: HomeChartViewModel by activityViewModels { ViewModelFactory(RemoteRepository()) }
     private lateinit var mMap: GoogleMap
     private lateinit var startingPoint: LatLng  // Google Map 지도 중심 점
     private val disposablesHome = CompositeDisposable()
@@ -96,7 +96,10 @@ class HomeFragment :
 
     // Listener 초기화
     private fun setListener(googleMap: GoogleMap) = with(binding) {
-        // 음악 추천하기 Button Click Listener
+        /**
+         * 음악 추천하기 Button Click Listener
+         * Button Click 중복 방지를 위해 RxBinding 적용
+         */
         val observableBtnCreateSong = btnCreateSong
             .clicks()
             .throttleFirst(RX_THROTTLE_TIME, TimeUnit.MILLISECONDS)
@@ -106,7 +109,11 @@ class HomeFragment :
             }
         disposablesHome.add(observableBtnCreateSong)
 
-        // 음악 핀(Marker) Click Listener
+        /**
+         * 음악 핀(Marker) Click Listener
+         * Button Click 중복 방지를 위해 RxBinding 적용
+         * todo : 수정 필요
+         */
         googleMap.setOnMarkerClickListener { Marker ->
             val observableMarker = Observable.just(Marker)
                 .throttleFirst(RX_THROTTLE_TIME, TimeUnit.MILLISECONDS)

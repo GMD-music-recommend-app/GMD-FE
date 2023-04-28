@@ -14,7 +14,7 @@ import com.sesac.gmd.common.util.AlertDialogUtil.displayYesNoDialog
 import com.sesac.gmd.common.util.DEFAULT_TAG
 import com.sesac.gmd.common.util.Utils.Companion.displayToastExceptions
 import com.sesac.gmd.common.util.Utils.Companion.toastMessage
-import com.sesac.gmd.data.repository.Repository
+import com.sesac.gmd.data.repository.remote.RemoteRepository
 import com.sesac.gmd.databinding.FragmentWriteStoryBinding
 import com.sesac.gmd.presentation.ui.create_song.viewmodel.CreateSongViewModel
 import com.sesac.gmd.presentation.factory.ViewModelFactory
@@ -28,7 +28,7 @@ class WriteStoryFragment : BaseFragment<FragmentWriteStoryBinding>(FragmentWrite
         private val TAG = WriteStoryFragment::class.simpleName
         fun newInstance() = WriteStoryFragment()
     }
-    private val viewModel: CreateSongViewModel by activityViewModels { ViewModelFactory(Repository()) }
+    private val viewModel: CreateSongViewModel by activityViewModels { ViewModelFactory(RemoteRepository()) }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)

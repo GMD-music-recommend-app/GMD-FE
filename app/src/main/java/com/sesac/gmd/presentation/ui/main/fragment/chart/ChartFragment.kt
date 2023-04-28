@@ -12,10 +12,10 @@ import com.sesac.gmd.common.util.Utils.Companion.displayToastExceptions
 import com.sesac.gmd.common.util.Utils.Companion.toastMessage
 import com.sesac.gmd.data.model.remote.GetChartResult
 import com.sesac.gmd.data.model.Location
-import com.sesac.gmd.data.repository.Repository
+import com.sesac.gmd.data.repository.remote.RemoteRepository
 import com.sesac.gmd.databinding.FragmentChartBinding
 import com.sesac.gmd.presentation.factory.ViewModelFactory
-import com.sesac.gmd.presentation.ui.main.fragment.chart.adapter.ChartAdapter
+import com.sesac.gmd.presentation.ui.main.adapter.ChartAdapter
 import com.sesac.gmd.presentation.ui.main.viewmodel.HomeChartViewModel
 
 /**
@@ -27,7 +27,7 @@ class ChartFragment : BaseFragment<FragmentChartBinding>(FragmentChartBinding::i
         //private val TAG = ChartFragment::class.java.simpleName
         fun newInstance() = ChartFragment()
     }
-    private val viewModel: HomeChartViewModel by activityViewModels { ViewModelFactory(Repository()) }
+    private val viewModel: HomeChartViewModel by activityViewModels { ViewModelFactory(RemoteRepository()) }
     private lateinit var chartAdapter: ChartAdapter
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {

@@ -1,4 +1,4 @@
-package com.sesac.gmd.data.repository
+package com.sesac.gmd.data.repository.remote
 
 import com.google.gson.Gson
 import com.sesac.gmd.data.datasource.remote.maniadb.ManiaDBRetrofitClient.Companion.maniaDBService
@@ -19,7 +19,7 @@ import okhttp3.RequestBody.Companion.toRequestBody
 import okhttp3.ResponseBody
 import retrofit2.Response
 
-class Repository {
+class RemoteRepository {
     // 반경 내 핀 리스트 가져오기
     suspend fun getPinList(lat: Double, lng: Double, radius: Int) : Response<GetPinListResponse> {
         return getPinListService.getPinList(lat, lng, radius)

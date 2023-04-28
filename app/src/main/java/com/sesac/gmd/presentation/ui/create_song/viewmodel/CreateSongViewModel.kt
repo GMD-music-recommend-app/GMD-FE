@@ -17,14 +17,14 @@ import com.sesac.gmd.common.util.Utils.Companion.parseXMLFromMania
 import com.sesac.gmd.data.model.Location
 import com.sesac.gmd.data.model.Song
 import com.sesac.gmd.data.model.SongList
-import com.sesac.gmd.data.repository.Repository
+import com.sesac.gmd.data.repository.remote.RemoteRepository
 import kotlinx.coroutines.*
 
 /**
  * 음악 추가하기 Sequence 에서 사용하는 ViewModel<br>
  * 멤버는 호출 순서대로 배치
  */
-class CreateSongViewModel(private val repository: Repository) : ViewModel() {
+class CreateSongViewModel(private val remoteRepository: RemoteRepository) : ViewModel() {
     companion object {
         private val TAG = CreateSongViewModel::class.simpleName
     }
@@ -85,7 +85,7 @@ class CreateSongViewModel(private val repository: Repository) : ViewModel() {
         isLoading.postValue(true)
         viewModelScope.launch(exceptionHandler) {
             try {
-                val responseBody = repository.getSong(keyword)
+                val responseBody = remoteRepository.getSong(keyword)
                 val result = parseXMLFromMania(responseBody.string())
                 songList.postValue(result)
                 isLoading.value = false
@@ -110,7 +110,7 @@ class CreateSongViewModel(private val repository: Repository) : ViewModel() {
     fun createPin(reason: String, hashtag: String?) {
         viewModelScope.launch(exceptionHandler) {
             try {
-                val response = repository.createPin(
+                val response = remoteRepository.createPin(
                     TEMP_USER_IDX,
                     location.value!!,
                     selectedSong.value!!,

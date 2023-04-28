@@ -1,4 +1,4 @@
-package com.sesac.gmd.presentation.ui.main.fragment.chart.adapter
+package com.sesac.gmd.presentation.ui.main.adapter
 
 import android.annotation.SuppressLint
 import android.view.LayoutInflater

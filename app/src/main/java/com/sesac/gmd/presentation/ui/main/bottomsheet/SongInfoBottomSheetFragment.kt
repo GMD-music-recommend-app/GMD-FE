@@ -24,7 +24,7 @@ import com.sesac.gmd.common.util.Utils.Companion.displayToastExceptions
 import com.sesac.gmd.common.util.Utils.Companion.toastMessage
 import com.sesac.gmd.common.util.YOUTUBE_BASE_URL
 import com.sesac.gmd.data.model.remote.GetPinInfoResult
-import com.sesac.gmd.data.repository.Repository
+import com.sesac.gmd.data.repository.remote.RemoteRepository
 import com.sesac.gmd.databinding.FragmentSongInfoBottomSheetBinding
 import com.sesac.gmd.presentation.factory.ViewModelFactory
 import com.sesac.gmd.presentation.ui.main.viewmodel.HomeChartViewModel
@@ -50,7 +50,7 @@ class SongInfoBottomSheetFragment : BottomSheetDialogFragment() {
         }
     }
     private lateinit var binding: FragmentSongInfoBottomSheetBinding
-    private val viewModel: HomeChartViewModel by activityViewModels { ViewModelFactory(Repository()) }
+    private val viewModel: HomeChartViewModel by activityViewModels { ViewModelFactory(RemoteRepository()) }
     private val disposablesSongInfo = CompositeDisposable()
     private var pinIdx : String? = null    // 유저가 클릭한 핀의 인덱스
 

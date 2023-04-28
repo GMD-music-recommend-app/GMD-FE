@@ -22,7 +22,7 @@ import com.sesac.gmd.common.util.*
 import com.sesac.gmd.common.util.PermissionsUtil.Companion.PERMISSIONS
 import com.sesac.gmd.common.util.Utils.Companion.displayToastExceptions
 import com.sesac.gmd.common.util.Utils.Companion.toastMessage
-import com.sesac.gmd.data.repository.Repository
+import com.sesac.gmd.data.repository.remote.RemoteRepository
 import com.sesac.gmd.databinding.ActivityMainBinding
 import com.sesac.gmd.presentation.factory.ViewModelFactory
 import com.sesac.gmd.presentation.ui.main.fragment.chart.ChartFragment
@@ -33,7 +33,7 @@ import com.sesac.gmd.presentation.ui.main.viewmodel.HomeChartViewModel
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
-    private val viewModel: HomeChartViewModel by viewModels { ViewModelFactory(Repository()) }
+    private val viewModel: HomeChartViewModel by viewModels { ViewModelFactory(RemoteRepository()) }
     private var isPermissionsGranted = false    // 필요 권한 동의 여부
 
     override fun onCreate(savedInstanceState: Bundle?) {

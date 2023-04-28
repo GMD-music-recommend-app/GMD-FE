@@ -17,7 +17,7 @@ import com.sesac.gmd.common.util.DEFAULT_TAG
 import com.sesac.gmd.common.util.Utils.Companion.displayToastExceptions
 import com.sesac.gmd.common.util.Utils.Companion.hideKeyBoard
 import com.sesac.gmd.common.util.Utils.Companion.toastMessage
-import com.sesac.gmd.data.repository.Repository
+import com.sesac.gmd.data.repository.remote.RemoteRepository
 import com.sesac.gmd.databinding.FragmentSearchSongBinding
 import com.sesac.gmd.presentation.ui.create_song.adapter.SearchSongAdapter
 import com.sesac.gmd.presentation.ui.create_song.adapter.SearchSongDecoration
@@ -36,7 +36,7 @@ class SearchSongFragment : BaseFragment<FragmentSearchSongBinding>(FragmentSearc
         private val TAG = SearchSongFragment::class.simpleName
         fun newInstance() = SearchSongFragment()
     }
-    private val viewModel: CreateSongViewModel by activityViewModels { ViewModelFactory(Repository()) }
+    private val viewModel: CreateSongViewModel by activityViewModels { ViewModelFactory(RemoteRepository()) }
     private lateinit var recyclerAdapter: SearchSongAdapter
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View {

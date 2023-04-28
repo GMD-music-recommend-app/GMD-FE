@@ -53,6 +53,7 @@ const val SEOUL_CITY_LONGITUDE = 126.97794509999994 // 서울 시청 경도
 /**
  * maniaDB 음악 검색
  */
+
 // 음악 검색 시 검색 결과 표시 갯수
 const val MUSIC_SEARCH_RESULT_COUNT = 20
 const val MANIADB_API_VERSION = 0.5

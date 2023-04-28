@@ -13,7 +13,7 @@ import com.sesac.gmd.data.model.remote.GetChartResult
 import com.sesac.gmd.data.model.remote.GetPinInfoResult
 import com.sesac.gmd.data.model.remote.Pin
 import com.sesac.gmd.data.model.Location
-import com.sesac.gmd.data.repository.Repository
+import com.sesac.gmd.data.repository.remote.RemoteRepository
 import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.launch
 
@@ -21,7 +21,7 @@ import kotlinx.coroutines.launch
  * MainActivity, HomeFragment, ChartFragment 에서 사용하는 ViewModel
  * 멤버는 호출 순서대로 배치
  */
-class HomeChartViewModel(private val repository: Repository) : ViewModel() {
+class HomeChartViewModel(private val remoteRepository: RemoteRepository) : ViewModel() {
     companion object {
         private val TAG = HomeChartViewModel::class.simpleName
     }
@@ -80,7 +80,7 @@ class HomeChartViewModel(private val repository: Repository) : ViewModel() {
     fun getPinList(lat: Double, lng: Double, radius: Int = PIN_SEARCH_RADIUS) {
         viewModelScope.launch(exceptionHandler) {
             try {
-                val response = repository.getPinList(lat, lng, radius)
+                val response = remoteRepository.getPinList(lat, lng, radius)
                 if (response.isSuccessful) {
                     _pinLists.value = response.body()!!.result
                 } else {
@@ -96,7 +96,7 @@ class HomeChartViewModel(private val repository: Repository) : ViewModel() {
     // 핀 정보 가져오기(핀 클릭 시 bottomSheet 화면)
     fun getPinInfo(pinIdx: Int) = viewModelScope.launch(exceptionHandler) {
         try {
-            val response = repository.getSongInfo(pinIdx, TEMP_USER_IDX)
+            val response = remoteRepository.getSongInfo(pinIdx, TEMP_USER_IDX)
             if (response.isSuccessful) {
                 _pinInfo.value = response.body()!!.result
             } else {
@@ -112,7 +112,7 @@ class HomeChartViewModel(private val repository: Repository) : ViewModel() {
     // 핀 공감하기
     fun insertLikePin(pinIdx: Int) = viewModelScope.launch(exceptionHandler) {
         try {
-            val response = repository.insertLikePin(pinIdx, TEMP_USER_IDX)
+            val response = remoteRepository.insertLikePin(pinIdx, TEMP_USER_IDX)
             if (response.isSuccessful) {
                 _isPinLiked.value = response.body()!!.result
             } else {
@@ -133,7 +133,7 @@ class HomeChartViewModel(private val repository: Repository) : ViewModel() {
     fun getChartData() = viewModelScope.launch(exceptionHandler) {
         try {
             val city = location.value!!.city.toString()
-            val response = repository.getChartList(city)
+            val response = remoteRepository.getChartList(city)
 
             if (response.isSuccessful) {
                 _chartList.value = response.body()!!.result

@@ -23,7 +23,7 @@ import com.sesac.gmd.common.util.DEFAULT_ZOOM_LEVEL
 import com.sesac.gmd.common.util.SEOUL_CITY_LATITUDE
 import com.sesac.gmd.common.util.SEOUL_CITY_LONGITUDE
 import com.sesac.gmd.common.util.Utils.Companion.displayToastExceptions
-import com.sesac.gmd.data.repository.Repository
+import com.sesac.gmd.data.repository.remote.RemoteRepository
 import com.sesac.gmd.databinding.FragmentFindOtherPlaceBinding
 import com.sesac.gmd.presentation.ui.create_song.bottomsheet.FindOtherPlaceBottomSheetFragment
 import com.sesac.gmd.presentation.ui.create_song.viewmodel.CreateSongViewModel
@@ -42,7 +42,7 @@ class FindOtherPlaceFragment :
         // 지도의 중심 점을 서울 시청으로 설정
         val startingPoint = LatLng(SEOUL_CITY_LATITUDE, SEOUL_CITY_LONGITUDE)
     }
-    private val viewModel: CreateSongViewModel by activityViewModels { ViewModelFactory(Repository()) }
+    private val viewModel: CreateSongViewModel by activityViewModels { ViewModelFactory(RemoteRepository()) }
     private lateinit var mMap: GoogleMap
     private var addedMarker: Marker? = null
 
