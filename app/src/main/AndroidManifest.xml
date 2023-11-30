@@ -18,7 +18,7 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.GMD"
         android:usesCleartextTraffic="true"
-        tools:targetApi="33">
+        tools:targetApi="34">
 
         <!-- Google Map API Key -->
         <meta-data
