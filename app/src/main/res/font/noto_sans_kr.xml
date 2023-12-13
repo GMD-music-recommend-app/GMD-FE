@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<font-family
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <font android:font="@font/noto_sans_kr_black" tools:targetApi="o" />
+    <font android:font="@font/noto_sans_kr_bold" tools:targetApi="o" />
+    <font android:font="@font/noto_sans_kr_light" tools:targetApi="o" />
+    <font android:font="@font/noto_sans_kr_medium" tools:targetApi="o" />
+    <font android:font="@font/noto_sans_kr_regular" tools:targetApi="o" />
+    <font android:font="@font/noto_sans_kr_thin" tools:targetApi="o" />
+
+</font-family>

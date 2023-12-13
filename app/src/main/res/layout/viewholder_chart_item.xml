@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_rv_chart_item">
+
+<!--    <com.google.android.material.card.MaterialCardView-->
+<!--        android:id="@+id/cv_chart_music_album"-->
+<!--        android:layout_width="64dp"-->
+<!--        android:layout_height="64dp"-->
+<!--        app:cardCornerRadius="@dimen/radius_to_16dp"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent">-->
+<!--        <androidx.appcompat.widget.AppCompatImageView-->
+<!--            android:id="@+id/img_chart_music_album"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:src="@drawable/ic_sample_image" />-->
+<!--    </com.google.android.material.card.MaterialCardView>-->
+
+<!--&lt;!&ndash;    <TextView&ndash;&gt;-->
+<!--&lt;!&ndash;        android:id="@+id/txt_chart_music_rank"&ndash;&gt;-->
+<!--&lt;!&ndash;        android:layout_width="wrap_content"&ndash;&gt;-->
+<!--&lt;!&ndash;        android:layout_height="wrap_content"&ndash;&gt;-->
+<!--&lt;!&ndash;        android:layout_marginStart="@dimen/margin_to_4dp"&ndash;&gt;-->
+<!--&lt;!&ndash;        android:gravity="center_vertical"&ndash;&gt;-->
+<!--&lt;!&ndash;        android:fontFamily="@font/noto_sans_bold"&ndash;&gt;-->
+<!--&lt;!&ndash;        android:text=""&ndash;&gt;-->
+<!--&lt;!&ndash;        android:textColor="@color/main_color"&ndash;&gt;-->
+<!--&lt;!&ndash;        android:textSize="@dimen/txt_size_to_12sp"&ndash;&gt;-->
+<!--&lt;!&ndash;        app:layout_constraintBottom_toBottomOf="@+id/cv_chart_music_album"&ndash;&gt;-->
+<!--&lt;!&ndash;        app:layout_constraintStart_toEndOf="@+id/cv_chart_music_album"&ndash;&gt;-->
+<!--&lt;!&ndash;        app:layout_constraintTop_toTopOf="@+id/cv_chart_music_album" />&ndash;&gt;-->
+
+<!--    <TextView-->
+<!--        android:id="@+id/txt_chart_music_title"-->
+<!--        android:layout_width="0dp"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginStart="@dimen/margin_to_8dp"-->
+<!--        android:ellipsize="end"-->
+<!--        android:fontFamily="@font/noto_sans_kr_bold"-->
+<!--        android:maxLines="1"-->
+<!--        android:text="제목"-->
+<!--        android:textColor="@color/black"-->
+<!--        android:textSize="@dimen/txt_size_to_14sp"-->
+<!--        app:layout_constraintEnd_toStartOf="@+id/txt_chart_liked_count"-->
+<!--        app:layout_constraintStart_toEndOf="@+id/cv_chart_music_album"-->
+<!--        app:layout_constraintTop_toTopOf="@+id/cv_chart_music_album" />-->
+
+<!--    <TextView-->
+<!--        android:id="@+id/txt_chart_music_artist"-->
+<!--        android:layout_width="0dp"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginTop="@dimen/margin_to_4dp"-->
+<!--        android:fontFamily="@font/noto_sans_kr_regular"-->
+<!--        android:text="가수 · 앨범"-->
+<!--        android:textSize="@dimen/txt_size_to_12sp"-->
+<!--        android:ellipsize="end"-->
+<!--        android:maxLines="1"-->
+<!--        app:layout_constraintEnd_toEndOf="@+id/txt_chart_music_title"-->
+<!--        app:layout_constraintStart_toStartOf="@+id/txt_chart_music_title"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/txt_chart_music_title" />-->
+
+<!--    <TextView-->
+<!--        android:id="@+id/txt_chart_liked_count"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:gravity="center_vertical"-->
+<!--        android:fontFamily="@font/noto_sans_kr_regular"-->
+<!--        android:text="회 공감"-->
+<!--        android:textSize="@dimen/txt_size_to_14sp"-->
+<!--        android:ellipsize="end"-->
+<!--        android:maxLines="1"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent" />-->
+
+</androidx.constraintlayout.widget.ConstraintLayout>
