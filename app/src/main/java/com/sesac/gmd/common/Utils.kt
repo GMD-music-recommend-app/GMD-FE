@@ -2,11 +2,14 @@ package com.sesac.gmd.common
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.content.Context
+import android.content.pm.PackageManager
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.util.Log
 import android.widget.Toast
+import androidx.core.app.ActivityCompat
 import com.sesac.gmd.application.GMDApplication.Companion.getAppInstance
 import java.net.SocketTimeoutException
 import java.util.concurrent.TimeoutException
@@ -18,6 +21,17 @@ object Utils {
         Manifest.permission.ACCESS_COARSE_LOCATION
     )
 
+    fun Activity.hasLocationPermissions(): Boolean {
+        return (ActivityCompat.checkSelfPermission(
+            this,
+            Manifest.permission.ACCESS_FINE_LOCATION
+        ) == PackageManager.PERMISSION_GRANTED
+                && ActivityCompat.checkSelfPermission(
+            this,
+            Manifest.permission.ACCESS_COARSE_LOCATION
+        ) == PackageManager.PERMISSION_GRANTED)
+    }
+
     // Toast 출력 함수
     fun toastMessage(message: String) {
         Toast.makeText(getAppInstance(), message, Toast.LENGTH_SHORT).show()
@@ -25,7 +39,7 @@ object Utils {
 
     // Exception 에 따라 ToastMessage 출력
     fun displayToastExceptions(e: Exception) {
-        Log.e("","error : ${e.message}")
+        Log.e("", "error : ${e.message}")
         when (e) {
             is TimeoutException -> toastMessage("연결이 고르지 않습니다.\n다시 시도해주시기 바랍니다.")
             is SocketTimeoutException -> toastMessage("연결이 고르지 않습니다.\n다시 시도해주시기 바랍니다.")
@@ -35,7 +49,7 @@ object Utils {
 
     // Network 연결 상태 확인
     @SuppressLint("MissingPermission")
-    fun isNetworkConnected(context: Context) : Boolean {
+    fun isNetworkConnected(context: Context): Boolean {
         val connectivityManager =
             context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
 

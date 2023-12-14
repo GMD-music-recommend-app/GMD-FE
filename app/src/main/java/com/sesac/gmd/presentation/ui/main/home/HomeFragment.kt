@@ -16,15 +16,16 @@ import com.sesac.gmd.R
 import com.sesac.gmd.common.DEFAULT_MAP_ZOOM_LEVEL
 import com.sesac.gmd.common.SEOUL_CITY_HALL_LATITUDE
 import com.sesac.gmd.common.SEOUL_CITY_HALL_LONGITUDE
+import com.sesac.gmd.common.asLatLng
 import com.sesac.gmd.data.model.Location
 import com.sesac.gmd.databinding.FragmentHomeBinding
 import com.sesac.gmd.presentation.base.BaseFragment
-import com.sesac.gmd.presentation.ui.main.MainViewModel
+import com.sesac.gmd.presentation.ui.main.LocationViewModel
 
 class HomeFragment : BaseFragment<FragmentHomeBinding>(), OnMapReadyCallback {
     override val layoutResourceId = R.layout.fragment_home
     private val viewModel: HomeViewModel by viewModels()
-    private val activityViewModel: MainViewModel by activityViewModels()
+    private val activityViewModel: LocationViewModel by activityViewModels()
 
     private lateinit var mMap: GoogleMap
     private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
@@ -57,14 +58,15 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), OnMapReadyCallback {
         activityViewModel.currentLocation.observe(viewLifecycleOwner, ::updateMapPoint)
     }
 
+    // FIXME: 메서드 이름 명확하게 수정
+    private fun updateMapPoint(location: Location) {
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(location.asLatLng(), DEFAULT_MAP_ZOOM_LEVEL))
+    }
+
     private fun setListener() {
         binding.btnCreateSong.setOnClickListener {
             CreateSongBottomSheetFragment().show(parentFragmentManager, tag)
         }
-    }
-
-    private fun updateMapPoint(location: Location) {
-
     }
 
     override val onBackPressedCallback = object : OnBackPressedCallback(true) {

@@ -17,6 +17,7 @@ import com.google.android.gms.maps.model.LatLng
 import com.google.android.material.tabs.TabLayout
 import com.sesac.gmd.R
 import com.sesac.gmd.common.LOCATION_UPDATE_INTERVAL_TIME
+import com.sesac.gmd.common.Logger
 import com.sesac.gmd.common.TAB_CHART
 import com.sesac.gmd.common.TAB_HOME
 import com.sesac.gmd.common.TAB_SETTING
@@ -30,7 +31,7 @@ import com.sesac.gmd.presentation.ui.main.setting.SettingFragment
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
-    private val viewModel: MainViewModel by viewModels()
+    private val viewModel: LocationViewModel by viewModels()
 
     private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
 
@@ -39,7 +40,9 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater).also {
             setContentView(it.root)
         }
+
         initViews(savedInstanceState)
+        initFusedLocationClient()
         setListener()
     }
 
@@ -50,6 +53,9 @@ class MainActivity : AppCompatActivity() {
                 .add(R.id.ft_container, HomeFragment())
                 .commit()
         }
+    }
+
+    private fun initFusedLocationClient() {
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
     }
 
@@ -104,6 +110,8 @@ class MainActivity : AppCompatActivity() {
 
     @SuppressLint("MissingPermission")
     private fun refreshUserLocation() {
+        Logger.d("try to update location...")
+
         val locationRequest =
             LocationRequest.Builder(Priority.PRIORITY_HIGH_ACCURACY, LOCATION_UPDATE_INTERVAL_TIME)
                 .apply {
@@ -124,6 +132,12 @@ class MainActivity : AppCompatActivity() {
      */
     private val locationCallback = object : LocationCallback() {
         override fun onLocationResult(locationResult: LocationResult) {
+            Logger.d("""Success to update location!
+                Latitude : ${locationResult.lastLocation?.latitude}
+                Longitude : ${locationResult.lastLocation?.longitude}
+            """.trimIndent()
+            )
+
             viewModel.updateCurrentLocation(
                 LatLng(
                     locationResult.lastLocation!!.latitude,
@@ -145,6 +159,7 @@ class MainActivity : AppCompatActivity() {
             fusedLocationProviderClient.removeLocationUpdates(locationCallback)
         } catch (e: Exception) {
             e.printStackTrace()
+            // TODO: 예외 처리 필요
         }
     }
 }
