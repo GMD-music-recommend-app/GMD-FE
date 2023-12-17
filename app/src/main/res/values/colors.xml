@@ -8,6 +8,8 @@
     <!--  Custom Colors  -->
     <color name="main_color">#FF5552</color>
 
+    <color name="gray_01">#AEAEAE</color>
+
     <color name="gray_for_setting_contents">#585858</color>
     <color name="rv_item_background_color_gray">#F8F8F8</color>
     <color name="default_text_color_gray">#AEAEAE</color>
