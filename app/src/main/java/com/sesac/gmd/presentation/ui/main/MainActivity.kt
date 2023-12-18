@@ -82,8 +82,8 @@ class MainActivity : AppCompatActivity() {
 
     private fun replaceFragment(tabPosition: Int) {
         val fragment: Fragment? = when (tabPosition) {
-            TAB_CHART -> ChartFragment()
             TAB_HOME -> HomeFragment()
+            TAB_CHART -> ChartFragment()
             TAB_SETTING -> SettingFragment()
             else -> null
         }

@@ -1,34 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <!-- GMD Basic Colors -->
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <color name="gray">#858585</color>
     <color name="transparent">#00000000</color>
-
-    <!--  Custom Colors  -->
     <color name="main_color">#FF5552</color>
 
-
+    <!--  Custom Colors  -->
     <color name="gray_01">#AEAEAE</color>
-
     <color name="gray_for_setting_contents">#585858</color>
     <color name="rv_item_background_color_gray">#F8F8F8</color>
     <color name="default_text_color_gray">#AEAEAE</color>
-    <color name="default_borderline_color_gray">#D9D9D9</color>
     <color name="unselected_button_color_gray">#D9D9D9</color>
 
     <!-- override colors -->
-    <color name="button_01">#FFFFFF</color>
-    <color name="button_02">#FF5552</color>
-
     <color name="text_00">#FF5552</color>
     <color name="text_01">#949494</color>
     <color name="text_02">#585858</color>
 
     <color name="background_main">#FFFFFF</color>
     <color name="background_sub">#F4F4F4</color>
+    <color name="background_negative_button">#FFFFFF</color>
+    <color name="background_toolbar_borderline">#D9D9D9</color>
     <color name="background_view_group_bubble">#F8F8F8</color>
 
     <color name="icon_setting">#585858</color>
+    <color name="icon_close">#FF000000</color>
     <color name="icon_setting_arrow_button">#949494</color>
 </resources>

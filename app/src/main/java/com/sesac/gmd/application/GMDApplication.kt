@@ -20,7 +20,6 @@ class GMDApplication: Application() {
         appInstance = this
 
         initGooglePlacesSDK()
-        setDarkMode()
         setScreenPortrait()
     }
 
@@ -28,10 +27,6 @@ class GMDApplication: Application() {
         if (!Places.isInitialized()) {
             Places.initialize(applicationContext, GOOGLE_MAPS_SERVICE_KEY, Locale.KOREA)
         }
-    }
-
-    private fun setDarkMode() {
-
     }
 
     private fun setScreenPortrait() {
