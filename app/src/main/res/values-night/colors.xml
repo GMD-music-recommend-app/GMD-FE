@@ -1,10 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- override colors -->
+    <color name="button_01">#FF5552</color>
+    <color name="button_02">#3B3B3B</color> <!-- fixme -->
+
+    <color name="text_00">#FFFFFF</color>
     <color name="text_01">#AEAEAE</color>
     <color name="text_02">#F8F8F8</color>
 
     <color name="background_main">#2B2B2B</color>
+    <color name="background_sub">#4B4B4B</color>
     <color name="background_view_group_bubble">#3B3B3B</color>
 
     <color name="icon_setting">#F8F8F8</color>
