@@ -7,7 +7,7 @@ const val TAB_CHART = 0
 const val TAB_HOME = 1
 const val TAB_SETTING = 2
 
-const val LOCATION_UPDATE_INTERVAL_TIME = 10 * 60 * 1_000L
+const val LOCATION_UPDATE_INTERVAL_TIME = 10 * 60 * 1_000L  // 10분
 
 const val SEOUL_CITY_HALL_LATITUDE = 37.5662952  // 서울 시청 위도
 const val SEOUL_CITY_HALL_LONGITUDE = 126.97794509999994 // 서울 시청 경도

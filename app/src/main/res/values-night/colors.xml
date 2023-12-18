@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- override colors -->
+    <color name="text_01">#AEAEAE</color>
+    <color name="text_02">#F8F8F8</color>
+
+    <color name="background_main">#2B2B2B</color>
+    <color name="background_view_group_bubble">#3B3B3B</color>
+
+    <color name="icon_setting">#F8F8F8</color>
+    <color name="icon_setting_arrow_button">#AEAEAE</color>
+</resources>
