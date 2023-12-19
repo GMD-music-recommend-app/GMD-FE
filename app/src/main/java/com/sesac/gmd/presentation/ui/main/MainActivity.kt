@@ -14,7 +14,6 @@ import com.google.android.gms.location.LocationResult
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.location.Priority
 import com.google.android.gms.maps.model.LatLng
-import com.google.android.material.tabs.TabLayout
 import com.sesac.gmd.R
 import com.sesac.gmd.common.LOCATION_UPDATE_INTERVAL_TIME
 import com.sesac.gmd.common.Logger
@@ -27,7 +26,6 @@ import com.sesac.gmd.presentation.ui.main.home.HomeFragment
 import com.sesac.gmd.presentation.ui.main.setting.SettingFragment
 
 // TODO: Permission check before loading google map
-// TODO: tabLayout focus on center content
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
@@ -52,6 +50,8 @@ class MainActivity : AppCompatActivity() {
                 .beginTransaction()
                 .add(R.id.ft_container, HomeFragment())
                 .commit()
+
+        // TODO:  binding.bottomNavigationMenu.selectedItemId = R.id.tab_home   <- 필요..?
         }
     }
 
@@ -70,14 +70,25 @@ class MainActivity : AppCompatActivity() {
             }
         })
 
-        binding.tabLayout.addOnTabSelectedListener(object : TabLayout.OnTabSelectedListener {
-            override fun onTabSelected(tab: TabLayout.Tab) {
-                replaceFragment(tab.position)
+        binding.bottomNavigationMenu.run {
+            setOnItemSelectedListener { item ->
+                when (item.itemId) {
+                    R.id.tab_home -> {
+                        replaceFragment(TAB_HOME)
+                        true
+                    }
+                    R.id.tab_chart -> {
+                        replaceFragment(TAB_CHART)
+                        true
+                    }
+                    R.id.tab_my_page -> {
+                        replaceFragment(TAB_SETTING)
+                        true
+                    }
+                    else -> false
+                }
             }
-
-            override fun onTabReselected(tab: TabLayout.Tab?) {}
-            override fun onTabUnselected(tab: TabLayout.Tab?) {}
-        })
+        }
     }
 
     private fun replaceFragment(tabPosition: Int) {
