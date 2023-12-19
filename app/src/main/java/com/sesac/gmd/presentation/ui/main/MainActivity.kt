@@ -19,11 +19,11 @@ import com.sesac.gmd.common.LOCATION_UPDATE_INTERVAL_TIME
 import com.sesac.gmd.common.Logger
 import com.sesac.gmd.common.TAB_CHART
 import com.sesac.gmd.common.TAB_HOME
-import com.sesac.gmd.common.TAB_SETTING
+import com.sesac.gmd.common.TAB_MY_PAGE
 import com.sesac.gmd.databinding.ActivityMainBinding
 import com.sesac.gmd.presentation.ui.main.chart.ChartFragment
 import com.sesac.gmd.presentation.ui.main.home.HomeFragment
-import com.sesac.gmd.presentation.ui.main.setting.SettingFragment
+import com.sesac.gmd.presentation.ui.main.my_page.MyPageFragment
 
 // TODO: Permission check before loading google map
 
@@ -51,7 +51,7 @@ class MainActivity : AppCompatActivity() {
                 .add(R.id.ft_container, HomeFragment())
                 .commit()
 
-        // TODO:  binding.bottomNavigationMenu.selectedItemId = R.id.tab_home   <- 필요..?
+            // TODO:  binding.bottomNavigationMenu.selectedItemId = R.id.tab_home   <- 필요..?
         }
     }
 
@@ -77,14 +77,17 @@ class MainActivity : AppCompatActivity() {
                         replaceFragment(TAB_HOME)
                         true
                     }
+
                     R.id.tab_chart -> {
                         replaceFragment(TAB_CHART)
                         true
                     }
+
                     R.id.tab_my_page -> {
-                        replaceFragment(TAB_SETTING)
+                        replaceFragment(TAB_MY_PAGE)
                         true
                     }
+
                     else -> false
                 }
             }
@@ -95,7 +98,7 @@ class MainActivity : AppCompatActivity() {
         val fragment: Fragment? = when (tabPosition) {
             TAB_HOME -> HomeFragment()
             TAB_CHART -> ChartFragment()
-            TAB_SETTING -> SettingFragment()
+            TAB_MY_PAGE -> MyPageFragment()
             else -> null
         }
 
@@ -143,7 +146,8 @@ class MainActivity : AppCompatActivity() {
      */
     private val locationCallback = object : LocationCallback() {
         override fun onLocationResult(locationResult: LocationResult) {
-            Logger.d("""Success to update location!
+            Logger.d(
+                """Success to update location!
                 Latitude : ${locationResult.lastLocation?.latitude}
                 Longitude : ${locationResult.lastLocation?.longitude}
             """.trimIndent()

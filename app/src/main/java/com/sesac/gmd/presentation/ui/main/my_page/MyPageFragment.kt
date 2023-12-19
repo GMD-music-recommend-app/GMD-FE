@@ -1,4 +1,4 @@
-package com.sesac.gmd.presentation.ui.main.setting
+package com.sesac.gmd.presentation.ui.main.my_page
 
 import android.os.Bundle
 import android.view.View
@@ -7,7 +7,7 @@ import com.sesac.gmd.R
 import com.sesac.gmd.databinding.FragmentSettingBinding
 import com.sesac.gmd.presentation.base.BaseFragment
 
-class SettingFragment : BaseFragment<FragmentSettingBinding>() {
+class MyPageFragment : BaseFragment<FragmentSettingBinding>() {
     override val layoutResourceId = R.layout.fragment_setting
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

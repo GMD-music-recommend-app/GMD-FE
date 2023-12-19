@@ -1,6 +1,5 @@
 package com.sesac.gmd.common
 
-import android.util.Log
 import com.sesac.gmd.data.model.ManiaDBAlbum
 import com.sesac.gmd.data.model.Song
 import com.sesac.gmd.data.model.SongList
@@ -20,7 +19,8 @@ object XMLParser {
             val itemTags = rootDoc.getElementsByTagName(MUSIC_ITEM)
             for (idx in 0 until itemTags.length) {
                 val song = Song()
-                song.songIdx = itemTags.item(idx).attributes.getNamedItem(MUSIC_ID).nodeValue.trim().toInt()
+                song.songIdx =
+                    itemTags.item(idx).attributes.getNamedItem(MUSIC_ID).nodeValue.trim().toInt()
                 val itemSubTagLength = itemTags.item(idx).childNodes.length
                 for (subIdx in 0 until itemSubTagLength) {
                     val itemChildNode = itemTags.item(idx).childNodes.item(subIdx)
@@ -35,10 +35,11 @@ object XMLParser {
                                             album.albumTitle =
                                                 albumNodes.item(childIdx).textContent.trim()
                                                     .replace("&#39;", "'")
-                                                    .replace("&amp;","&")
-                                                    .replace("&nbsp;"," ")
+                                                    .replace("&amp;", "&")
+                                                    .replace("&nbsp;", " ")
                                                     .replace("&quot;", "\"")
                                         }
+
                                         ALBUM_IMAGE -> {
                                             album.albumImage =
                                                 albumNodes.item(childIdx).textContent.trim()
@@ -47,6 +48,7 @@ object XMLParser {
                                 }
                                 song.album = album
                             }
+
                             XML_TAG_ALBUM_INFO -> {
                                 val artists = itemChildNode.childNodes
                                 for (artIdx in 0 until artists.length) {
@@ -57,19 +59,20 @@ object XMLParser {
                                             song.artist.add(
                                                 artistChildNode.item(artSubIdx).textContent.trim()
                                                     .replace("&#39;", "'")
-                                                    .replace("&amp;","&")
-                                                    .replace("&nbsp;"," ")
+                                                    .replace("&amp;", "&")
+                                                    .replace("&nbsp;", " ")
                                                     .replace("&quot;", "\"")
                                             )
                                         }
                                     }
                                 }
                             }
+
                             XML_TAG_SONG_TITLE -> {
                                 song.songTitle = itemChildNode.textContent.trim()
                                     .replace("&#39;", "'")
-                                    .replace("&amp;","&")
-                                    .replace("&nbsp;"," ")
+                                    .replace("&amp;", "&")
+                                    .replace("&nbsp;", " ")
                                     .replace("&quot;", "\"")
                             }
                         }
@@ -78,7 +81,7 @@ object XMLParser {
                 songList.songs.add(song)
             }
         } catch (e: Exception) {
-            Log.e("XML Parser", "Erorr parsing XML : $e")
+            Logger.traceException(e)
         }
         return songList
     }
