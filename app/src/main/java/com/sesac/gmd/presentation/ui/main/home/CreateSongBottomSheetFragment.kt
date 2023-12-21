@@ -11,7 +11,8 @@ import com.sesac.gmd.databinding.FragmentCreateSongBottomSheetBinding
 import com.sesac.gmd.presentation.base.BaseBottomSheetFragment
 import com.sesac.gmd.presentation.ui.create_song.CreateSongActivity
 
-class CreateSongBottomSheetFragment : BaseBottomSheetFragment<FragmentCreateSongBottomSheetBinding>() {
+class CreateSongBottomSheetFragment :
+    BaseBottomSheetFragment<FragmentCreateSongBottomSheetBinding>() {
     override val layoutResourceId = R.layout.fragment_create_song_bottom_sheet
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

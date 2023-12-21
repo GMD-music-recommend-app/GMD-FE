@@ -63,7 +63,12 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), OnMapReadyCallback {
 
     // FIXME: 메서드 이름 명확하게 수정
     private fun updateMapPoint(location: Location) {
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(location.asLatLng(), DEFAULT_MAP_ZOOM_LEVEL))
+        mMap.moveCamera(
+            CameraUpdateFactory.newLatLngZoom(
+                location.asLatLng(),
+                DEFAULT_MAP_ZOOM_LEVEL
+            )
+        )
     }
 
     private fun setListener() {

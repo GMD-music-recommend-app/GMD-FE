@@ -139,9 +139,7 @@ class AlertDialogFragment(private val message: String) : DialogFragment() {
                     activity.getSystemService(Context.WINDOW_SERVICE) as WindowManager
                 windowManager.defaultDisplay.getMetrics(displayMetrics)
                 val screenWidthPx = displayMetrics.widthPixels
-
                 val screenWidthDp = screenWidthPx / displayMetrics.density
-
                 screenWidthDp.toInt()
             }
         }

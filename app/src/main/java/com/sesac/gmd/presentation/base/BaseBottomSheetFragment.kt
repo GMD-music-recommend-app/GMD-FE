@@ -9,16 +9,16 @@ import androidx.databinding.ViewDataBinding
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
-abstract class BaseBottomSheetFragment<T: ViewDataBinding> : BottomSheetDialogFragment() {
+abstract class BaseBottomSheetFragment<T : ViewDataBinding> : BottomSheetDialogFragment() {
     private var _binding: T? = null
-    val binding get() = requireNotNull(_binding) { throw IllegalStateException("Failed to bind BottomSheet..!")}
+    val binding get() = requireNotNull(_binding) { throw IllegalStateException("Failed to bind BottomSheet..!") }
 
     abstract val layoutResourceId: Int
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
+        savedInstanceState: Bundle?,
     ): View? {
         _binding = DataBindingUtil.inflate(inflater, layoutResourceId, container, false)
         binding.lifecycleOwner = viewLifecycleOwner
@@ -29,7 +29,8 @@ abstract class BaseBottomSheetFragment<T: ViewDataBinding> : BottomSheetDialogFr
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         // BottomSheet 전체 화면으로 펼치기
-        val bottomSheet = dialog?.findViewById<View>(com.google.android.material.R.id.design_bottom_sheet)
+        val bottomSheet =
+            dialog?.findViewById<View>(com.google.android.material.R.id.design_bottom_sheet)
         bottomSheet?.let {
             val behavior = BottomSheetBehavior.from<View>(bottomSheet)
             behavior.state = BottomSheetBehavior.STATE_EXPANDED
