@@ -50,7 +50,10 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), OnMapReadyCallback {
             // 내 위치 Tracking Button
             isMyLocationEnabled = true
         }
-
+        /**
+         * 지도가 완전히 표시된 후 클릭에 반응하도록
+         * onMapReady 안에서 setListener 호출
+         */
         setListener()
     }
 
