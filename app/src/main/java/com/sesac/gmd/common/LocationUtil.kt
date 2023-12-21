@@ -7,7 +7,6 @@ import android.location.Geocoder
 import android.os.Build
 import com.google.android.gms.location.LocationServices
 import com.google.android.gms.maps.model.LatLng
-import com.sesac.gmd.application.GMDApplication
 import com.sesac.gmd.data.model.Location
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.tasks.await
@@ -16,12 +15,12 @@ import java.util.Locale
 
 object LocationUtil {
     // Geocoding(위/경도 -> 행정 구역 변환) 함수
-    fun geocoding(latLng: LatLng) : Location {
+    fun geocoding(context: Context, latLng: LatLng) : Location {
         // TODO: applicationContext -> Hilt 적용
-        val mContext = GMDApplication.getAppInstance().applicationContext
+//        val geocoder = Geocoder(mContext, Locale.getDefault())
 
         val userLocation = Location(latLng.latitude, latLng.longitude)
-        val geocoder = Geocoder(mContext, Locale.getDefault())
+        val geocoder = Geocoder(context, Locale.getDefault())
 
         // Over Android API 33
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
