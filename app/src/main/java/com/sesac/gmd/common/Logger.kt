@@ -4,7 +4,6 @@ import android.util.Log
 import com.sesac.gmd.BuildConfig
 import java.io.PrintWriter
 import java.io.StringWriter
-import java.lang.Exception
 
 object Logger {
     private const val TAG = "DebugLog"
@@ -49,7 +48,7 @@ object Logger {
         if (BuildConfig.DEBUG) Log.v(TAG, buildLogMsg(message))
     }
 
-    fun traceException(e : Exception) {
+    fun traceException(e: Exception) {
         if (!BuildConfig.DEBUG) return
         val errors = StringWriter()
         e.printStackTrace(PrintWriter(errors))
@@ -63,7 +62,7 @@ object Logger {
         Log.e(TAG, errors.toString())
     }
 
-    private fun buildLogMsg(message : String) : String {
+    private fun buildLogMsg(message: String): String {
         val ste = Thread.currentThread().stackTrace[4]
         val sb = StringBuilder().apply {
             append("[")
@@ -76,5 +75,4 @@ object Logger {
 
         return sb.toString()
     }
-
 }

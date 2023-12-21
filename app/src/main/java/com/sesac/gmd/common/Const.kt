@@ -5,7 +5,7 @@ const val SPLASH_LOGO_SHOWING_TIME = 3_000L
 
 const val TAB_HOME = 0
 const val TAB_CHART = 1
-const val TAB_SETTING = 2
+const val TAB_MY_PAGE = 2
 
 const val LOCATION_UPDATE_INTERVAL_TIME = 10 * 60 * 1_000L  // 10분
 

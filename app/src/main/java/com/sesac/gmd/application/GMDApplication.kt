@@ -9,9 +9,9 @@ import com.google.android.libraries.places.api.Places
 import com.sesac.gmd.common.GOOGLE_MAPS_SERVICE_KEY
 import java.util.Locale
 
-class GMDApplication: Application() {
+class GMDApplication : Application() {
     companion object {
-        private lateinit var appInstance : GMDApplication
+        private lateinit var appInstance: GMDApplication
         fun getAppInstance() = appInstance
     }
 
@@ -35,6 +35,7 @@ class GMDApplication: Application() {
             override fun onActivityCreated(activity: Activity, savedInstanceState: Bundle?) {
                 activity.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_PORTRAIT
             }
+
             override fun onActivityStarted(activity: Activity) {}
             override fun onActivityResumed(activity: Activity) {}
             override fun onActivityPaused(activity: Activity) {}

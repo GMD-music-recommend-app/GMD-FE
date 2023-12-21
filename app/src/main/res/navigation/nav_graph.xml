@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/tab_home">
+
+    <fragment
+        android:id="@+id/tab_home"
+        android:name="com.sesac.gmd.presentation.ui.main.home.HomeFragment"
+        android:label="홈"
+        tools:layout="@layout/fragment_home">
+        <action
+            android:id="@+id/move_to_chart"
+            app:destination="@id/tab_chart" />
+        <action
+            android:id="@+id/move_to_my"
+            app:destination="@id/tab_my_page" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/tab_chart"
+        android:name="com.sesac.gmd.presentation.ui.main.chart.ChartFragment"
+        android:label="인기 차트"
+        tools:layout="@layout/fragment_chart">
+        <action
+            android:id="@+id/move_to_my"
+            app:destination="@+id/tab_my_page" />
+        <action
+            android:id="@+id/move_to_home"
+            app:destination="@id/tab_home" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/tab_my_page"
+        android:name="com.sesac.gmd.presentation.ui.main.my_page.MyPageFragment"
+        android:label="마이 페이지"
+        tools:layout="@layout/fragment_setting">
+        <action
+            android:id="@+id/move_to_home"
+            app:destination="@id/tab_home" />
+        <action
+            android:id="@+id/move_to_chart"
+            app:destination="@id/tab_chart" />
+    </fragment>
+</navigation>

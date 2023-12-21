@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
     <!-- GMD Basic Colors -->
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
@@ -8,6 +8,8 @@
     <color name="main_color">#FF5552</color>
 
     <!--  Custom Colors  -->
+    <color name="bottom_nav_contents_color" tools:ignore="ReferenceType">@drawable/bottom_nav_color_selector</color>
+
     <color name="gray_01">#AEAEAE</color>
     <color name="gray_for_setting_contents">#585858</color>
     <color name="rv_item_background_color_gray">#F8F8F8</color>
