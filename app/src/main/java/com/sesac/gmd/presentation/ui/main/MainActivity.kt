@@ -6,7 +6,9 @@ import android.os.Looper
 import androidx.activity.OnBackPressedCallback
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.fragment.app.Fragment
+import androidx.navigation.NavController
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.onNavDestinationSelected
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationCallback
 import com.google.android.gms.location.LocationRequest
@@ -17,13 +19,7 @@ import com.google.android.gms.maps.model.LatLng
 import com.sesac.gmd.R
 import com.sesac.gmd.common.LOCATION_UPDATE_INTERVAL_TIME
 import com.sesac.gmd.common.Logger
-import com.sesac.gmd.common.TAB_CHART
-import com.sesac.gmd.common.TAB_HOME
-import com.sesac.gmd.common.TAB_MY_PAGE
 import com.sesac.gmd.databinding.ActivityMainBinding
-import com.sesac.gmd.presentation.ui.main.chart.ChartFragment
-import com.sesac.gmd.presentation.ui.main.home.HomeFragment
-import com.sesac.gmd.presentation.ui.main.my_page.MyPageFragment
 
 // TODO: Permission check before loading google map
 
@@ -31,32 +27,36 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private val viewModel: LocationViewModel by viewModels()
 
-    private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
+    private lateinit var fusedLocationClient: FusedLocationProviderClient
+    private lateinit var mNavController : NavController
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityMainBinding.inflate(layoutInflater).also {
-            setContentView(it.root)
-        }
 
-        initViews(savedInstanceState)
+        initBinding()
+        initNavigation()
         initFusedLocationClient()
         setListener()
     }
 
-    private fun initViews(savedInstanceState: Bundle?) {
-        if (savedInstanceState == null) {
-            supportFragmentManager
-                .beginTransaction()
-                .add(R.id.ft_container, HomeFragment())
-                .commit()
-
-            // TODO:  binding.bottomNavigationMenu.selectedItemId = R.id.tab_home   <- 필요..?
+    private fun initBinding() {
+        binding = ActivityMainBinding.inflate(layoutInflater).also {
+            setContentView(it.root)
         }
     }
 
+    private fun initNavigation() {
+        val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host) as NavHostFragment
+        mNavController = navHostFragment.navController
+
+        val graphInflater = navHostFragment.navController.navInflater
+        val navGraph = graphInflater.inflate(R.navigation.nav_graph)
+
+        mNavController.graph = navGraph
+    }
+
     private fun initFusedLocationClient() {
-        fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this)
+        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
     }
 
     private fun setListener() {
@@ -72,43 +72,9 @@ class MainActivity : AppCompatActivity() {
 
         binding.bottomNavigationMenu.run {
             setOnItemSelectedListener { item ->
-                when (item.itemId) {
-                    R.id.tab_home -> {
-                        replaceFragment(TAB_HOME)
-                        true
-                    }
-
-                    R.id.tab_chart -> {
-                        replaceFragment(TAB_CHART)
-                        true
-                    }
-
-                    R.id.tab_my_page -> {
-                        replaceFragment(TAB_MY_PAGE)
-                        true
-                    }
-
-                    else -> false
-                }
+                item.onNavDestinationSelected(mNavController)
             }
         }
-    }
-
-    private fun replaceFragment(tabPosition: Int) {
-        val fragment: Fragment? = when (tabPosition) {
-            TAB_HOME -> HomeFragment()
-            TAB_CHART -> ChartFragment()
-            TAB_MY_PAGE -> MyPageFragment()
-            else -> null
-        }
-
-        supportFragmentManager
-            .beginTransaction()
-            .replace(
-                R.id.ft_container,
-                fragment ?: throw IllegalStateException("Unexpected value : $tabPosition")
-            )
-            .commit()
     }
 
     override fun onResume() {
@@ -117,7 +83,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun startLocationUpdate() {
-        if (::fusedLocationProviderClient.isInitialized) {
+        if (::fusedLocationClient.isInitialized) {
             refreshUserLocation()
         }
     }
@@ -133,7 +99,7 @@ class MainActivity : AppCompatActivity() {
                     setMaxUpdateDelayMillis(LOCATION_UPDATE_INTERVAL_TIME)  // 위치 업데이트 최대 지연 시간
                     setWaitForAccurateLocation(true)                        // 정밀한 위치를 받기 위해 대기(wait) 가능
                 }.build()
-        fusedLocationProviderClient.requestLocationUpdates(
+        fusedLocationClient.requestLocationUpdates(
             locationRequest,
             locationCallback,
             Looper.getMainLooper()
@@ -171,7 +137,7 @@ class MainActivity : AppCompatActivity() {
     private fun stopLocationUpdate() {
         try {
             // FusedLocation Callback 해제
-            fusedLocationProviderClient.removeLocationUpdates(locationCallback)
+            fusedLocationClient.removeLocationUpdates(locationCallback)
         } catch (e: Exception) {
             e.printStackTrace()
             // TODO: 예외 처리 필요
