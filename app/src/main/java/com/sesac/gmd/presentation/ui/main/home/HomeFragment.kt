@@ -50,7 +50,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), OnMapReadyCallback {
             // 내 위치 Tracking Button
             isMyLocationEnabled = true
         }
-
+        // TODO: 주석 작성 필요
         setListener()
     }
 

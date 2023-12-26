@@ -31,6 +31,7 @@ class SplashActivity : AppCompatActivity() {
         }
     }
 
+    // TODO: TEDPermission 빼고 ActivityCompat 으로 바꾸기 
     private fun checkPermissions() {
         TedPermission.create()
             .setPermissionListener(permissionListener)
