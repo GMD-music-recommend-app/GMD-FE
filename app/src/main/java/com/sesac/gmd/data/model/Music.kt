@@ -9,16 +9,16 @@ package com.sesac.gmd.data.model
  * * maniaDB:album.image : 앨범 이미지
  * * maniaDB:artist.name : 가수
  */
-data class SongList(
-    val songs: MutableList<Song> = mutableListOf()
+data class MusicList(
+    val songs: MutableList<Music> = mutableListOf()
 )
 
 /**
  * 곡에 대한 개별 정보
  */
-data class Song(
-    var songIdx: Int = 0,
-    var songTitle: String = "",
+data class Music(
+    var musicIdx: Int = 0,
+    var musicTitle: String = "",
     var album: ManiaDBAlbum = ManiaDBAlbum(),
     var artist: MutableList<String> = mutableListOf()
 )
