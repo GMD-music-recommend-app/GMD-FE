@@ -5,8 +5,6 @@ import android.os.Bundle
 import android.view.View
 import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
-import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -24,14 +22,13 @@ import com.sesac.gmd.presentation.ui.main.LocationViewModel
 
 class HomeFragment : BaseFragment<FragmentHomeBinding>(), OnMapReadyCallback {
     override val layoutResourceId = R.layout.fragment_home
-    private val viewModel: HomeViewModel by viewModels()
-    private val activityViewModel: LocationViewModel by activityViewModels()
+    private val locationVM: LocationViewModel by activityViewModels()
 
     private lateinit var mMap: GoogleMap
-    private lateinit var fusedLocationProviderClient: FusedLocationProviderClient
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         initViews()
         setObserver()
     }
@@ -44,7 +41,14 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), OnMapReadyCallback {
     @SuppressLint("MissingPermission")
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap.apply {
-            val startingPoint = LatLng(SEOUL_CITY_HALL_LATITUDE, SEOUL_CITY_HALL_LONGITUDE)
+            val startingPoint = locationVM.currentLocation.value?.let { location ->
+                LatLng(
+                    location.latitude,
+                    location.longitude
+                )
+            } ?: run {
+                LatLng(SEOUL_CITY_HALL_LATITUDE, SEOUL_CITY_HALL_LONGITUDE)
+            }
             moveCamera(CameraUpdateFactory.newLatLngZoom(startingPoint, DEFAULT_MAP_ZOOM_LEVEL))
 
             // 내 위치 Tracking Button
@@ -55,7 +59,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), OnMapReadyCallback {
     }
 
     private fun setObserver() {
-        activityViewModel.currentLocation.observe(viewLifecycleOwner, ::updateMapPoint)
+        locationVM.currentLocation.observe(viewLifecycleOwner, ::updateMapPoint)
     }
 
     // FIXME: 메서드 이름 명확하게 수정
