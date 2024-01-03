@@ -22,42 +22,31 @@ object LocationUtil {
 
         // Over Android API 33
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            geocoder.getFromLocation(
-                latLng.latitude,
-                latLng.longitude,
-                1,
-                object : Geocoder.GeocodeListener {
-                    // 제대로 Geocoding 성공했을 경우
-                    override fun onGeocode(address: MutableList<Address>) {
-                        userLocation.state =
-                            if (address[0].adminArea == null) address[0].subAdminArea else address[0].adminArea
-                        userLocation.city =
-                            if (address[0].locality == null) address[0].subLocality else address[0].locality
-                        userLocation.street =
-                            if (address[0].thoroughfare == null) address[0].subThoroughfare else address[0].thoroughfare
-                    }
+            geocoder.getFromLocation(latLng.latitude, latLng.longitude, 1, object: Geocoder.GeocodeListener {
+                // 제대로 Geocoding 성공했을 경우
+                override fun onGeocode(address: MutableList<Address>) {
+                    userLocation.state = if (address[0].adminArea == null) address[0].subAdminArea else address[0].adminArea
+                    userLocation.city = if (address[0].locality == null) address[0].subLocality else address[0].locality
+                    userLocation.street = if (address[0].thoroughfare == null) address[0].subThoroughfare else address[0].thoroughfare
+                }
+                // Geocoding 실패했을 경우
+                override fun onError(errorMessage: String?) {
+                    Logger.e("Geocoder occurred error : $errorMessage!!")
 
-                    // Geocoding 실패했을 경우
-                    override fun onError(errorMessage: String?) {
-                        Logger.e("Geocoder occurred error : $errorMessage!!")
-
-                        super.onError(errorMessage)
-                        // FIXME: 에러 발생 시 Toast -> Dialog
-                        Utils.toastMessage("예기치 못한 문제가 발생했습니다.")
-                    }
-                })
+                    super.onError(errorMessage)
+                    // FIXME: 에러 발생 시 Toast -> Dialog
+                    Utils.toastMessage("예기치 못한 문제가 발생했습니다.")
+                }
+            })
         } else {
             // Under Android API 33
             val address = geocoder.getFromLocation(latLng.latitude, latLng.longitude, 1)
             try {
                 if (address != null) {
                     if (address.isNotEmpty()) {
-                        userLocation.state =
-                            if (address[0].adminArea == null) address[0].subAdminArea else address[0].adminArea
-                        userLocation.city =
-                            if (address[0].locality == null) address[0].subLocality else address[0].locality
-                        userLocation.street =
-                            if (address[0].thoroughfare == null) address[0].subThoroughfare else address[0].thoroughfare
+                        userLocation.state = if (address[0].adminArea == null) address[0].subAdminArea else address[0].adminArea
+                        userLocation.city = if (address[0].locality == null) address[0].subLocality else address[0].locality
+                        userLocation.street = if (address[0].thoroughfare == null) address[0].subThoroughfare else address[0].thoroughfare
                     }
                 }
             } catch (e: Exception) {
