@@ -39,6 +39,9 @@ class OtherLocationSelectionFragment : BaseFragment<FragmentOtherLocationSelecti
     private fun initViews() {
         val mapFragment = childFragmentManager.findFragmentById(R.id.map_view) as SupportMapFragment
         mapFragment.getMapAsync(this@OtherLocationSelectionFragment)
+
+        // 해당 페이지에 대한 안내 Bottom Sheet Dialog 표시
+        GuideLocationSelectionBottomSheetFragment().show(parentFragmentManager, "tag")
     }
 
     @SuppressLint("MissingPermission")
