@@ -35,7 +35,7 @@
         android:id="@+id/tab_my_page"
         android:name="com.sesac.gmd.presentation.ui.main.my_page.MyPageFragment"
         android:label="마이 페이지"
-        tools:layout="@layout/fragment_setting">
+        tools:layout="@layout/fragment_my_page">
         <action
             android:id="@+id/move_to_home"
             app:destination="@id/tab_home" />

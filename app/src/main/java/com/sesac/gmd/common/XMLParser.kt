@@ -1,27 +1,32 @@
 package com.sesac.gmd.common
 
 import com.sesac.gmd.data.model.ManiaDBAlbum
-import com.sesac.gmd.data.model.Song
-import com.sesac.gmd.data.model.SongList
+import com.sesac.gmd.data.model.Music
+import com.sesac.gmd.data.model.MusicList
 import org.xml.sax.InputSource
 import java.io.StringReader
 import javax.xml.parsers.DocumentBuilderFactory
 
 object XMLParser {
     // XML -> DTO parsing 함수
-    fun parseXMLFromMania(xmlFromManiaDB: String): SongList {
+    fun parseXMLFromMania(xmlFromManiaDB: String): MusicList {
         val xmlDOMBuilder = DocumentBuilderFactory.newInstance()
-        val songList = SongList()
+        val musicList = MusicList()
+
         try {
             val inputSource = InputSource()
             inputSource.characterStream = StringReader(xmlFromManiaDB)
             val rootDoc = xmlDOMBuilder.newDocumentBuilder().parse(inputSource)
+
             val itemTags = rootDoc.getElementsByTagName(MUSIC_ITEM)
+
             for (idx in 0 until itemTags.length) {
-                val song = Song()
-                song.songIdx =
+                val music = Music()
+
+                music.musicIdx =
                     itemTags.item(idx).attributes.getNamedItem(MUSIC_ID).nodeValue.trim().toInt()
                 val itemSubTagLength = itemTags.item(idx).childNodes.length
+
                 for (subIdx in 0 until itemSubTagLength) {
                     val itemChildNode = itemTags.item(idx).childNodes.item(subIdx)
                     if (itemChildNode != null) {
@@ -46,7 +51,7 @@ object XMLParser {
                                         }
                                     }
                                 }
-                                song.album = album
+                                music.album = album
                             }
 
                             XML_TAG_ALBUM_INFO -> {
@@ -56,7 +61,7 @@ object XMLParser {
                                     for (artSubIdx in 0 until artistChildNode.length) {
                                         val artistName = artistChildNode.item(artSubIdx).nodeName
                                         if (artistName == MUSIC_NAME) {
-                                            song.artist.add(
+                                            music.artist.add(
                                                 artistChildNode.item(artSubIdx).textContent.trim()
                                                     .replace("&#39;", "'")
                                                     .replace("&amp;", "&")
@@ -68,8 +73,8 @@ object XMLParser {
                                 }
                             }
 
-                            XML_TAG_SONG_TITLE -> {
-                                song.songTitle = itemChildNode.textContent.trim()
+                            XML_TAG_MUSIC_TITLE -> {
+                                music.musicTitle = itemChildNode.textContent.trim()
                                     .replace("&#39;", "'")
                                     .replace("&amp;", "&")
                                     .replace("&nbsp;", " ")
@@ -78,18 +83,18 @@ object XMLParser {
                         }
                     }
                 }
-                songList.songs.add(song)
+                musicList.songs.add(music)
             }
         } catch (e: Exception) {
             Logger.traceException(e)
         }
-        return songList
+        return musicList
     }
 
     // region XML TAG names
     private const val XML_TAG_MANIA_DB_ALBUM = "maniadb:album"
     private const val XML_TAG_ALBUM_INFO = "maniadb:trackartists"
-    private const val XML_TAG_SONG_TITLE = "title"
+    private const val XML_TAG_MUSIC_TITLE = "title"
 
     private const val MUSIC_ITEM = "item"
     private const val MUSIC_ID = "id"

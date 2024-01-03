@@ -50,7 +50,7 @@ class MainActivity : AppCompatActivity() {
         mNavController = navHostFragment.navController
 
         val graphInflater = navHostFragment.navController.navInflater
-        val navGraph = graphInflater.inflate(R.navigation.nav_graph)
+        val navGraph = graphInflater.inflate(R.navigation.nav_graph_main)
 
         mNavController.graph = navGraph
     }
@@ -90,8 +90,6 @@ class MainActivity : AppCompatActivity() {
 
     @SuppressLint("MissingPermission")
     private fun refreshUserLocation() {
-        Logger.d("try to update location...")
-
         val locationRequest =
             LocationRequest.Builder(Priority.PRIORITY_HIGH_ACCURACY, LOCATION_UPDATE_INTERVAL_TIME)
                 .apply {

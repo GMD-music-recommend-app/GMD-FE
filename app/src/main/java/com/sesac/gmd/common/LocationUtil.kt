@@ -15,10 +15,8 @@ import java.util.Locale
 
 object LocationUtil {
     // Geocoding(위/경도 -> 행정 구역 변환) 함수
-    fun geocoding(context: Context, latLng: LatLng) : Location {
+    fun geocoding(context: Context, latLng: LatLng): Location {
         // TODO: applicationContext -> Hilt 적용
-//        val geocoder = Geocoder(mContext, Locale.getDefault())
-
         val userLocation = Location(latLng.latitude, latLng.longitude)
         val geocoder = Geocoder(context, Locale.getDefault())
 

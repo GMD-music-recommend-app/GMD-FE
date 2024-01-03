@@ -9,10 +9,9 @@ import com.sesac.gmd.common.GO_TO_PAGE
 import com.sesac.gmd.common.SET_OTHER_PLACE
 import com.sesac.gmd.databinding.FragmentCreateSongBottomSheetBinding
 import com.sesac.gmd.presentation.base.BaseBottomSheetFragment
-import com.sesac.gmd.presentation.ui.create_song.CreateSongActivity
+import com.sesac.gmd.presentation.ui.music_recommend.MusicRecommendActivity
 
-class CreateSongBottomSheetFragment :
-    BaseBottomSheetFragment<FragmentCreateSongBottomSheetBinding>() {
+class CreateSongBottomSheetFragment : BaseBottomSheetFragment<FragmentCreateSongBottomSheetBinding>() {
     override val layoutResourceId = R.layout.fragment_create_song_bottom_sheet
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -27,7 +26,7 @@ class CreateSongBottomSheetFragment :
     }
 
     private fun onCreateButtonClick(page: String) {
-        val nextPage = Intent(requireContext(), CreateSongActivity::class.java)
+        val nextPage = Intent(requireContext(), MusicRecommendActivity::class.java)
         nextPage.putExtra(GO_TO_PAGE, page)
         startActivity(nextPage)
         dismiss()

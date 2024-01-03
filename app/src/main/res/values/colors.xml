@@ -8,6 +8,7 @@
     <color name="main_color">#FF5552</color>
 
     <!--  Custom Colors  -->
+    <color name="background_loading">#80000000</color>
     <color name="bottom_nav_contents_color" tools:ignore="ReferenceType">@drawable/bottom_nav_color_selector</color>
 
     <color name="gray_01">#AEAEAE</color>
