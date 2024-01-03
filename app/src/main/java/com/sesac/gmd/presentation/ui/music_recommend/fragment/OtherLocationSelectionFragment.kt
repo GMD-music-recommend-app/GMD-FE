@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.View
 import androidx.activity.OnBackPressedCallback
+import androidx.core.view.isVisible
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.Navigation
 import com.google.android.gms.maps.CameraUpdateFactory
@@ -11,6 +12,8 @@ import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
+import com.google.android.gms.maps.model.Marker
+import com.google.android.gms.maps.model.MarkerOptions
 import com.sesac.gmd.R
 import com.sesac.gmd.common.DEFAULT_MAP_ZOOM_LEVEL
 import com.sesac.gmd.common.SEOUL_CITY_HALL_LATITUDE
@@ -25,6 +28,7 @@ class OtherLocationSelectionFragment : BaseFragment<FragmentOtherLocationSelecti
     private val activityViewModel: SongViewModel by activityViewModels()
 
     private lateinit var mMap: GoogleMap
+    private var addedMarker: Marker? = null
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -53,26 +57,35 @@ class OtherLocationSelectionFragment : BaseFragment<FragmentOtherLocationSelecti
             // 내 위치 Tracking Button
             isMyLocationEnabled = true
         }
-        // TODO: 주석 작성
+        /**
+         * 지도가 완전히 표시된 후 클릭에 반응하도록
+         * onMapReady 안에서 setListener 호출
+         */
         setListener()
     }
 
     private fun setListener() {
-        mMap.setOnMapLongClickListener { onMapLongClick() }
+        mMap.setOnMapLongClickListener(mMapLongClickListener)
         binding.btnSelectLocation.setOnClickListener { onSelectLocationButtonClick() }
     }
 
-    private fun onMapLongClick() {
+    private val mMapLongClickListener = GoogleMap.OnMapLongClickListener { point ->
+        // 마커가 이미 생성 되어있으면 해당 마커 제거
+        addedMarker?.let { mMap.clear() }
 
+        val location = LatLng(point.latitude, point.longitude)
+        addedMarker = mMap.addMarker(MarkerOptions().position(location))
+        addedMarker?.showInfoWindow()
+
+        // 장소가 선택 되었을 때 추천하기 버튼 표시
+        binding.btnSelectLocation.isVisible = addedMarker != null
     }
 
     private fun onSelectLocationButtonClick() {
         AlertDialogFragment("이 곳에서 음악을 추천하시겠습니까?").apply {
             positiveButton(
                 text = "확인",
-                action = {
-                    goToNextPage()
-                }
+                action = { goToNextPage() }
             )
             negativeButton("취소", null)
         }.also {
@@ -81,13 +94,22 @@ class OtherLocationSelectionFragment : BaseFragment<FragmentOtherLocationSelecti
     }
 
     private fun goToNextPage() {
-        // FIXME: 마커 위치 받아와서 위치 설정
-        val selectedLocation = LatLng(SEOUL_CITY_HALL_LATITUDE, SEOUL_CITY_HALL_LONGITUDE)
-        activityViewModel.setLocation(selectedLocation)
+        addedMarker?.let {
+            val selectedLocation = LatLng(it.position.latitude, it.position.longitude)
+            activityViewModel.setLocation(selectedLocation)
 
-        Navigation.findNavController(binding.root).navigate(R.id.go_to_music_search)
+            Navigation.findNavController(binding.root).navigate(R.id.go_to_music_search)
+        } ?: run {
+            AlertDialogFragment("위치가 선택되지 않았습니다.\n다시 시도해 주세요.").apply {
+                positiveButton(
+                    text = "확인",
+                    action = { requireActivity().finish() }
+                )
+            }
+        }
     }
 
+    // TODO:
     private fun searchLocation() {
 
     }
