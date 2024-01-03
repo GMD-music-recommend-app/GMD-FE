@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_graph_create_song"
+    app:startDestination="@id/otherSpotSelectionFragment">
+
+    <fragment
+        android:id="@+id/otherSpotSelectionFragment"
+        android:name="com.sesac.gmd.presentation.ui.music_recommend.fragment.OtherLocationSelectionFragment"
+        android:label="음악 추천하기" >
+        <action
+            android:id="@+id/go_to_music_search"
+            app:destination="@id/musicSearchFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/musicSearchFragment"
+        android:name="com.sesac.gmd.presentation.ui.music_recommend.music_search.MusicSearchFragment"
+        android:label="음악 추천하기" >
+        <action
+            android:id="@+id/go_to_story_input"
+            app:destination="@id/storyInputFragment" />
+        <action
+            android:id="@+id/back_to_location_selection"
+            app:destination="@id/otherSpotSelectionFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/storyInputFragment"
+        android:name="com.sesac.gmd.presentation.ui.music_recommend.fragment.StoryInputFragment"
+        android:label="음악 추천하기" >
+        <action
+            android:id="@+id/back_to_music_search"
+            app:destination="@id/musicSearchFragment" />
+    </fragment>
+</navigation>

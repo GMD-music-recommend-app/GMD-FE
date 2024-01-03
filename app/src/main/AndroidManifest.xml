@@ -19,10 +19,6 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="34">
         <activity
-            android:name=".presentation.ui.create_song.CreateSongActivity"
-            android:exported="false" />
-
-        <activity
             android:name=".presentation.ui.splash.SplashActivity"
             android:exported="true"
             android:theme="@style/SplashTheme">
@@ -35,6 +31,10 @@
 
         <activity
             android:name=".presentation.ui.main.MainActivity"
+            android:exported="false" />
+
+        <activity
+            android:name=".presentation.ui.music_recommend.MusicRecommendActivity"
             android:exported="false" />
 
         <meta-data
