@@ -11,11 +11,23 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:gravity="center"
         android:background="@drawable/borderline_toolbar"
+        android:gravity="center"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"/>
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/txt_page_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:fontFamily="@font/noto_sans_kr_bold"
+            android:includeFontPadding="false"
+            android:text="음악 추천하기"
+            android:textColor="@color/black"
+            android:textSize="16dp" />
+    </androidx.appcompat.widget.Toolbar>
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/nav_host_create_song"
@@ -33,15 +45,16 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/background_loading"
-        android:visibility="gone"
-        android:importantForAccessibility="no">
+        android:importantForAccessibility="no"
+        android:visibility="gone">
+
         <ProgressBar
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:importantForAccessibility="no"
             android:indeterminate="true"
             android:indeterminateTint="@color/main_color"
-            android:progressTint="@color/main_color"
-            android:importantForAccessibility="no"/>
+            android:progressTint="@color/main_color" />
     </FrameLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
