@@ -26,7 +26,7 @@ class MusicSearchFragment: BaseFragment<FragmentMusicSearchBinding>() {
         setObserver()
         setListener()
     }
-    
+
     private fun setObserver() {
         activityViewModel.selectedLocation.observe(viewLifecycleOwner, this@MusicSearchFragment::checkLocationInitialized)
     }

@@ -9,7 +9,6 @@ import androidx.navigation.ui.setupWithNavController
 import com.sesac.gmd.R
 import com.sesac.gmd.common.CREATE_MUSIC_HERE
 import com.sesac.gmd.common.GO_TO_PAGE
-import com.sesac.gmd.common.Logger
 import com.sesac.gmd.common.SET_OTHER_PLACE
 import com.sesac.gmd.databinding.ActivityMusicRecommendBinding
 
@@ -23,7 +22,8 @@ class MusicRecommendActivity : AppCompatActivity() {
 
         initBinding()
         initNavigation()
-        initView(savedInstanceState)
+        hideToolbarTitle()
+        setFragment(savedInstanceState)
     }
 
     private fun initBinding() {
@@ -45,10 +45,18 @@ class MusicRecommendActivity : AppCompatActivity() {
         mNavController.graph = navGraph
     }
 
-    private fun initView(savedInstanceState: Bundle?) {
+    private fun hideToolbarTitle() {
+        // TODO: 임의로 activity 타이틀과 toolbar 타이틀이 겹쳐서 표시되지 않도록 했는데 더 좋은 방법 찾아보기
+        binding.toolbar.title = ""
+
+        mNavController.addOnDestinationChangedListener { _, _, _ ->
+            binding.toolbar.title = ""
+        }
+    }
+
+    private fun setFragment(savedInstanceState: Bundle?) {
         if (savedInstanceState == null) {
             val page = intent.getStringExtra(GO_TO_PAGE)
-            Logger.e("page: ${page}")
 
             when (page) {
                 SET_OTHER_PLACE -> {
