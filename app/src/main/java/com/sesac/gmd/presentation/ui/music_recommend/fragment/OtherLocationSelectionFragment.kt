@@ -23,7 +23,8 @@ import com.sesac.gmd.presentation.base.BaseFragment
 import com.sesac.gmd.presentation.common.AlertDialogFragment
 import com.sesac.gmd.presentation.ui.music_recommend.SongViewModel
 
-class OtherLocationSelectionFragment : BaseFragment<FragmentOtherLocationSelectionBinding>(), OnMapReadyCallback {
+class OtherLocationSelectionFragment : BaseFragment<FragmentOtherLocationSelectionBinding>(),
+    OnMapReadyCallback {
     override val layoutResourceId = R.layout.fragment_other_location_selection
     private val activityViewModel: SongViewModel by activityViewModels()
 
@@ -68,13 +69,25 @@ class OtherLocationSelectionFragment : BaseFragment<FragmentOtherLocationSelecti
     }
 
     private fun setListener() {
+        mMap.setOnMapClickListener(mMapShortClickListener)
         mMap.setOnMapLongClickListener(mMapLongClickListener)
         binding.btnSelectLocation.setOnClickListener { onSelectLocationButtonClick() }
     }
 
+    private val mMapShortClickListener = GoogleMap.OnMapClickListener { _ ->
+        // 마커가 이미 생성 되어있으면 해당 마커 제거
+        addedMarker?.let {
+            mMap.clear()
+            addedMarker = null
+        }
+    }
+
     private val mMapLongClickListener = GoogleMap.OnMapLongClickListener { point ->
         // 마커가 이미 생성 되어있으면 해당 마커 제거
-        addedMarker?.let { mMap.clear() }
+        addedMarker?.let {
+            mMap.clear()
+            addedMarker = null
+        }
 
         val location = LatLng(point.latitude, point.longitude)
         addedMarker = mMap.addMarker(MarkerOptions().position(location))
@@ -104,10 +117,9 @@ class OtherLocationSelectionFragment : BaseFragment<FragmentOtherLocationSelecti
             Navigation.findNavController(binding.root).navigate(R.id.go_to_music_search)
         } ?: run {
             AlertDialogFragment("위치가 선택되지 않았습니다.\n다시 시도해 주세요.").apply {
-                positiveButton(
-                    text = "확인",
-                    action = { requireActivity().finish() }
-                )
+                positiveButton("확인", null)
+            }.also {
+                it.show(parentFragmentManager, "dialog")
             }
         }
     }
