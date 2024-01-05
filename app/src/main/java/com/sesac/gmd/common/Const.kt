@@ -14,9 +14,6 @@ const val SEOUL_CITY_HALL_LONGITUDE = 126.97794509999994 // 서울 시청 경도
 
 const val DEFAULT_MAP_ZOOM_LEVEL = 16F
 
-const val GOOGLE_MAPS_SERVICE_KEY = "AIzaSyCEk2qpEEyYPSretU7AtVMGkFe5bwimczc"
-
-
 // 다음 페이지에서 보여 줄 fragment 정의
 const val GO_TO_PAGE = "GO_TO_PAGE"
 const val SET_OTHER_PLACE = "SET_OTHER_PLACE"

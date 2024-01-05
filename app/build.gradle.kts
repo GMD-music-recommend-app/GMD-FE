@@ -1,7 +1,11 @@
+import com.android.build.gradle.internal.cxx.configure.gradleLocalProperties
+
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
 }
+
+val GOOGLE_API_KEY = getApiKey("GOOGLE_API_KEY")
 
 android {
     namespace = "com.sesac.gmd"
@@ -15,6 +19,9 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+        manifestPlaceholders["GOOGLE_API_KEY"] = getApiKey("GOOGLE_API_KEY")
+        buildConfigField("String", "GOOGLE_API_KEY", getApiKey("GOOGLE_API_KEY"))
     }
 
     buildTypes {
@@ -46,6 +53,10 @@ android {
         dataBinding = true
         viewBinding = true
     }
+}
+
+fun getApiKey(propertyKey: String): String {
+    return gradleLocalProperties(rootDir).getProperty(propertyKey)
 }
 
 dependencies {

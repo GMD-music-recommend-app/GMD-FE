@@ -6,7 +6,7 @@ import android.app.Application
 import android.content.pm.ActivityInfo
 import android.os.Bundle
 import com.google.android.libraries.places.api.Places
-import com.sesac.gmd.common.GOOGLE_MAPS_SERVICE_KEY
+import com.sesac.gmd.BuildConfig
 import java.util.Locale
 
 class GMDApplication : Application() {
@@ -25,7 +25,7 @@ class GMDApplication : Application() {
 
     private fun initGooglePlacesSDK() {
         if (!Places.isInitialized()) {
-            Places.initialize(applicationContext, GOOGLE_MAPS_SERVICE_KEY, Locale.KOREA)
+            Places.initialize(applicationContext, BuildConfig.GOOGLE_API_KEY, Locale.KOREA)
         }
     }
 
