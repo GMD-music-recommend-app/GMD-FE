@@ -1,29 +1,58 @@
 package com.sesac.gmd.presentation.ui.music_recommend.music_search
 
+import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.sesac.gmd.R
+import com.sesac.gmd.common.isEqualMusicItem
 import com.sesac.gmd.data.model.Music
-import com.sesac.gmd.databinding.ViewholderMusicItemBinding
+import com.sesac.gmd.databinding.ViewholderSearchMusicResultBinding
 
 class MusicSearchAdapter(
     private val onClickItem: ((music: Music) -> Unit),
 ) : ListAdapter<Music, MusicSearchAdapter.MusicItemViewHolder>(MusicListDiffCallback()) {
 
     class MusicItemViewHolder(
-        val binding: ViewholderMusicItemBinding,
+        val binding: ViewholderSearchMusicResultBinding,
         private val onClickItem: (music: Music) -> Unit,
     ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(music: Music) {
+            setMusicAlbumArtImage(music)
+            setTextViewContents(music)
+            setListener(music)
+        }
 
+        private fun setMusicAlbumArtImage(music: Music) {
+            Glide.with(itemView.context)
+                .load(music.album.albumImage)
+                .placeholder(R.drawable.ic_music_basic)
+                .error(R.drawable.ic_music_basic)
+                .into(binding.imgResultAlbumArt)
+        }
+
+        @SuppressLint("SetTextI18n")
+        private fun setTextViewContents(music: Music) {
+            binding.txtResultMusicTitle.text = music.musicTitle
+            binding.txtSearchMusicArtist.text =
+                """${music.artist.joinToString(",")} · ${music.album.albumTitle}"""
+        }
+
+        private fun setListener(music: Music) {
+            binding.btnSelectMusic.setOnClickListener { onClickItem.invoke(music) }
         }
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MusicItemViewHolder {
         return MusicItemViewHolder(
-            ViewholderMusicItemBinding.inflate(LayoutInflater.from(parent.context), parent, false),
+            ViewholderSearchMusicResultBinding.inflate(
+                LayoutInflater.from(parent.context),
+                parent,
+                false
+            ),
             onClickItem
         )
     }
@@ -38,11 +67,11 @@ class MusicSearchAdapter(
 
     private class MusicListDiffCallback : DiffUtil.ItemCallback<Music>() {
         override fun areContentsTheSame(oldItem: Music, newItem: Music): Boolean {
-            TODO("Not yet implemented")
+            return oldItem.isEqualMusicItem(newItem)
         }
 
         override fun areItemsTheSame(oldItem: Music, newItem: Music): Boolean {
-            TODO("Not yet implemented")
+            return oldItem.musicIdx == newItem.musicIdx
         }
     }
 }
