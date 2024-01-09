@@ -86,6 +86,10 @@ dependencies {
     // TedPermission
     implementation("io.github.ParkSangGwon:tedpermission-normal:3.3.0")
 
+    // Glide
+    implementation("com.github.bumptech.glide:glide:4.15.1")
+    annotationProcessor("com.github.bumptech.glide:compiler:4.15.1")
+
     // Test
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
