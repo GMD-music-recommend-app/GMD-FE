@@ -1,4 +1,4 @@
-package com.sesac.gmd.presentation.ui.music_recommend.fragment
+package com.sesac.gmd.presentation.ui.music_recommend.location_select
 
 import android.os.Bundle
 import android.view.View
