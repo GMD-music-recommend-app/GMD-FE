@@ -11,8 +11,10 @@ import com.sesac.gmd.common.CREATE_MUSIC_HERE
 import com.sesac.gmd.common.GO_TO_PAGE
 import com.sesac.gmd.common.SET_OTHER_PLACE
 import com.sesac.gmd.databinding.ActivityMusicRecommendBinding
+import dagger.hilt.android.AndroidEntryPoint
 
-// TODO:  
+// TODO:
+@AndroidEntryPoint
 class MusicRecommendActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMusicRecommendBinding
     private lateinit var mNavController : NavController

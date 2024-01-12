@@ -24,6 +24,7 @@ android {
 
         manifestPlaceholders["GOOGLE_API_KEY"] = getApiKey("GOOGLE_API_KEY")
         buildConfigField("String", "GOOGLE_API_KEY", getApiKey("GOOGLE_API_KEY"))
+        buildConfigField("String", "MANIA_DB_API_KEY", getApiKey("MANIA_API_KEY"))
     }
 
     buildTypes {
@@ -93,8 +94,15 @@ dependencies {
     annotationProcessor("com.github.bumptech.glide:compiler:4.15.1")
 
     // Hilt
-    implementation("com.google.dagger:hilt-android:2.44")
-    kapt("com.google.dagger:hilt-android-compiler:2.44")
+    implementation("com.google.dagger:hilt-android:2.50")
+    kapt("com.google.dagger:hilt-android-compiler:2.50")
+
+    // OkHttp3 & Retrofit2
+    implementation("com.squareup.okhttp3:okhttp:5.0.0-alpha.11")
+    implementation("com.squareup.okhttp3:logging-interceptor:5.0.0-alpha.11")
+    implementation("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation("com.squareup.retrofit2:converter-gson:2.9.0")
+    implementation("com.google.code.gson:gson:2.10.1")
 
     // Test
     testImplementation("junit:junit:4.13.2")

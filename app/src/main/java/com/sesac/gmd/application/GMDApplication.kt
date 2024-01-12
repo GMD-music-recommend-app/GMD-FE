@@ -7,8 +7,10 @@ import android.content.pm.ActivityInfo
 import android.os.Bundle
 import com.google.android.libraries.places.api.Places
 import com.sesac.gmd.BuildConfig
+import dagger.hilt.android.HiltAndroidApp
 import java.util.Locale
 
+@HiltAndroidApp
 class GMDApplication : Application() {
     companion object {
         private lateinit var appInstance: GMDApplication
@@ -20,7 +22,7 @@ class GMDApplication : Application() {
         appInstance = this
 
         initGooglePlacesSDK()
-        setScreenPortrait()
+//        setScreenPortrait()
     }
 
     private fun initGooglePlacesSDK() {

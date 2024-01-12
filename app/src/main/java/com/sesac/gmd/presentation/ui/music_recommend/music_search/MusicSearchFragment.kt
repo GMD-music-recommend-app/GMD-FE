@@ -20,6 +20,8 @@ class MusicSearchFragment: BaseFragment<FragmentMusicSearchBinding>() {
     private val activityViewModel: SongViewModel by activityViewModels()
     private val viewModel: MusicSearchViewModel by viewModels()
 
+    private lateinit var adapter: MusicSearchAdapter
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 

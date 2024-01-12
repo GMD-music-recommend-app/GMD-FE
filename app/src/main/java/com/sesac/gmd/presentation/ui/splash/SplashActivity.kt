@@ -5,7 +5,6 @@ import android.content.ActivityNotFoundException
 import android.content.Intent
 import android.os.Bundle
 import android.provider.Settings
-import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
@@ -15,6 +14,7 @@ import com.sesac.gmd.R
 import com.sesac.gmd.common.SPLASH_LOGO_SHOWING_TIME
 import com.sesac.gmd.common.Utils.PERMISSIONS
 import com.sesac.gmd.common.Utils.isNetworkConnected
+import com.sesac.gmd.presentation.common.AlertDialogFragment
 import com.sesac.gmd.presentation.ui.main.MainActivity
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -71,9 +71,9 @@ class SplashActivity : AppCompatActivity() {
             startActivity(nextPage)
             finish()
         } else {
-            Toast.makeText(this@SplashActivity, "네트워크 연결 상태를 확인 후 다시 앱을 실행해주세요.", Toast.LENGTH_LONG)
-                .show()
-            finish()
+            AlertDialogFragment("네트워크 연결 상태를 확인 후 다시 앱을 실행해주세요.").apply {
+                positiveButton("확인") { finish() }
+            }.show(supportFragmentManager, "dialog")
         }
     }
 }

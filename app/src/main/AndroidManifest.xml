@@ -13,6 +13,7 @@
         android:fullBackupContent="@xml/backup_rules"
         android:icon="@mipmap/ic_launcher_gmd"
         android:label="@string/app_name"
+        android:name=".application.GMDApplication"
         android:roundIcon="@mipmap/ic_launcher_gmd_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.GMD"

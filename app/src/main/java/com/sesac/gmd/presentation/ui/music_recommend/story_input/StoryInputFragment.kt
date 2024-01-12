@@ -1,4 +1,4 @@
-package com.sesac.gmd.presentation.ui.music_recommend.fragment
+package com.sesac.gmd.presentation.ui.music_recommend.story_input
 
 import android.os.Bundle
 import android.view.View

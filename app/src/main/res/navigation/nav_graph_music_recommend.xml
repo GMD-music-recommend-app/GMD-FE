@@ -6,7 +6,7 @@
 
     <fragment
         android:id="@+id/otherSpotSelectionFragment"
-        android:name="com.sesac.gmd.presentation.ui.music_recommend.fragment.OtherLocationSelectionFragment"
+        android:name="com.sesac.gmd.presentation.ui.music_recommend.location_select.OtherLocationSelectionFragment"
         android:label="다른 장소 선택하기" >
         <action
             android:id="@+id/go_to_music_search"
@@ -25,7 +25,7 @@
     </fragment>
     <fragment
         android:id="@+id/storyInputFragment"
-        android:name="com.sesac.gmd.presentation.ui.music_recommend.fragment.StoryInputFragment"
+        android:name="com.sesac.gmd.presentation.ui.music_recommend.story_input.StoryInputFragment"
         android:label="사연 입력하기" >
         <action
             android:id="@+id/back_to_music_search"
