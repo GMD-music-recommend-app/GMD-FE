@@ -99,11 +99,8 @@ class OtherLocationSelectionFragment : BaseFragment<FragmentOtherLocationSelecti
 
     private fun onSelectLocationButtonClick() {
         AlertDialogFragment("이 곳에서 음악을 추천하시겠습니까?").apply {
-            positiveButton(
-                text = "확인",
-                action = { goToNextPage() }
-            )
-            negativeButton("취소", null)
+            positiveButton { goToNextPage() }
+            negativeButton("취소")
         }.also {
             it.show(parentFragmentManager, "dialog")
         }
@@ -117,7 +114,7 @@ class OtherLocationSelectionFragment : BaseFragment<FragmentOtherLocationSelecti
             Navigation.findNavController(binding.root).navigate(R.id.go_to_music_search)
         } ?: run {
             AlertDialogFragment("위치가 선택되지 않았습니다.\n다시 시도해 주세요.").apply {
-                positiveButton("확인", null)
+                positiveButton("확인")
             }.also {
                 it.show(parentFragmentManager, "dialog")
             }

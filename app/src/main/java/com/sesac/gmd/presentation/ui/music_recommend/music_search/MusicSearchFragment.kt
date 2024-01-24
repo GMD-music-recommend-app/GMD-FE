@@ -38,19 +38,13 @@ class MusicSearchFragment: BaseFragment<FragmentMusicSearchBinding>() {
             AlertDialogFragment(
                 message = "사용자의 위치 정보를 가져오는 데 실패했습니다.\n위치 지정 페이지로 이동하시겠습니까?"
             ).apply {
-                positiveButton(
-                    text = "확인",
-                    action = {
-                        // TODO: navigate.LocationFragment 
-                    }
-                )
-                negativeButton(
-                    text = "취소",
-                    action = {
-                        requireActivity().finish()
-                        startActivity(Intent(requireContext(), MainActivity::class.java))
-                    }
-                )
+                positiveButton {
+                    // TODO: navigate.LocationFragment
+                }
+                negativeButton {
+                    requireActivity().finish()
+                    startActivity(Intent(requireContext(), MainActivity::class.java))
+                }
             }.also {
                 it.show(parentFragmentManager, "dialog")
             }

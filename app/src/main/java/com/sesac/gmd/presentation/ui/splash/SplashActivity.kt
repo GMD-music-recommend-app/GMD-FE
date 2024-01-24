@@ -72,7 +72,7 @@ class SplashActivity : AppCompatActivity() {
             finish()
         } else {
             AlertDialogFragment("네트워크 연결 상태를 확인 후 다시 앱을 실행해주세요.").apply {
-                positiveButton("확인") { finish() }
+                positiveButton { finish() }
             }.show(supportFragmentManager, "dialog")
         }
     }

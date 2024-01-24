@@ -66,17 +66,19 @@ class AlertDialogFragment(private val message: String) : DialogFragment() {
             }
 
         dialog?.window?.setLayout(
-            dialogWidth.dpToPixels(requireContext()),
-            ViewGroup.LayoutParams.WRAP_CONTENT
+            dialogWidth.dpToPixels(requireContext()), ViewGroup.LayoutParams.WRAP_CONTENT
         )
 
         // Dialog Background 세팅(모서리 둥글게)
         dialog?.window?.setBackgroundDrawable(
-            ContextCompat.getDrawable(
-                requireContext(),
-                R.drawable.bg_dialog_alert
-            )
+            ContextCompat.getDrawable(requireContext(), R.drawable.bg_dialog_alert)
         )
+    }
+
+    private fun setNegativeButtonVisibility() = with(binding) {
+        if (negText == null) {
+            btnAlertNegative.visibility = View.GONE
+        }
     }
 
     private fun setButtonListener() = with(binding) {
@@ -90,19 +92,29 @@ class AlertDialogFragment(private val message: String) : DialogFragment() {
         }
     }
 
-    private fun setNegativeButtonVisibility() = with(binding) {
-        if (negText == null) {
-            btnAlertNegative.visibility = View.GONE
-        }
+    fun AlertDialogFragment.positiveButton(text: String) {
+        positiveButton(text, null)
     }
 
-    fun AlertDialogFragment.positiveButton(text: String, action: (() -> Unit)?) {
-        this.posText = text
+    fun AlertDialogFragment.positiveButton(action: (() -> Unit)?) {
+        positiveButton(null, action)
+    }
+
+    fun AlertDialogFragment.positiveButton(text: String?, action: (() -> Unit)?) {
+        this.posText = text ?: "확인"
         this.posFunc = action
     }
 
-    fun AlertDialogFragment.negativeButton(text: String, action: (() -> Unit)?) {
-        this.negText = text
+    fun AlertDialogFragment.negativeButton(text: String) {
+        negativeButton(text, null)
+    }
+
+    fun AlertDialogFragment.negativeButton(action: (() -> Unit)?) {
+        negativeButton(null, action)
+    }
+
+    fun AlertDialogFragment.negativeButton(text: String?, action: (() -> Unit)?) {
+        this.negText = text ?: "취소"
         this.negFunc = action
     }
 
