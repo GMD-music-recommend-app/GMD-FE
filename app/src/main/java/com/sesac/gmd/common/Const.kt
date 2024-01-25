@@ -2,11 +2,6 @@ package com.sesac.gmd.common
 
 // Splash Logo Showing Time
 const val SPLASH_LOGO_SHOWING_TIME = 3_000L
-
-const val TAB_HOME = 0
-const val TAB_CHART = 1
-const val TAB_MY_PAGE = 2
-
 const val LOCATION_UPDATE_INTERVAL_TIME = 10 * 60 * 1_000L  // 10분
 
 const val SEOUL_CITY_HALL_LATITUDE = 37.5662952  // 서울 시청 위도
