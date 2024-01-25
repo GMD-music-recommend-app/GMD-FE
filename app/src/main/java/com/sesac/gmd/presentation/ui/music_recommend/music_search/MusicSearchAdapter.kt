@@ -13,12 +13,12 @@ import com.sesac.gmd.data.model.Music
 import com.sesac.gmd.databinding.ViewholderSearchMusicResultBinding
 
 class MusicSearchAdapter(
-    private val onClickItem: ((music: Music) -> Unit),
+    private val onItemClick: ((music: Music) -> Unit),
 ) : ListAdapter<Music, MusicSearchAdapter.MusicItemViewHolder>(MusicListDiffCallback()) {
 
     class MusicItemViewHolder(
         val binding: ViewholderSearchMusicResultBinding,
-        private val onClickItem: (music: Music) -> Unit,
+        private val onItemClick: (music: Music) -> Unit,
     ) : RecyclerView.ViewHolder(binding.root) {
         fun bind(music: Music) {
             setMusicAlbumArtImage(music)
@@ -42,7 +42,7 @@ class MusicSearchAdapter(
         }
 
         private fun setListener(music: Music) {
-            binding.btnSelectMusic.setOnClickListener { onClickItem.invoke(music) }
+            binding.btnSelectMusic.setOnClickListener { onItemClick.invoke(music) }
         }
     }
 
@@ -53,7 +53,7 @@ class MusicSearchAdapter(
                 parent,
                 false
             ),
-            onClickItem
+            onItemClick
         )
     }
 
