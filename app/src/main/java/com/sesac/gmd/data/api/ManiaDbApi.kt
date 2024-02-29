@@ -1,7 +1,8 @@
 package com.sesac.gmd.data.api
 
 import com.sesac.gmd.BuildConfig
-import com.squareup.okhttp.ResponseBody
+import com.sesac.gmd.data.model.response.ManiaDBClientResponse
+import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Path
 
@@ -12,7 +13,11 @@ const val MUSIC_SEARCH_RESULT_COUNT = 20
 const val MANIA_DB_API_VERSION = 0.5
 
 interface ManiaDbApi {
-    // 곡 제목 검색(검색 결과 20(=display)개 표시)
+    /**
+     * API 문서: https://www.maniadb.com/api/
+     * @param keyword 검색 키워드
+     * @return MUSIC_SEARCH_RESULT_COUNT 갯수 만큼 검색 결과 XML로 리턴
+     */
     @GET("{keyword}/?sr=song&display=${MUSIC_SEARCH_RESULT_COUNT}&key=${BuildConfig.MANIA_DB_API_KEY}&v=${MANIA_DB_API_VERSION}")
-    suspend fun getMusic(@Path("keyword") keyword: String) : ResponseBody
+    suspend fun getSong(@Path("keyword") keyword: String) : Response<ManiaDBClientResponse>
 }

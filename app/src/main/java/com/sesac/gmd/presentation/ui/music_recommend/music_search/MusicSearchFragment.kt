@@ -4,7 +4,6 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.KeyEvent
 import android.view.View
-import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import com.sesac.gmd.R
@@ -14,7 +13,9 @@ import com.sesac.gmd.presentation.base.BaseFragment
 import com.sesac.gmd.presentation.common.AlertDialogFragment
 import com.sesac.gmd.presentation.ui.main.MainActivity
 import com.sesac.gmd.presentation.ui.music_recommend.SongViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MusicSearchFragment: BaseFragment<FragmentMusicSearchBinding>() {
     override val layoutResourceId = R.layout.fragment_music_search
     private val activityViewModel: SongViewModel by activityViewModels()
@@ -65,7 +66,4 @@ class MusicSearchFragment: BaseFragment<FragmentMusicSearchBinding>() {
             }
         }
     }
-
-    override val onBackPressedCallback: OnBackPressedCallback
-        get() = TODO("Not yet implemented")
 }

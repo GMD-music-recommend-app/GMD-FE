@@ -2,7 +2,6 @@ package com.sesac.gmd.presentation.ui.main.chart
 
 import android.os.Bundle
 import android.view.View
-import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import com.sesac.gmd.R
@@ -37,7 +36,4 @@ class ChartFragment : BaseFragment<FragmentChartBinding>() {
     private fun updateChartListView(list: MutableList<GetChartResult>) {
 
     }
-
-    override val onBackPressedCallback: OnBackPressedCallback
-        get() = TODO("Not yet implemented")
 }

@@ -3,7 +3,6 @@ package com.sesac.gmd.presentation.ui.music_recommend.location_select
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.View
-import androidx.activity.OnBackPressedCallback
 import androidx.core.view.isVisible
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.Navigation
@@ -125,7 +124,4 @@ class OtherLocationSelectionFragment : BaseFragment<FragmentOtherLocationSelecti
     private fun searchLocation() {
 
     }
-
-    override val onBackPressedCallback: OnBackPressedCallback
-        get() = TODO("Not yet implemented")
 }

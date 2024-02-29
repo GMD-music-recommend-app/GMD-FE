@@ -3,7 +3,6 @@ package com.sesac.gmd.presentation.ui.main.home
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.View
-import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.activityViewModels
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -78,12 +77,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), OnMapReadyCallback {
     private fun setListener() {
         binding.btnCreateSong.setOnClickListener {
             CreateSongBottomSheetFragment().show(parentFragmentManager, tag)
-        }
-    }
-
-    override val onBackPressedCallback = object : OnBackPressedCallback(true) {
-        override fun handleOnBackPressed() {
-            super.handleOnBackCancelled()
         }
     }
 }

@@ -2,6 +2,8 @@ package com.sesac.gmd.data.datasource
 
 import com.sesac.gmd.BuildConfig
 import com.sesac.gmd.data.api.ManiaDbApi
+import com.tickaroo.tikxml.TikXml
+import com.tickaroo.tikxml.retrofit.TikXmlConverterFactory
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -9,7 +11,6 @@ import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 
@@ -20,7 +21,7 @@ object NetworkModule {
 
     @Provides
     @Singleton
-    fun provideBaseUrl() = "asdf"  // TODO: 이거 맞나..? 
+    fun provideBaseUrl() = "http://www.maniadb.com/api/search/"
 
     @Provides
     @Singleton
@@ -47,18 +48,22 @@ object NetworkModule {
 
     @Provides
     @Singleton
-    fun provideConverterFactory() = GsonConverterFactory.create()
+    fun provideTikXmlConverterFactory(): TikXmlConverterFactory {
+        val parser = TikXml.Builder().exceptionOnUnreadXml(false).build()
+        return TikXmlConverterFactory.create(parser)
+//        return TikXmlConverterFactory.create()
+    }
 
     @Provides
     @Singleton
     fun provideRetrofit(
         okHttpClient: OkHttpClient,
-        gsonConverterFactory: GsonConverterFactory,
+        tikXmlConverterFactory: TikXmlConverterFactory
     ): Retrofit {
         return Retrofit.Builder()
-            .client(okHttpClient)
             .baseUrl(provideBaseUrl())
-            .addConverterFactory(gsonConverterFactory)
+            .addConverterFactory(tikXmlConverterFactory)
+            .client(okHttpClient)
             .build()
     }
 
